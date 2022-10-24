@@ -12,7 +12,8 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forgotPasswordProvider= Provider.of<ForgotPasswordProvider>(context,listen: false);
+    final forgotPasswordProvider =
+        Provider.of<ForgotPasswordProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -20,30 +21,55 @@ class ForgotPasswordScreen extends StatelessWidget {
           elevation: 0,
           backgroundColor: AppColors.transparentColor,
           title: const Text(
-            'Forgot Password',
+            'Password Reset',
             style: AppTextStyles.appBarTextStyle,
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Image(
-                height: 200,
-                width: 200,
-                image: AssetImage(
-                    'assets/forgot_ password_screen_assets/start.png'),
-              ),
-              const Text(
-                'A code will be sent to the number below',
-                style: TextStyle(fontSize: 16),
-              ),
-              AppSizedBoxes.sizedboxH20,
-              const CustomContainer(),
-              AppSizedBoxes.sizedboxH50,
-              CustomButtonOne(text: 'Continue', onTap: ()=>forgotPasswordProvider.toOtpScreen(context))
-            ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Image(
+                  height: 200,
+                  width: 200,
+                  image: AssetImage(
+                      'assets/forgot_ password_screen_assets/start.png'),
+                ),
+                const Text('Choose a way to reset your password'),
+                AppSizedBoxes.sizedboxH20,
+                Consumer<ForgotPasswordProvider>(
+                  builder: (context,values,_) {
+                    return GestureDetector(
+                      onTap: ()=>values.smsSelected(),
+                      child:  CustomContainer(
+                        image: 'assets/forgot_ password_screen_assets/via_sms.png',
+                        text: 'Via SMS',
+                        color:values.isSmsSelected==true? AppColors.whiteColor:Colors.grey,
+                      ),
+                    );
+                  }
+                ),
+                AppSizedBoxes.sizedboxH20,
+                Consumer<ForgotPasswordProvider>(
+                  builder: (context,values,_) {
+                    return GestureDetector(
+                      onTap:()=>values.mailSelected() ,
+                      child:  CustomContainer(
+                        image: 'assets/forgot_ password_screen_assets/mail.png',
+                        text: 'Via Mail',
+                        color:values.isMailSelected==true? AppColors.whiteColor:Colors.grey,
+                      ),
+                    );
+                  }
+                ),
+                AppSizedBoxes.sizedboxH50,
+                CustomButtonOne(
+                    text: 'Continue',
+                    onTap: () => forgotPasswordProvider.getResetMethod(context))
+              ],
+            ),
           ),
         ),
       ),

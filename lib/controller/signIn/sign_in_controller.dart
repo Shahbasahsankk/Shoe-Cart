@@ -1,3 +1,5 @@
+
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../routes/rout_names.dart';
@@ -24,6 +26,15 @@ class SignInProvider with ChangeNotifier {
       return null;
     }
   }
+  String? numberValidation(String? value){
+    if(value==null||value.isEmpty){
+      return 'Please enter your mobile number';
+    }else if(value.length!=10){
+      return 'Invalid mobile number';
+    }else{
+      return null;
+    }
+  }
 
   void passwordHide() {
     isNotVisible = !isNotVisible;
@@ -43,4 +54,6 @@ class SignInProvider with ChangeNotifier {
     Navigator.of(context)
         .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);
   }
+
+ 
 }

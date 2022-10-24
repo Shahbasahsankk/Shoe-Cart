@@ -3,6 +3,7 @@ import 'package:e_commerce_app/view/forgot_password/forgot_password_screen.dart'
 import 'package:e_commerce_app/view/home/home_screen.dart';
 import 'package:e_commerce_app/view/new_password/new_password_screen.dart';
 import 'package:e_commerce_app/view/onBoard/on_board_screen.dart';
+import 'package:e_commerce_app/view/otp/model/otp_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
 import 'package:e_commerce_app/view/signIn/sign_in_screen.dart';
 import 'package:e_commerce_app/view/signup/signup_screen.dart';
@@ -44,8 +45,9 @@ class AppRoutes {
           builder: (context) => const ForgotPasswordScreen(),
         );
         case RouteNames.otpScreen:
+        final args= settings.arguments as OtpArguementModel;
         return MaterialPageRoute(
-          builder: (context) => const OtpScreen(),
+          builder: (context) =>  OtpScreen(text: args.text,),
         );
         case RouteNames.newPasswordScreen:
         return MaterialPageRoute(

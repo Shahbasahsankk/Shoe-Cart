@@ -8,8 +8,11 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:provider/provider.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
-
+  const OtpScreen({
+    super.key,
+    required this.text,
+  });
+  final String text;
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
@@ -20,7 +23,7 @@ class _OtpScreenState extends State<OtpScreen> {
   void initState() {
     otpProvider = Provider.of<OtpScreenProvider>(context, listen: false);
     otpProvider.changeTimer();
-    otpProvider.timeRemaining=30;
+    otpProvider.timeRemaining = 30;
     super.initState();
   }
 
@@ -47,8 +50,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Code has been sent to +91 99••••••89',
+                     Text(
+                      'Code has been sent to ${widget.text}',
                       style: AppTextStyles.textStyle3,
                     ),
                     AppSizedBoxes.sizedboxH50,

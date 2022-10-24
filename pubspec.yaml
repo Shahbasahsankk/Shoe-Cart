@@ -75,6 +75,7 @@ flutter:
     - assets/forgot_ password_screen_assets/via_sms.png
     - assets/create_new_password_screen_assets/create_new_password.png
     - assets/create_new_password_screen_assets/password_reset_success.png
+    - assets/forgot_ password_screen_assets/mail.png
 
   
 

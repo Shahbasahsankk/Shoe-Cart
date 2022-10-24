@@ -44,4 +44,5 @@ class OtpScreenProvider with ChangeNotifier {
       }
     });
   }
+
 }

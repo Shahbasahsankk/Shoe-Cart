@@ -4,41 +4,39 @@ import 'package:flutter/material.dart';
 import '../../../helper/colors/app_colors.dart';
 
 class CustomContainer extends StatelessWidget {
-  const CustomContainer({super.key});
-
+  const CustomContainer({
+    super.key,
+    required this.image,
+    required this.text,
+    required this.color,
+  });
+  final String image;
+  final String text;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 100,
       width: 400,
       decoration: BoxDecoration(
-        color: AppColors.lightDarkBackgroundColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
+          color: AppColors.lightDarkBackgroundColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           AppSizedBoxes.sizedboxW15,
-          const CircleAvatar(
+          CircleAvatar(
             backgroundColor: AppColors.darkShadeBackgroundColor,
             radius: 40,
             child: Image(
               height: 40,
               width: 40,
-              image: AssetImage(
-                  'assets/forgot_ password_screen_assets/via_sms.png'),
+              image: AssetImage(image),
             ),
           ),
           AppSizedBoxes.sizedboxW15,
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text('Via SMS:'),
-              AppSizedBoxes.sizedboxH5,
-              Text('+91 99••••••89'),
-            ],
-          )
+          Text(text)
         ],
       ),
     );
