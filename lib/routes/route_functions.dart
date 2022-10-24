@@ -7,6 +7,8 @@ import 'package:e_commerce_app/view/otp/model/otp_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
 import 'package:e_commerce_app/view/signIn/sign_in_screen.dart';
 import 'package:e_commerce_app/view/signup/signup_screen.dart';
+import 'package:e_commerce_app/view/signup/widgets/signup_arguement_model.dart';
+import 'package:e_commerce_app/view/signup/widgets/signup_otp.dart';
 import 'package:e_commerce_app/view/welcome/welcome_screen.dart';
 import 'package:e_commerce_app/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,7 @@ class AppRoutes {
         );
         case RouteNames.signUpScreen:
         return MaterialPageRoute(
-          builder: (context) => const SignUpScreen(),
+          builder: (context) =>  SignUpScreen(),
         );
         case RouteNames.signInScreen:
         return MaterialPageRoute(
@@ -56,6 +58,11 @@ class AppRoutes {
          case RouteNames.homeScreen:
         return MaterialPageRoute(
           builder: (context) => const HomeScreen(),
+        );
+          case RouteNames.signUpOtp:
+          final args= settings.arguments as SignUpOtpArguementModel;
+        return MaterialPageRoute(
+          builder: (context) =>  SignUpOtpScreen(model: args.model,),
         );
       default:
         return MaterialPageRoute(

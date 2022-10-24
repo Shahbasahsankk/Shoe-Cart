@@ -39,35 +39,37 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
                 const Text('Choose a way to reset your password'),
                 AppSizedBoxes.sizedboxH20,
-                Consumer<ForgotPasswordProvider>(
-                  builder: (context,values,_) {
-                    return GestureDetector(
-                      onTap: ()=>values.smsSelected(),
-                      child:  CustomContainer(
-                        image: 'assets/forgot_ password_screen_assets/via_sms.png',
-                        text: 'Via SMS',
-                        color:values.isSmsSelected==true? AppColors.whiteColor:Colors.grey,
-                      ),
-                    );
-                  }
-                ),
+                Consumer<ForgotPasswordProvider>(builder: (context, values, _) {
+                  return GestureDetector(
+                    onTap: () => values.smsSelected(),
+                    child: CustomContainer(
+                      image:
+                          'assets/forgot_ password_screen_assets/via_sms.png',
+                      text: 'Via SMS',
+                      color: values.isSmsSelected == true
+                          ? AppColors.whiteColor
+                          : Colors.grey,
+                    ),
+                  );
+                }),
                 AppSizedBoxes.sizedboxH20,
-                Consumer<ForgotPasswordProvider>(
-                  builder: (context,values,_) {
-                    return GestureDetector(
-                      onTap:()=>values.mailSelected() ,
-                      child:  CustomContainer(
-                        image: 'assets/forgot_ password_screen_assets/mail.png',
-                        text: 'Via Mail',
-                        color:values.isMailSelected==true? AppColors.whiteColor:Colors.grey,
-                      ),
-                    );
-                  }
-                ),
+                Consumer<ForgotPasswordProvider>(builder: (context, values, _) {
+                  return GestureDetector(
+                    onTap: () => values.mailSelected(),
+                    child: CustomContainer(
+                      image: 'assets/forgot_ password_screen_assets/mail.png',
+                      text: 'Via Mail',
+                      color: values.isMailSelected == true
+                          ? AppColors.whiteColor
+                          : Colors.grey,
+                    ),
+                  );
+                }),
                 AppSizedBoxes.sizedboxH50,
                 CustomButtonOne(
-                    text: 'Continue',
-                    onTap: () => forgotPasswordProvider.getResetMethod(context))
+                  text: 'Continue',
+                  onTap: () => forgotPasswordProvider.getResetMethod(context),
+                )
               ],
             ),
           ),

@@ -10,4 +10,5 @@ class RouteNames{
   static const newPasswordScreen='newPassword';
   static const homeScreen= 'home';
   static const bottomNav='bottomNav';
+  static const signUpOtp='signUpOtp';
 }

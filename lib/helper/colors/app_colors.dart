@@ -10,4 +10,5 @@ class AppColors {
   static const darkShadeBackgroundColor = Color(0xFF35383f);
   static const dullWhitecolor= Colors.white70;
   static const redColor= Colors.red;
+  static const greenColor= Colors.green;
 }
