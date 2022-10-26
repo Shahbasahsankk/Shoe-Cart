@@ -1,8 +1,8 @@
 class SignUpModel {
-   String? fullName;
-   String? email;
-   String? number;
-   String? password;
+  String? fullName;
+  String? email;
+  String? number;
+  String? password;
   SignUpModel({
     required this.fullName,
     required this.email,
@@ -15,7 +15,7 @@ class SignUpModel {
       'fullname': fullName,
       'email': email,
       'password': password,
-      'phone': number
+      'phone': number,
     };
   }
 

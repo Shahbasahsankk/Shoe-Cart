@@ -1,38 +1,48 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:e_commerce_app/helper/colors/app_colors.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:e_commerce_app/constants/api_queryparameters.dart';
+import 'package:e_commerce_app/utils/app_exceptions.dart';
 import '../../model/signup_model/signup_model.dart';
-import '../../routes/rout_names.dart';
 
 class OtpService {
-  Future<void> verifyOtp(SignUpModel model, context, otpNumber) async {
-    final dio = Dio();
-    // const url = ApiUrl.apiUrl + ApiEndPoints.verifyOtp;
-
+  // const url = ApiUrl.apiUrl + ApiEndPoints.otp;
+  final dio = Dio();
+  Future<bool> verifyOtp(SignUpModel model, context, otpNumber) async {
     try {
-      Response<dynamic> response = await dio
-          .post('http://192.168.0.201:5000/api/v1/auth/verifyOtp', data: {
-        "newUser": json.encode(model.toJson()),
-        "otp": otpNumber,
-      }, queryParameters: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-      });
+      Response<dynamic> response =
+          await dio.post('http://192.168.0.201:5001/api/v1/auth/otp',
+              data: {
+                'otp': otpNumber,
+                'email': model.number,
+              },
+              queryParameters: ApiQueryParameter.queryParameter);
+      log(response.statusCode.toString());
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(RouteNames.bottomNav, ((route) => false));
-        Fluttertoast.showToast(
-            msg: 'SignUp successfull', backgroundColor: AppColors.greenColor);
+        log('otp verify successfull');
+        return true;
       }
     } catch (e) {
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        backgroundColor: AppColors.redColor,
-      );
+      AppExceptions.errorHandler(e);
     }
+    return false;
+  }
+
+  Future<bool> sendOtp(context, phone) async {
+    try {
+      Response<dynamic> response = await dio.get(
+        'http://192.168.0.201:5001/api/v1/auth/otp',
+        queryParameters: {
+          'phone': phone,
+        },
+      );
+      if (response.statusCode! >= 200 && response.statusCode! <= 299) {
+        log(response.statusCode.toString());
+        return true;
+      }
+    } catch (e) {
+      AppExceptions.errorHandler(e);
+    }
+    return false;
   }
 }

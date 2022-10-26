@@ -10,8 +10,8 @@ import 'package:e_commerce_app/controller/signUp/signup_controller.dart';
 import 'package:e_commerce_app/controller/splash/splash_controller.dart';
 import 'package:e_commerce_app/controller/welcome/welcome_controller.dart';
 import 'package:e_commerce_app/routes/route_functions.dart';
+import 'package:e_commerce_app/view/signIn/sign_in_screen.dart';
 import 'package:e_commerce_app/view/signup/signup_screen.dart';
-import 'package:e_commerce_app/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
         onGenerateRoute: (settings) => AppRoutes.generateRoute(settings),
-        home:  SignUpScreen(),
+        home:  SignInScreen(),
       ),
     );
   }

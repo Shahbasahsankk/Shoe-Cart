@@ -6,9 +6,9 @@ import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/signup/otp_service.dart';
 import 'package:e_commerce_app/service/signup/signup_service.dart';
+import 'package:e_commerce_app/utils/app_toast.dart';
 import 'package:e_commerce_app/view/signup/widgets/signup_arguement_model.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpProvider with ChangeNotifier {
   SignUpProvider() {
@@ -29,6 +29,8 @@ class SignUpProvider with ChangeNotifier {
   bool clear = false;
   bool otpDone = false;
   String code = '';
+  bool? resp;
+  bool loading = false;
 
   String? nameValidation(String? value) {
     if (value == null || value.isEmpty) {
@@ -70,7 +72,7 @@ class SignUpProvider with ChangeNotifier {
   String? passwordValidation(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
-    } else if (value.length < 9) {
+    } else if (value.length < 8) {
       return 'Short password';
     } else {
       return null;
@@ -99,9 +101,36 @@ class SignUpProvider with ChangeNotifier {
       number: mobileNumberController.text,
       password: passwordController.text,
     );
-
+    final args = SignUpOtpArguementModel(model: model);
     if (currentState.validate()) {
-      await SignUpService().signUp(model, context);
+      loading = true;
+      notifyListeners();
+      await SignUpService().checkUser(emailController.text).then((value) async {
+        log(value.toString());
+        if (value == true) {
+          log('sending otp');
+          resp =
+              await OtpService().sendOtp(context, mobileNumberController.text);
+        } else {
+          log('else case of sending otp');
+          return null;
+        }
+      }).then((value) {
+        if (resp == true) {
+          log('otp sended successfully');
+          Navigator.of(context)
+              .pushNamed(RouteNames.signUpOtp, arguments: args)
+              .then((value) {
+            loading = false;
+            notifyListeners();
+          });
+        } else {
+          return null;
+        }
+        return null;
+      });
+      loading = false;
+      notifyListeners();
     }
   }
 
@@ -122,11 +151,17 @@ class SignUpProvider with ChangeNotifier {
     });
   }
 
-  void setResendVisibility(bool newValue) {
-    enableResend = newValue;
-    timeRemaining = 30;
-    clear = true;
-    notifyListeners();
+  void setResendVisibility(bool newValue, context, phone) async {
+    await OtpService().sendOtp(context, phone).then((value) {
+      if (value == true) {
+        enableResend = newValue;
+        timeRemaining = 30;
+        clear = true;
+        notifyListeners();
+      } else {
+        return null;
+      }
+    });
   }
 
   void setCode(String newCode) {
@@ -136,10 +171,28 @@ class SignUpProvider with ChangeNotifier {
 
   void verifyCode(context, SignUpModel model) async {
     if (code.length != 4) {
-      Fluttertoast.showToast(
-          msg: 'Please enter OTP', backgroundColor: AppColors.redColor);
+      AppToast.showToast('Please enter OTP', AppColors.redColor);
     } else {
-      await OtpService().verifyOtp(model, context, code);
+      if (timeRemaining == 0) {
+        AppToast.showToast('Otp timedout', AppColors.redColor);
+      } else {
+        loading = true;
+        notifyListeners();
+        await OtpService().verifyOtp(model, context, code).then((value) {
+          if (value == true) {
+            log('going to save data to database');
+            SignUpService().signUp(model, context).then((value) {
+              loading = false;
+              notifyListeners();
+            });
+          } else {
+            log('not saving to database');
+            null;
+            loading = false;
+            notifyListeners();
+          }
+        });
+      }
     }
   }
 }

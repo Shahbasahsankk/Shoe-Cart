@@ -4,6 +4,7 @@ import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/helper/textstyles/app_textstyles.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
+import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:e_commerce_app/widgets/custom_button1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -55,7 +56,7 @@ class _OtpScreenState extends State<SignUpOtpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Code has been sent to ${widget.model.number}',
+                      'Code has been sent to +91 ${widget.model.number}',
                       style: AppTextStyles.textStyle3,
                     ),
                     AppSizedBoxes.sizedboxH50,
@@ -83,7 +84,8 @@ class _OtpScreenState extends State<SignUpOtpScreen> {
                       return values.timeRemaining != 0
                           ? Text('Resend code in ${values.timeRemaining}s')
                           : TextButton(
-                              onPressed: () => values.setResendVisibility(true),
+                              onPressed: () => values.setResendVisibility(
+                                  true, context, widget.model.number),
                               child: const Text(
                                 'Resend OTP',
                                 style: TextStyle(color: AppColors.whiteColor),
@@ -91,10 +93,15 @@ class _OtpScreenState extends State<SignUpOtpScreen> {
                             );
                     }),
                     AppSizedBoxes.sizedboxH50,
-                    CustomButtonOne(
-                      text: 'Verify',
-                      onTap: () => signUpProvider.verifyCode(context,widget.model),
-                    ),
+                    Consumer<SignUpProvider>(builder: (context, values, _) {
+                      return values.loading == true
+                          ? const LoadingWidget()
+                          : CustomButtonOne(
+                              text: 'Verify',
+                              onTap: () => signUpProvider.verifyCode(
+                                  context, widget.model),
+                            );
+                    }),
                   ],
                 ),
               ),
