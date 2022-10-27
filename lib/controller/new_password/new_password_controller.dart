@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/routes/rout_names.dart';
+import 'package:e_commerce_app/service/forgot_password/forgot_password_service.dart';
 import 'package:e_commerce_app/view/new_password/widgets/success_dialogue.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +10,7 @@ class NewPasswordProvider with ChangeNotifier {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   bool isVisible = false;
+  bool loading = false;
 
   void visibility() {
     isVisible = !isVisible;
@@ -33,19 +37,32 @@ class NewPasswordProvider with ChangeNotifier {
     }
   }
 
-  void success(context) async {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (ctx) {
-        return const SuccessDialouge();
-      },
-    );
+  void success(context, email) async {
+    loading = true;
+    notifyListeners();
+    await ForgotPasswordService()
+        .changePassword(email, newPasswordController.text)
+        .then((value) {
+      log(value.toString());
+      if (value == true) {
+        loading = false;
+        notifyListeners();
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (ctx) {
+            return const SuccessDialouge();
+          },
+        );
+      }
+      loading = false;
+      notifyListeners();
+    });
   }
 
   void toSignInScreen(context) async {
     await Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 2),
     );
     Navigator.of(context)
         .pushNamedAndRemoveUntil(RouteNames.signInScreen, (route) => false);

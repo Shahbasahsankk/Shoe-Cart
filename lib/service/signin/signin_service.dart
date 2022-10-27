@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:e_commerce_app/constants/api_endpoints.dart';
 import 'package:e_commerce_app/constants/api_queryparameters.dart';
+import 'package:e_commerce_app/constants/api_url.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/login_model/login_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
@@ -15,11 +16,10 @@ import '../../view/signup/widgets/signup_arguement_model.dart';
 
 class SignInService {
   final dio = Dio();
-//  static const url = ApiUrl.apiUrl + ApiEndPoints.login;
   Future<void> login(context, LoginModel model) async {
     try {
       Response<Map<String, dynamic>> response = await dio.post(
-        'http://192.168.0.201:5001/api/v1/auth/login',
+        ApiUrl.apiUrl + ApiEndPoints.login,
         queryParameters: ApiQueryParameter.queryParameter,
         data: jsonEncode(model.toJson()),
       );
@@ -31,10 +31,9 @@ class SignInService {
                 AppToast.showToast('Login successfull', AppColors.greenColor));
       }
       if (response.statusCode == 201) {
-        log(SignUpModel.fromJson(response.data!).toString());
         final args = SignUpOtpArguementModel(
             model: SignUpModel.fromJson(response.data!));
-        Navigator.of(context).pushNamed(RouteNames.signUpOtp, arguments: args);
+        Navigator.of(context).pushNamed(RouteNames.otpScreen, arguments: args);
         AppToast.showToast('Verify your account to login', AppColors.redColor);
       }
     } catch (e) {

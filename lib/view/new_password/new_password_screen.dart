@@ -1,15 +1,21 @@
+import 'dart:ui';
+
 import 'package:e_commerce_app/controller/new_password/new_password_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/helper/textstyles/app_textstyles.dart';
+import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/widgets/custom_button1.dart';
 import 'package:e_commerce_app/widgets/custom_textformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NewPasswordScreen extends StatelessWidget {
-  const NewPasswordScreen({super.key});
-
+  const NewPasswordScreen({
+    super.key,
+    required this.model,
+  });
+  final SignUpModel model;
   @override
   Widget build(BuildContext context) {
     final newPasswordProvider =
@@ -62,7 +68,7 @@ class NewPasswordScreen extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     action: TextInputAction.done,
                     icon: Icons.lock,
-                    hint: 'Confirm password',  
+                    hint: 'Confirm password',
                     obscure: false,
                     validator: (value) =>
                         newPasswordProvider.confirmPasswordValidation(value),
@@ -70,7 +76,10 @@ class NewPasswordScreen extends StatelessWidget {
                   AppSizedBoxes.sizedboxH50,
                   CustomButtonOne(
                     text: 'Continue',
-                    onTap: () => newPasswordProvider.success(context),
+                    onTap: () => newPasswordProvider.success(
+                      context,
+                      model.email,
+                    ),
                   ),
                 ],
               ),

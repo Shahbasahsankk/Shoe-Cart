@@ -11,7 +11,8 @@ class AppExceptions {
       AppToast.showToast('No Internet Connection', Colors.red);
     } else if (e is DioError) {
       if (e.response?.data['message'] != null) {
-        AppToast.showToast(e.response!.data['message'], AppColors.redColor);
+        AppToast.showToast(
+            e.response!.data['message'].toString(), AppColors.redColor);
       } else if (e.type == DioErrorType.connectTimeout) {
         AppToast.showToast('Connection timedout', AppColors.redColor);
       } else if (e.type == DioErrorType.receiveTimeout) {

@@ -1,18 +1,17 @@
 import 'package:e_commerce_app/routes/rout_names.dart';
-import 'package:e_commerce_app/view/forgot_password/forgot_password_screen.dart';
+import 'package:e_commerce_app/view/forgot_password/forgot_password.dart';
 import 'package:e_commerce_app/view/home/home_screen.dart';
 import 'package:e_commerce_app/view/new_password/new_password_screen.dart';
+import 'package:e_commerce_app/view/new_password/widgets/model/newpassword_screen_model.dart';
 import 'package:e_commerce_app/view/onBoard/on_board_screen.dart';
-import 'package:e_commerce_app/view/otp/model/otp_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
 import 'package:e_commerce_app/view/signIn/sign_in_screen.dart';
 import 'package:e_commerce_app/view/signup/signup_screen.dart';
-import 'package:e_commerce_app/view/signup/widgets/signup_arguement_model.dart';
-import 'package:e_commerce_app/view/signup/widgets/signup_otp.dart';
 import 'package:e_commerce_app/view/welcome/welcome_screen.dart';
 import 'package:e_commerce_app/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../view/otp/model/otp_screen_arguement_model.dart';
 import '../view/splash/splash_screen.dart';
 
 class AppRoutes {
@@ -30,39 +29,39 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => const OnBoardScreen(),
         );
-        case RouteNames.signUpScreen:
+      case RouteNames.signUpScreen:
         return MaterialPageRoute(
-          builder: (context) =>  SignUpScreen(),
+          builder: (context) => SignUpScreen(),
         );
-        case RouteNames.signInScreen:
+      case RouteNames.signInScreen:
         return MaterialPageRoute(
           builder: (context) => const SignInScreen(),
         );
-        case RouteNames.bottomNav:
+      case RouteNames.bottomNav:
         return MaterialPageRoute(
           builder: (context) => const BottomNavBar(),
         );
-        case RouteNames.forgotPasswordScreen:
+      case RouteNames.findMyAccount:
         return MaterialPageRoute(
-          builder: (context) => const ForgotPasswordScreen(),
+          builder: (context) => ForgotPassword(),
         );
-        case RouteNames.otpScreen:
-        final args= settings.arguments as OtpArguementModel;
+      case RouteNames.otpScreen:
+        final args = settings.arguments as OtpArguementModel;
         return MaterialPageRoute(
-          builder: (context) =>  OtpScreen(text: args.text,),
-        );
-        case RouteNames.newPasswordScreen:
+            builder: (context) => OtpScreen(
+                  model: args.model,
+                  screenCheck: args.checkScreen,
+                ));
+      case RouteNames.newPasswordScreen:
+        final args = settings.arguments as NewPasswordScreenArguementsModel;
         return MaterialPageRoute(
-          builder: (context) => const NewPasswordScreen(),
+          builder: (context) => NewPasswordScreen(
+            model: args.model,
+          ),
         );
-         case RouteNames.homeScreen:
+      case RouteNames.homeScreen:
         return MaterialPageRoute(
           builder: (context) => const HomeScreen(),
-        );
-          case RouteNames.signUpOtp:
-          final args= settings.arguments as SignUpOtpArguementModel;
-        return MaterialPageRoute(
-          builder: (context) =>  SignUpOtpScreen(model: args.model,),
         );
       default:
         return MaterialPageRoute(

@@ -1,3 +1,3 @@
-class ApiUrl{
-  static const apiUrl='http://192.168.0.201:5000/api/v1/';
+class ApiUrl {
+  static const apiUrl = 'http://172.16.3.154:5003/api/v1/';
 }

@@ -1,25 +1,23 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:e_commerce_app/constants/api_endpoints.dart';
 import 'package:e_commerce_app/constants/api_queryparameters.dart';
+import 'package:e_commerce_app/constants/api_url.dart';
 import 'package:e_commerce_app/utils/app_exceptions.dart';
-import '../../model/signup_model/signup_model.dart';
 
 class OtpService {
-  // const url = ApiUrl.apiUrl + ApiEndPoints.otp;
   final dio = Dio();
-  Future<bool> verifyOtp(SignUpModel model, context, otpNumber) async {
+  Future<bool> verifyOtp(number, context, otpNumber) async {
     try {
       Response<dynamic> response =
-          await dio.post('http://192.168.0.201:5001/api/v1/auth/otp',
+          await dio.post(ApiUrl.apiUrl + ApiEndPoints.verifyOrSendOtp,
               data: {
                 'otp': otpNumber,
-                'email': model.number,
+                'email': number,
               },
               queryParameters: ApiQueryParameter.queryParameter);
-      log(response.statusCode.toString());
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
-        log('otp verify successfull');
         return true;
       }
     } catch (e) {
@@ -30,17 +28,20 @@ class OtpService {
 
   Future<bool> sendOtp(context, phone) async {
     try {
+      log('entered to send otp');
       Response<dynamic> response = await dio.get(
-        'http://192.168.0.201:5001/api/v1/auth/otp',
+        ApiUrl.apiUrl + ApiEndPoints.verifyOrSendOtp,
         queryParameters: {
           'phone': phone,
         },
       );
+      log(response.statusCode.toString());
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
-        log(response.statusCode.toString());
+        log('entered create');
         return true;
       }
     } catch (e) {
+      log('entered catch');
       AppExceptions.errorHandler(e);
     }
     return false;

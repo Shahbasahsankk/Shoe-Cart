@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
+import 'package:e_commerce_app/model/otpscreen_enum_model.dart/otpscreen_enum.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/signup/otp_service.dart';
 import 'package:e_commerce_app/service/signup/signup_service.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
+import 'package:e_commerce_app/view/otp/model/otp_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/signup/widgets/signup_arguement_model.dart';
 import 'package:flutter/widgets.dart';
 
@@ -29,7 +31,7 @@ class SignUpProvider with ChangeNotifier {
   bool clear = false;
   bool otpDone = false;
   String code = '';
-  bool? resp;
+  bool resp = false;
   bool loading = false;
 
   String? nameValidation(String? value) {
@@ -94,40 +96,39 @@ class SignUpProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void toSignUpOtpScreen(context, currentState) async {
+  void toSignUpOtpScreen(context, FormState currentState) async {
     final SignUpModel model = SignUpModel(
       fullName: nameController.text,
       email: emailController.text,
       number: mobileNumberController.text,
       password: passwordController.text,
     );
-    final args = SignUpOtpArguementModel(model: model);
+    final args = OtpArguementModel(
+        model: model, checkScreen: OtpScreenEnum.signUpOtpScreen);
     if (currentState.validate()) {
       loading = true;
       notifyListeners();
       await SignUpService().checkUser(emailController.text).then((value) async {
         log(value.toString());
         if (value == true) {
-          log('sending otp');
-          resp =
-              await OtpService().sendOtp(context, mobileNumberController.text);
-        } else {
-          log('else case of sending otp');
-          return null;
-        }
-      }).then((value) {
-        if (resp == true) {
-          log('otp sended successfully');
-          Navigator.of(context)
-              .pushNamed(RouteNames.signUpOtp, arguments: args)
+          await OtpService()
+              .sendOtp(context, mobileNumberController.text)
               .then((value) {
-            loading = false;
-            notifyListeners();
+            log(value.toString());
+            if (value == true) {
+              log('navigating to otpScreen');
+              Navigator.of(context)
+                  .pushNamed(RouteNames.otpScreen, arguments: args)
+                  .then((value) {
+                loading = false;
+                notifyListeners();
+              });
+            } else {
+              AppToast.showToast('something went wrong', AppColors.redColor);
+            }
+            return false;
           });
-        } else {
-          return null;
         }
-        return null;
       });
       loading = false;
       notifyListeners();
@@ -178,15 +179,13 @@ class SignUpProvider with ChangeNotifier {
       } else {
         loading = true;
         notifyListeners();
-        await OtpService().verifyOtp(model, context, code).then((value) {
+        await OtpService().verifyOtp(model.number, context, code).then((value) {
           if (value == true) {
-            log('going to save data to database');
             SignUpService().signUp(model, context).then((value) {
               loading = false;
               notifyListeners();
             });
           } else {
-            log('not saving to database');
             null;
             loading = false;
             notifyListeners();

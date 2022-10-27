@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:e_commerce_app/constants/api_endpoints.dart';
+import 'package:e_commerce_app/constants/api_url.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/utils/app_exceptions.dart';
@@ -13,10 +15,9 @@ import '../../routes/rout_names.dart';
 class SignUpService {
   final dio = Dio();
   Future<void> signUp(SignUpModel model, context) async {
-    // const url = ApiUrl.apiUrl + ApiEndPoints.signUp;
     try {
       Response<Map<String, dynamic>> response = await dio.post(
-          'http://192.168.0.201:5001/api/v1/auth/signup',
+          ApiUrl.apiUrl + ApiEndPoints.signUp,
           data: jsonEncode(model.toJson()),
           queryParameters: {
             'Content-type': 'application/json',
@@ -33,10 +34,9 @@ class SignUpService {
   }
 
   Future<bool> checkUser(email) async {
-    // const url= ApiUrl.apiUrl+ApiEndPoints.usercheck;
     try {
       Response response = await dio.get(
-        'http://192.168.0.201:5001/api/v1/users/',
+        ApiUrl.apiUrl + ApiEndPoints.usercheck,
         queryParameters: {
           'email': email,
         },

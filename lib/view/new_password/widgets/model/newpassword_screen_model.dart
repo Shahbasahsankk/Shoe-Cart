@@ -1,11 +1,9 @@
 import 'package:e_commerce_app/model/otpscreen_enum_model.dart/otpscreen_enum.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 
-class OtpArguementModel {
+class NewPasswordScreenArguementsModel {
   final SignUpModel model;
-  final OtpScreenEnum checkScreen;
-  OtpArguementModel({
+  NewPasswordScreenArguementsModel({
     required this.model,
-    required this.checkScreen,
   });
 }

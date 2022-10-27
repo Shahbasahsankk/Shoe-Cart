@@ -11,7 +11,7 @@ class SuccessDialouge extends StatelessWidget {
   Widget build(BuildContext context) {
     final newPasswordProvider =
         Provider.of<NewPasswordProvider>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       newPasswordProvider.toSignInScreen(context);
     });
     return Dialog(
@@ -32,9 +32,10 @@ class SuccessDialouge extends StatelessWidget {
                 image: AssetImage(
                     'assets/create_new_password_screen_assets/password_reset_success.png'),
               ),
-              Text('Success!',style: AppTextStyles.textStyle2),
+              Text('Success!', style: AppTextStyles.textStyle2),
               AppSizedBoxes.sizedboxH12,
-              Text('You will be redirected to the\nHome page in a\nfew seconds',textAlign: TextAlign.center,style: AppTextStyles.textStyle3),
+              Text('You will be redirected to the\nHome page in a\nfew seconds',
+                  textAlign: TextAlign.center, style: AppTextStyles.textStyle3),
               AppSizedBoxes.sizedboxH20,
               CircularProgressIndicator(),
             ],

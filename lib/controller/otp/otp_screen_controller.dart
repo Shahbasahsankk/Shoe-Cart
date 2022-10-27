@@ -1,9 +1,14 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
+import 'package:e_commerce_app/model/otpscreen_enum_model.dart/otpscreen_enum.dart';
+import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
+import 'package:e_commerce_app/view/new_password/widgets/model/newpassword_screen_model.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
+import '../../service/signup/otp_service.dart';
+import '../../utils/app_toast.dart';
 
 class OtpScreenProvider with ChangeNotifier {
   int timeRemaining = 30;
@@ -12,12 +17,19 @@ class OtpScreenProvider with ChangeNotifier {
   bool clear = false;
   bool otpDone = false;
   String code = '';
+  bool loading = false;
 
-  void setResendVisibility(bool newValue) {
-    enableResend = newValue;
-    timeRemaining = 30;
-    clear = true;
-    notifyListeners();
+  void setResendVisibility(bool newValue, context, phone) async {
+    await OtpService().sendOtp(context, phone).then((value) {
+      if (value == true) {
+        enableResend = newValue;
+        timeRemaining = 30;
+        clear = true;
+        notifyListeners();
+      } else {
+        return null;
+      }
+    });
   }
 
   void setCode(String newCode) {
@@ -25,11 +37,32 @@ class OtpScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void verifyCode(context){
-    if(code.length!=4){
-     Fluttertoast.showToast(msg: 'Please enter OTP',backgroundColor: AppColors.redColor);
-    }else{
-      Navigator.of(context).pushReplacementNamed(RouteNames.newPasswordScreen);
+  void verifyCode(context, SignUpModel model) async {
+    if (code.length != 4) {
+      AppToast.showToast('Please enter OTP', AppColors.redColor);
+    } else {
+      if (timeRemaining == 0) {
+        AppToast.showToast('Otp timedout', AppColors.redColor);
+      } else {
+        loading = true;
+        notifyListeners();
+        await OtpService().verifyOtp(model.number, context, code).then((value) {
+          if (value == true) {
+            final args = NewPasswordScreenArguementsModel(model: model);
+            Navigator.of(context)
+                .pushReplacementNamed(RouteNames.newPasswordScreen,
+                    arguments: args)
+                .then((value) {
+              loading = false;
+              notifyListeners();
+            });
+          } else {
+            null;
+            loading = false;
+            notifyListeners();
+          }
+        });
+      }
     }
   }
 
@@ -44,5 +77,4 @@ class OtpScreenProvider with ChangeNotifier {
       }
     });
   }
-
 }

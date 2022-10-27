@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
-  final GlobalKey formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final signUpProvider = Provider.of<SignUpProvider>(context, listen: false);

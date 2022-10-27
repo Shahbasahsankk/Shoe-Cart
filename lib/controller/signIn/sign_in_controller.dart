@@ -1,5 +1,3 @@
-import 'dart:isolate';
-
 import 'package:e_commerce_app/model/login_model/login_model.dart';
 import 'package:e_commerce_app/service/signin/signin_service.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +49,7 @@ class SignInProvider with ChangeNotifier {
   }
 
   void toForgotPasswordScreen(context) {
-    Navigator.of(context).pushNamed(RouteNames.forgotPasswordScreen);
+    Navigator.of(context).pushNamed(RouteNames.findMyAccount);
   }
 
   void login(context) async {
