@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
-import 'package:e_commerce_app/model/otpscreen_enum_model.dart/otpscreen_enum.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/view/new_password/widgets/model/newpassword_screen_model.dart';

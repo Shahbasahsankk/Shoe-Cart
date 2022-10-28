@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:e_commerce_app/controller/forgot_password/forgot_password_controller.dart';
 import 'package:e_commerce_app/controller/otp/otp_screen_controller.dart';
 import 'package:e_commerce_app/controller/signUp/signup_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';

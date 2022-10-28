@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 import '../../view/otp/model/otp_screen_arguement_model.dart';
 
 class ForgotPasswordProvider with ChangeNotifier {
-  bool isSmsSelected = false;
-  bool isMailSelected = false;
+  bool loading = false;
   final TextEditingController findAccountController = TextEditingController();
 
   void toOtpScreen(context, FormState currentState) async {
     if (currentState.validate()) {
+      loading = true;
+      notifyListeners();
       await ForgotPasswordService()
           .getUser(findAccountController.text)
           .then((value) {
@@ -24,7 +25,11 @@ class ForgotPasswordProvider with ChangeNotifier {
             RouteNames.otpScreen,
             arguments: args,
           );
+          loading = false;
+          notifyListeners();
         } else {
+          loading = false;
+          notifyListeners();
           AppToast.showToast('Something went wrong', AppColors.redColor);
         }
       });

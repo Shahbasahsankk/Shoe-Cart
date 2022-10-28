@@ -2,6 +2,7 @@ import 'package:e_commerce_app/controller/new_password/new_password_controller.d
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/helper/textstyles/app_textstyles.dart';
+import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,7 @@ class SuccessDialouge extends StatelessWidget {
               Text('You will be redirected to the\nHome page in a\nfew seconds',
                   textAlign: TextAlign.center, style: AppTextStyles.textStyle3),
               AppSizedBoxes.sizedboxH20,
-              CircularProgressIndicator(),
+              LoadingWidget(),
             ],
           ),
         ),

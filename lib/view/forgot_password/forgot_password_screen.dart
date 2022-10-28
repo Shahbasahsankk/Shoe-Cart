@@ -2,6 +2,7 @@ import 'package:e_commerce_app/controller/forgot_password/forgot_password_contro
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/helper/textstyles/app_textstyles.dart';
+import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:e_commerce_app/widgets/custom_button1.dart';
 import 'package:e_commerce_app/widgets/custom_textformfield.dart';
 import 'package:flutter/material.dart';
@@ -54,13 +55,18 @@ class ForgotPassword extends StatelessWidget {
                           .findAccountTextfieldValidation(value),
                     ),
                     AppSizedBoxes.sizedboxH50,
-                    CustomButtonOne(
-                      text: 'Continue',
-                      onTap: () => forgotPasswordProvider.toOtpScreen(
-                        context,
-                        formKey.currentState!,
-                      ),
-                    ),
+                    Consumer<ForgotPasswordProvider>(
+                        builder: (context, values, _) {
+                      return values.loading == true
+                          ? const LoadingWidget()
+                          : CustomButtonOne(
+                              text: 'Continue',
+                              onTap: () => values.toOtpScreen(
+                                context,
+                                formKey.currentState!,
+                              ),
+                            );
+                    }),
                   ],
                 ),
               ),

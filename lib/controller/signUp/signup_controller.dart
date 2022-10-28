@@ -9,7 +9,6 @@ import 'package:e_commerce_app/service/signup/otp_service.dart';
 import 'package:e_commerce_app/service/signup/signup_service.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
 import 'package:e_commerce_app/view/otp/model/otp_screen_arguement_model.dart';
-import 'package:e_commerce_app/view/signup/widgets/signup_arguement_model.dart';
 import 'package:flutter/widgets.dart';
 
 class SignUpProvider with ChangeNotifier {

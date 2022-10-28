@@ -3,13 +3,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
-import 'package:flutter/material.dart';
 
 class AppExceptions {
   static void errorHandler(Object e) {
-    if (e is SocketException) {
-      AppToast.showToast('No Internet Connection', Colors.red);
-    } else if (e is DioError) {
+    if (e is DioError) {
       if (e.response?.data['message'] != null) {
         AppToast.showToast(
             e.response!.data['message'].toString(), AppColors.redColor);
@@ -22,7 +19,7 @@ class AppExceptions {
       } else if (e.type == DioErrorType.sendTimeout) {
         AppToast.showToast('Sending timedout', AppColors.redColor);
       } else if (e.type == DioErrorType.other) {
-        AppToast.showToast('Something went Wrong', AppColors.redColor);
+        AppToast.showToast('No internet connection', AppColors.redColor);
       }
     }
   }

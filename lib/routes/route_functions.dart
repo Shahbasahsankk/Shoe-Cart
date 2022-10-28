@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/routes/rout_names.dart';
-import 'package:e_commerce_app/view/forgot_password/forgot_password.dart';
+import 'package:e_commerce_app/view/forgot_password/forgot_password_screen.dart';
 import 'package:e_commerce_app/view/home/home_screen.dart';
 import 'package:e_commerce_app/view/new_password/new_password_screen.dart';
 import 'package:e_commerce_app/view/new_password/widgets/model/newpassword_screen_model.dart';
