@@ -1,12 +1,11 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/otpscreen_enum_model.dart/otpscreen_enum.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
-import 'package:e_commerce_app/service/signup/otp_service.dart';
-import 'package:e_commerce_app/service/signup/signup_service.dart';
+import 'package:e_commerce_app/service/forgot_password/forgot_password_service.dart';
+import 'package:e_commerce_app/service/otp_service/otp_service.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
 import 'package:e_commerce_app/view/otp/model/otp_screen_arguement_model.dart';
 import 'package:flutter/widgets.dart';
@@ -100,14 +99,14 @@ class SignUpProvider with ChangeNotifier {
     if (currentState.validate()) {
       loading = true;
       notifyListeners();
-      await SignUpService().checkUser(emailController.text).then((value) async {
+      await ForgotPasswordService()
+          .getUser(emailController.text)
+          .then((value) async {
         log(value.toString());
-        if (value == true) {
-          await OtpService()
-              .sendOtp(context, mobileNumberController.text)
-              .then((value) {
+        if (value == null) {
+          await OtpService().sendOtp(mobileNumberController.text).then((value) {
             log(value.toString());
-            if (value == true) {
+            if (value != null) {
               log('navigating to otpScreen');
               Navigator.of(context)
                   .pushNamed(RouteNames.otpScreen, arguments: args)
@@ -116,10 +115,11 @@ class SignUpProvider with ChangeNotifier {
                 notifyListeners();
               });
             } else {
-              AppToast.showToast('something went wrong', AppColors.redColor);
+              return null;
             }
-            return false;
           });
+        } else {
+          AppToast.showToast('User already exists', AppColors.redColor);
         }
       });
       loading = false;

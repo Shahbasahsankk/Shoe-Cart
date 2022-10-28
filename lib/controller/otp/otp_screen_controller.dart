@@ -7,7 +7,7 @@ import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/view/new_password/widgets/model/newpassword_screen_model.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../service/signup/otp_service.dart';
+import '../../service/otp_service/otp_service.dart';
 import '../../service/signup/signup_service.dart';
 import '../../utils/app_toast.dart';
 
@@ -21,8 +21,8 @@ class OtpScreenProvider with ChangeNotifier {
   bool loading = false;
 
   void setResendVisibility(bool newValue, context, phone) async {
-    await OtpService().sendOtp(context, phone).then((value) {
-      if (value == true) {
+    await OtpService().sendOtp(phone).then((value) {
+      if (value != null) {
         enableResend = newValue;
         timeRemaining = 30;
         clear = true;
@@ -51,7 +51,7 @@ class OtpScreenProvider with ChangeNotifier {
           await OtpService()
               .verifyOtp(model.number, context, code)
               .then((value) {
-            if (value == true) {
+            if (value != null) {
               final args = NewPasswordScreenArguementsModel(model: model);
               Navigator.of(context)
                   .pushReplacementNamed(RouteNames.newPasswordScreen,
@@ -70,12 +70,17 @@ class OtpScreenProvider with ChangeNotifier {
           await OtpService()
               .verifyOtp(model.number, context, code)
               .then((value) {
-            if (value == true) {
+            if (value != null) {
               SignUpService().signUp(model, context).then((value) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    RouteNames.bottomNav, (route) => false);
-                loading = false;
-                notifyListeners();
+                if (value != null) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      RouteNames.bottomNav, (route) => false);
+                  loading = false;
+                  notifyListeners();
+                } else {
+                  loading = false;
+                  notifyListeners();
+                }
               });
             } else {
               null;

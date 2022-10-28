@@ -30,7 +30,7 @@ class ForgotPasswordProvider with ChangeNotifier {
         } else {
           loading = false;
           notifyListeners();
-          AppToast.showToast('Something went wrong', AppColors.redColor);
+          AppToast.showToast('No user Found', AppColors.redColor);
         }
       });
     }

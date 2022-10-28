@@ -2,9 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/constants/api_queryparameters.dart';
-import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
-import 'package:e_commerce_app/utils/app_toast.dart';
 
 import '../../constants/api_endpoints.dart';
 import '../../constants/api_url.dart';
@@ -26,7 +24,6 @@ class ForgotPasswordService {
         return model;
       } else if (response.statusCode == 201) {
         log('No user found');
-        AppToast.showToast('No user found', AppColors.redColor);
         return null;
       }
     } catch (e) {
@@ -35,7 +32,7 @@ class ForgotPasswordService {
     return null;
   }
 
-  Future<bool> changePassword(email, newPassword) async {
+  Future<String?> changePassword(email, newPassword) async {
     try {
       log('entered changepassword function');
       Response<dynamic> response = await dio.post(
@@ -49,12 +46,12 @@ class ForgotPasswordService {
       log(response.statusCode.toString());
       if (response.statusCode == 202) {
         log('Password changed successfull');
-        return true;
+        return response.data['status'];
       }
     } catch (e) {
       log('entered catch');
       AppExceptions.errorHandler(e);
     }
-    return false;
+    return null;
   }
 }

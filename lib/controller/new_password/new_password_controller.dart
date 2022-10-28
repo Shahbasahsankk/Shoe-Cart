@@ -44,7 +44,7 @@ class NewPasswordProvider with ChangeNotifier {
         .changePassword(email, newPasswordController.text)
         .then((value) {
       log(value.toString());
-      if (value == true) {
+      if (value != null) {
         loading = false;
         notifyListeners();
         showDialog(
@@ -54,9 +54,10 @@ class NewPasswordProvider with ChangeNotifier {
             return const SuccessDialouge();
           },
         );
+      } else {
+        loading = false;
+        notifyListeners();
       }
-      loading = false;
-      notifyListeners();
     });
   }
 

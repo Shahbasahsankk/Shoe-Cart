@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/utils/loading_widget.dart';
+import 'package:e_commerce_app/widgets/custom_button3.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -83,6 +84,30 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                   AppSizedBoxes.sizedboxH35,
+                  Row(
+                    children: const [
+                      Expanded(
+                          child: Divider(
+                        thickness: 0.4,
+                      )),
+                      AppSizedBoxes.sizedboxW5,
+                      Text(
+                        "or continue with",
+                        style: TextStyle(color: AppColors.whiteColor),
+                      ),
+                      AppSizedBoxes.sizedboxW5,
+                      Expanded(
+                          child: Divider(
+                        thickness: 0.4,
+                      ))
+                    ],
+                  ),
+                  AppSizedBoxes.sizedboxH20,
+                  Center(
+                    child: CustomButtonThree(
+                        onTap: () {},
+                        imagePath: 'assets/google_icon/google-logo.png'),
+                  ),
                   AppSizedBoxes.sizedboxH35,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

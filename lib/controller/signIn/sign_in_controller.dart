@@ -45,10 +45,14 @@ class SignInProvider with ChangeNotifier {
   }
 
   void toSignUpScreen(context) {
+    emailController.clear();
+    passwordController.clear();
     Navigator.of(context).pushNamed(RouteNames.signUpScreen);
   }
 
   void toForgotPasswordScreen(context) {
+    emailController.clear();
+    passwordController.clear();
     Navigator.of(context).pushNamed(RouteNames.findMyAccount);
   }
 
@@ -59,8 +63,16 @@ class SignInProvider with ChangeNotifier {
       email: emailController.text,
       password: passwordController.text,
     );
-    await SignInService().login(context, model);
-    loading = false;
-    notifyListeners();
+    await SignInService().login(model).then((value) {
+      if (value != null) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);
+        loading = false;
+        notifyListeners();
+      } else {
+        loading = false;
+        notifyListeners();
+      }
+    });
   }
 }
