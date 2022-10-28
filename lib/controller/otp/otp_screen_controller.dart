@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
+import 'package:e_commerce_app/model/otpscreen_enum_model.dart/otpscreen_enum.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/view/new_password/widgets/model/newpassword_screen_model.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../service/signup/otp_service.dart';
+import '../../service/signup/signup_service.dart';
 import '../../utils/app_toast.dart';
 
 class OtpScreenProvider with ChangeNotifier {
@@ -36,7 +38,7 @@ class OtpScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void verifyCode(context, SignUpModel model) async {
+  void verifyCode(context, SignUpModel model, OtpScreenEnum screenChek) async {
     if (code.length != 4) {
       AppToast.showToast('Please enter OTP', AppColors.redColor);
     } else {
@@ -45,22 +47,43 @@ class OtpScreenProvider with ChangeNotifier {
       } else {
         loading = true;
         notifyListeners();
-        await OtpService().verifyOtp(model.number, context, code).then((value) {
-          if (value == true) {
-            final args = NewPasswordScreenArguementsModel(model: model);
-            Navigator.of(context)
-                .pushReplacementNamed(RouteNames.newPasswordScreen,
-                    arguments: args)
-                .then((value) {
+        if (screenChek == OtpScreenEnum.forgotOtpScreen) {
+          await OtpService()
+              .verifyOtp(model.number, context, code)
+              .then((value) {
+            if (value == true) {
+              final args = NewPasswordScreenArguementsModel(model: model);
+              Navigator.of(context)
+                  .pushReplacementNamed(RouteNames.newPasswordScreen,
+                      arguments: args)
+                  .then((value) {
+                loading = false;
+                notifyListeners();
+              });
+            } else {
+              null;
               loading = false;
               notifyListeners();
-            });
-          } else {
-            null;
-            loading = false;
-            notifyListeners();
-          }
-        });
+            }
+          });
+        } else if (screenChek == OtpScreenEnum.signUpOtpScreen) {
+          await OtpService()
+              .verifyOtp(model.number, context, code)
+              .then((value) {
+            if (value == true) {
+              SignUpService().signUp(model, context).then((value) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    RouteNames.bottomNav, (route) => false);
+                loading = false;
+                notifyListeners();
+              });
+            } else {
+              null;
+              loading = false;
+              notifyListeners();
+            }
+          });
+        }
       }
     }
   }

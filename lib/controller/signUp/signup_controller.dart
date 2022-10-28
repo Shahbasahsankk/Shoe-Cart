@@ -24,13 +24,6 @@ class SignUpProvider with ChangeNotifier {
       TextEditingController();
 
   bool isNotVisible = true;
-  int timeRemaining = 30;
-  Timer? timer;
-  bool enableResend = false;
-  bool clear = false;
-  bool otpDone = false;
-  String code = '';
-  bool resp = false;
   bool loading = false;
 
   String? nameValidation(String? value) {
@@ -131,66 +124,6 @@ class SignUpProvider with ChangeNotifier {
       });
       loading = false;
       notifyListeners();
-    }
-  }
-
-  void toBottonNav(context) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);
-  }
-
-  void changeTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (timeRemaining != 0) {
-        timeRemaining--;
-        notifyListeners();
-      } else {
-        enableResend = true;
-        notifyListeners();
-      }
-    });
-  }
-
-  void setResendVisibility(bool newValue, context, phone) async {
-    await OtpService().sendOtp(context, phone).then((value) {
-      if (value == true) {
-        enableResend = newValue;
-        timeRemaining = 30;
-        clear = true;
-        notifyListeners();
-      } else {
-        return null;
-      }
-    });
-  }
-
-  void setCode(String newCode) {
-    code = newCode;
-    notifyListeners();
-  }
-
-  void verifyCode(context, SignUpModel model) async {
-    if (code.length != 4) {
-      AppToast.showToast('Please enter OTP', AppColors.redColor);
-    } else {
-      if (timeRemaining == 0) {
-        AppToast.showToast('Otp timedout', AppColors.redColor);
-      } else {
-        loading = true;
-        notifyListeners();
-        await OtpService().verifyOtp(model.number, context, code).then((value) {
-          if (value == true) {
-            SignUpService().signUp(model, context).then((value) {
-              loading = false;
-              notifyListeners();
-            });
-          } else {
-            null;
-            loading = false;
-            notifyListeners();
-          }
-        });
-      }
     }
   }
 }

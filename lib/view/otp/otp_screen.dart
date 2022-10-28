@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/controller/otp/otp_screen_controller.dart';
 import 'package:e_commerce_app/controller/signUp/signup_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
@@ -32,18 +30,10 @@ class _OtpScreenState extends State<OtpScreen> {
   late OtpScreenProvider otpProvider;
   @override
   void initState() {
-    log(widget.screenCheck.toString());
-    if (widget.screenCheck == OtpScreenEnum.signUpOtpScreen) {
-      log('singupOtp');
-      signUpprovider = Provider.of<SignUpProvider>(context, listen: false);
-      signUpprovider.changeTimer();
-      signUpprovider.timeRemaining = 30;
-    } else {
-      log('forgotOtp');
-      otpProvider = Provider.of<OtpScreenProvider>(context, listen: false);
-      otpProvider.changeTimer();
-      otpProvider.timeRemaining = 30;
-    }
+    otpProvider = Provider.of<OtpScreenProvider>(context, listen: false);
+    otpProvider.changeTimer();
+    otpProvider.timeRemaining = 30;
+
     super.initState();
   }
 
@@ -75,103 +65,48 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: AppTextStyles.textStyle3,
                     ),
                     AppSizedBoxes.sizedboxH50,
-                    widget.screenCheck == OtpScreenEnum.signUpOtpScreen
-                        ? Consumer<SignUpProvider>(
-                            builder: (context, values, _) {
-                            return OtpTextField(
-                              numberOfFields: 4,
-                              showFieldAsBox: true,
-                              fillColor: AppColors.lightDarkBackgroundColor,
-                              filled: true,
-                              fieldWidth: 70,
-                              borderRadius: BorderRadius.circular(15),
-                              autoFocus: true,
-                              borderColor: AppColors.dullWhitecolor,
-                              disabledBorderColor: AppColors.transparentColor,
-                              enabledBorderColor:
-                                  AppColors.darkShadeBackgroundColor,
-                              cursorColor: AppColors.dullWhitecolor,
-                              focusedBorderColor: AppColors.dullWhitecolor,
-                              borderWidth: 1.5,
-                              clearText: values.clear == true ? true : false,
-                              onSubmit: (String code) => values.setCode(code),
-                            );
-                          })
-                        : Consumer<OtpScreenProvider>(
-                            builder: (context, values, _) {
-                            return OtpTextField(
-                              numberOfFields: 4,
-                              showFieldAsBox: true,
-                              fillColor: AppColors.lightDarkBackgroundColor,
-                              filled: true,
-                              fieldWidth: 70,
-                              borderRadius: BorderRadius.circular(15),
-                              autoFocus: true,
-                              borderColor: AppColors.dullWhitecolor,
-                              disabledBorderColor: AppColors.transparentColor,
-                              enabledBorderColor:
-                                  AppColors.darkShadeBackgroundColor,
-                              cursorColor: AppColors.dullWhitecolor,
-                              focusedBorderColor: AppColors.dullWhitecolor,
-                              borderWidth: 1.5,
-                              clearText: values.clear == true ? true : false,
-                              onSubmit: (String code) => values.setCode(code),
-                            );
-                          }),
+                    Consumer<OtpScreenProvider>(builder: (context, values, _) {
+                      return OtpTextField(
+                        numberOfFields: 4,
+                        showFieldAsBox: true,
+                        fillColor: AppColors.lightDarkBackgroundColor,
+                        filled: true,
+                        fieldWidth: 70,
+                        borderRadius: BorderRadius.circular(15),
+                        autoFocus: true,
+                        borderColor: AppColors.dullWhitecolor,
+                        disabledBorderColor: AppColors.transparentColor,
+                        enabledBorderColor: AppColors.darkShadeBackgroundColor,
+                        cursorColor: AppColors.dullWhitecolor,
+                        focusedBorderColor: AppColors.dullWhitecolor,
+                        borderWidth: 1.5,
+                        clearText: values.clear == true ? true : false,
+                        onSubmit: (String code) => values.setCode(code),
+                      );
+                    }),
                     AppSizedBoxes.sizedboxH35,
-                    widget.screenCheck == OtpScreenEnum.signUpOtpScreen
-                        ? Consumer<SignUpProvider>(
-                            builder: (context, values, _) {
-                            return values.timeRemaining != 0
-                                ? Text(
-                                    'Resend code in ${values.timeRemaining}s')
-                                : TextButton(
-                                    onPressed: () => values.setResendVisibility(
-                                        true, context, widget.model.number),
-                                    child: const Text(
-                                      'Resend OTP',
-                                      style: TextStyle(
-                                          color: AppColors.whiteColor),
-                                    ),
-                                  );
-                          })
-                        : Consumer<OtpScreenProvider>(
-                            builder: (context, values, _) {
-                            return values.timeRemaining != 0
-                                ? Text(
-                                    'Resend code in ${values.timeRemaining}s')
-                                : TextButton(
-                                    onPressed: () => values.setResendVisibility(
-                                        true, context, widget.model.number),
-                                    child: const Text(
-                                      'Resend OTP',
-                                      style: TextStyle(
-                                          color: AppColors.whiteColor),
-                                    ),
-                                  );
-                          }),
+                    Consumer<OtpScreenProvider>(builder: (context, values, _) {
+                      return values.timeRemaining != 0
+                          ? Text('Resend code in ${values.timeRemaining}s')
+                          : TextButton(
+                              onPressed: () => values.setResendVisibility(
+                                  true, context, widget.model.number),
+                              child: const Text(
+                                'Resend OTP',
+                                style: TextStyle(color: AppColors.whiteColor),
+                              ),
+                            );
+                    }),
                     AppSizedBoxes.sizedboxH50,
-                    widget.screenCheck == OtpScreenEnum.signUpOtpScreen
-                        ? Consumer<SignUpProvider>(
-                            builder: (context, values, _) {
-                            return values.loading == true
-                                ? const LoadingWidget()
-                                : CustomButtonOne(
-                                    text: 'Verify',
-                                    onTap: () => values.verifyCode(
-                                        context, widget.model),
-                                  );
-                          })
-                        : Consumer<OtpScreenProvider>(
-                            builder: (context, values, _) {
-                            return values.loading == true
-                                ? const LoadingWidget()
-                                : CustomButtonOne(
-                                    text: 'Verify',
-                                    onTap: () => values.verifyCode(
-                                        context, widget.model),
-                                  );
-                          }),
+                    Consumer<OtpScreenProvider>(builder: (context, values, _) {
+                      return values.loading == true
+                          ? const LoadingWidget()
+                          : CustomButtonOne(
+                              text: 'Verify',
+                              onTap: () => values.verifyCode(
+                                  context, widget.model, widget.screenCheck),
+                            );
+                    }),
                   ],
                 ),
               ),
@@ -184,11 +119,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   void dispose() {
-    if (widget.screenCheck == OtpScreenEnum.signUpOtpScreen) {
-      signUpprovider.timer!.cancel();
-    } else {
-      otpProvider.timer!.cancel();
-    }
+    otpProvider.timer!.cancel();
     super.dispose();
   }
 }

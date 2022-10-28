@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/model/onboard_screen_model.dart';
+import 'package:e_commerce_app/model/onboard_screen_model/onboard_screen_model.dart';
 
 class OnboardList {
   List<OnboardScreenModel> onboardList = [
