@@ -1,10 +1,13 @@
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/view/forgot_password/forgot_password_screen.dart';
 import 'package:e_commerce_app/view/home/home_screen.dart';
+import 'package:e_commerce_app/view/home/model/product_collection_model.dart';
+import 'package:e_commerce_app/view/home/widgets/products_collection_screen.dart';
 import 'package:e_commerce_app/view/new_password/new_password_screen.dart';
 import 'package:e_commerce_app/view/new_password/widgets/model/newpassword_screen_model.dart';
 import 'package:e_commerce_app/view/onBoard/on_board_screen.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
+import 'package:e_commerce_app/view/product_screen/product_screen.dart';
 import 'package:e_commerce_app/view/signIn/sign_in_screen.dart';
 import 'package:e_commerce_app/view/signup/signup_screen.dart';
 import 'package:e_commerce_app/view/welcome/welcome_screen.dart';
@@ -62,6 +65,17 @@ class AppRoutes {
       case RouteNames.homeScreen:
         return MaterialPageRoute(
           builder: (context) => const HomeScreen(),
+        );
+      case RouteNames.productCollections:
+        final args = settings.arguments as ProductCollectionScreenModel;
+        return MaterialPageRoute(
+          builder: (context) => ProductCollectionScreen(
+            category: args.category,
+          ),
+        );
+      case RouteNames.productScreen:
+        return MaterialPageRoute(
+          builder: (context) => const ProductViewScreen(),
         );
       default:
         return MaterialPageRoute(

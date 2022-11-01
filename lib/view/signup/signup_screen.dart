@@ -65,7 +65,7 @@ class SignUpScreen extends StatelessWidget {
                     AppSizedBoxes.sizedboxH8,
                     CustomTextFormfield(
                       controller: signUpProvider.mobileNumberController,
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.phone,
                       action: TextInputAction.next,
                       icon: Icons.numbers,
                       hint: 'Mobile number',

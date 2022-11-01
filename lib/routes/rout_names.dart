@@ -9,4 +9,6 @@ class RouteNames {
   static const newPasswordScreen = 'newPassword';
   static const homeScreen = 'home';
   static const bottomNav = 'bottomNav';
+  static const productCollections = 'productCollection';
+  static const productScreen = 'productScreen';
 }
