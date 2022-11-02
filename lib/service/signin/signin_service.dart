@@ -6,7 +6,7 @@ import 'package:e_commerce_app/constants/api_queryparameters.dart';
 import 'package:e_commerce_app/constants/api_url.dart';
 import 'package:e_commerce_app/model/login_model/login_model.dart';
 import 'package:e_commerce_app/utils/app_exceptions.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../model/signup_model/signup_model.dart';
 
 class SignInService {
@@ -23,6 +23,16 @@ class SignInService {
         final SignUpModel model = SignUpModel.fromJson(response.data!);
         return model;
       }
+    } catch (e) {
+      AppExceptions.errorHandler(e);
+    }
+    return null;
+  }
+
+  Future<GoogleSignInAccount?> googleSignIn(GoogleSignIn googleSignIn) async {
+    try {
+      final result = await googleSignIn.signIn();
+      return result;
     } catch (e) {
       AppExceptions.errorHandler(e);
     }

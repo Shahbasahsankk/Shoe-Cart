@@ -105,7 +105,7 @@ class SignInScreen extends StatelessWidget {
                   AppSizedBoxes.sizedboxH20,
                   Center(
                     child: CustomButtonThree(
-                        onTap: () {},
+                        onTap: () => signInProvider.googleSignin(context),
                         imagePath: 'assets/google_icon/google-logo.png'),
                   ),
                   AppSizedBoxes.sizedboxH35,

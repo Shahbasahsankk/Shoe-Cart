@@ -10,8 +10,6 @@ import 'package:e_commerce_app/controller/signUp/signup_controller.dart';
 import 'package:e_commerce_app/controller/splash/splash_controller.dart';
 import 'package:e_commerce_app/controller/welcome/welcome_controller.dart';
 import 'package:e_commerce_app/routes/route_functions.dart';
-import 'package:e_commerce_app/view/home/home_screen.dart';
-import 'package:e_commerce_app/view/product_screen/product_screen.dart';
 import 'package:e_commerce_app/view/signIn/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,13 +34,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => NewPasswordProvider()),
         ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
         ChangeNotifierProvider(create: (context) => BottomNavBarProvider()),
-        ChangeNotifierProvider(create: (context)=>ProductProvider()),
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
         onGenerateRoute: (settings) => AppRoutes.generateRoute(settings),
-        home: const HomeScreen(),
+        home: const SignInScreen(),
       ),
     );
   }

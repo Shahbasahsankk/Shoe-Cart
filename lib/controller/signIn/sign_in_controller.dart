@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/model/login_model/login_model.dart';
 import 'package:e_commerce_app/service/signin/signin_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../routes/rout_names.dart';
 
@@ -10,6 +13,7 @@ class SignInProvider with ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
   bool isNotVisible = true;
   bool loading = false;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   String? emailValidation(String? value) {
     if (value == null || value.isEmpty) {
@@ -65,6 +69,23 @@ class SignInProvider with ChangeNotifier {
     );
     await SignInService().login(model).then((value) {
       if (value != null) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);
+        loading = false;
+        notifyListeners();
+      } else {
+        loading = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  void googleSignin(context) async {
+    loading = true;
+    notifyListeners();
+    await SignInService().googleSignIn(googleSignIn).then((value) {
+      if (value != null) {
+        log(value.toString());
         Navigator.of(context)
             .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);
         loading = false;
