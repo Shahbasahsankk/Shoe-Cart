@@ -2,6 +2,7 @@ import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/otpscreen_enum_model.dart/otpscreen_enum.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/forgot_password/forgot_password_service.dart';
+import 'package:e_commerce_app/service/otp_service/otp_service.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
 import 'package:flutter/material.dart';
 
@@ -11,22 +12,27 @@ class ForgotPasswordProvider with ChangeNotifier {
   bool loading = false;
   final TextEditingController findAccountController = TextEditingController();
 
-  void toOtpScreen(context, FormState currentState) async {
+  void toOtpScreen(context, FormState currentState) {
     if (currentState.validate()) {
       loading = true;
       notifyListeners();
-      await ForgotPasswordService()
-          .getUser(findAccountController.text)
-          .then((value) {
-        if (value != null) {
-          final args = OtpArguementModel(
-              model: value, checkScreen: OtpScreenEnum.forgotOtpScreen);
-          Navigator.of(context).pushNamed(
-            RouteNames.otpScreen,
-            arguments: args,
-          );
-          loading = false;
-          notifyListeners();
+      ForgotPasswordService().getUser(findAccountController.text).then((model) {
+        if (model != null) {
+          OtpService().sendOtp(model.email).then((value) {
+            if (value != null) {
+              final args = OtpArguementModel(
+                  model: model, checkScreen: OtpScreenEnum.forgotOtpScreen);
+              Navigator.of(context).pushNamed(
+                RouteNames.otpScreen,
+                arguments: args,
+              );
+              loading = false;
+              notifyListeners();
+            } else {
+              loading = false;
+              notifyListeners();
+            }
+          });
         } else {
           loading = false;
           notifyListeners();

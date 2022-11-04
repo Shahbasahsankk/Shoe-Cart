@@ -104,7 +104,8 @@ class SignUpProvider with ChangeNotifier {
           .then((value) async {
         log(value.toString());
         if (value == null) {
-          await OtpService().sendOtp(mobileNumberController.text).then((value) {
+          log('going to sendotp functin');
+          await OtpService().sendOtp(emailController.text).then((value) {
             log(value.toString());
             if (value != null) {
               log('navigating to otpScreen');
@@ -115,6 +116,7 @@ class SignUpProvider with ChangeNotifier {
                 notifyListeners();
               });
             } else {
+              log('not navigating to otpScren');
               return null;
             }
           });

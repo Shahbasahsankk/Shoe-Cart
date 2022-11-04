@@ -8,13 +8,13 @@ import 'package:e_commerce_app/utils/app_exceptions.dart';
 
 class OtpService {
   final dio = Dio();
-  Future<String?> verifyOtp(number, context, otpNumber) async {
+  Future<String?> verifyOtp(email, otpNumber) async {
     try {
       Response response =
           await dio.post(ApiUrl.apiUrl + ApiEndPoints.verifyOrSendOtp,
               data: {
                 'otp': otpNumber,
-                'email': number,
+                'email': email,
               },
               queryParameters: ApiQueryParameter.queryParameter);
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
@@ -26,19 +26,21 @@ class OtpService {
     return null;
   }
 
-  Future<String?> sendOtp(phone) async {
+  Future<String?> sendOtp(email) async {
+    log(email);
     try {
       log('entered to send otp');
       Response response = await dio.get(
         ApiUrl.apiUrl + ApiEndPoints.verifyOrSendOtp,
         queryParameters: {
-          'phone': phone,
+          'email': email,
         },
       );
       log(response.statusCode.toString());
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
-        log('entered create');
-        return response.data['status'];
+        log('otp send ');
+        log(response.data.toString());
+        return response.data['message'];
       }
     } catch (e) {
       log('entered catch');

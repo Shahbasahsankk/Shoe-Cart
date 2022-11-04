@@ -30,12 +30,15 @@ class ProductTextdesciptionStyle extends StatelessWidget {
           ),
         ),
         AppSizedBoxes.sizedboxW5,
-        Text(
-          text2,
-          style: TextStyle(
+        Expanded(
+          child: Text(
+            text2,
+            style: TextStyle(
               color: AppColors.whiteColor,
               overflow: TextOverflow.ellipsis,
-              fontSize: fontsize),
+              fontSize: fontsize,
+            ),
+          ),
         ),
         AppSizedBoxes.sizedboxW5,
         Expanded(

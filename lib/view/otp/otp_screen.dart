@@ -26,7 +26,6 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  late SignUpProvider signUpprovider;
   late OtpScreenProvider otpProvider;
   @override
   void initState() {
@@ -60,8 +59,12 @@ class _OtpScreenState extends State<OtpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const Text(
+                      'Code has been sent to',
+                      style: AppTextStyles.textStyle3,
+                    ),
                     Text(
-                      'Code has been sent to +91 ${widget.model.number?.substring(0, 2)}••••••${widget.model.number?.substring(8, 10)}',
+                      widget.model.email!,
                       style: AppTextStyles.textStyle3,
                     ),
                     AppSizedBoxes.sizedboxH50,
@@ -80,7 +83,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         cursorColor: AppColors.dullWhitecolor,
                         focusedBorderColor: AppColors.dullWhitecolor,
                         borderWidth: 1.5,
-                        clearText: values.clear == true ? true : false,
+                        clearText: values.clear,
                         onSubmit: (String code) => values.setCode(code),
                       );
                     }),
@@ -90,7 +93,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           ? Text('Resend code in ${values.timeRemaining}s')
                           : TextButton(
                               onPressed: () => values.setResendVisibility(
-                                  true, context, widget.model.number),
+                                  true, context, widget.model.email!),
                               child: const Text(
                                 'Resend OTP',
                                 style: TextStyle(color: AppColors.whiteColor),

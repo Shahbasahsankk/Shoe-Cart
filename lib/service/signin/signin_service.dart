@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/constants/api_endpoints.dart';
@@ -13,7 +14,7 @@ class SignInService {
   final dio = Dio();
   Future<SignUpModel?> login(LoginModel model) async {
     try {
-      Response<Map<String, dynamic>> response = await dio.post(
+      Response response = await dio.post(
         ApiUrl.apiUrl + ApiEndPoints.login,
         queryParameters: ApiQueryParameter.queryParameter,
         data: jsonEncode(model.toJson()),
@@ -29,11 +30,20 @@ class SignInService {
     return null;
   }
 
-  Future<GoogleSignInAccount?> googleSignIn(GoogleSignIn googleSignIn) async {
+  Future<String?> googleSignIn(GoogleSignIn googleSignIn) async {
     try {
       final result = await googleSignIn.signIn();
-      return result;
+      Response response =
+          await dio.post(ApiUrl.apiUrl + ApiEndPoints.googleSignIn, data: {
+        'email': result?.email,
+        'name': result?.displayName,
+      });
+      log(response.statusCode.toString());
+      if (response.statusCode == 201) {
+        return response.data['message'];
+      }
     } catch (e) {
+      log('entered catch of googlesignin');
       AppExceptions.errorHandler(e);
     }
     return null;

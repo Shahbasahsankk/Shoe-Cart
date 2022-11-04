@@ -20,13 +20,15 @@ class OtpScreenProvider with ChangeNotifier {
   String code = '';
   bool loading = false;
 
-  void setResendVisibility(bool newValue, context, phone) async {
-    await OtpService().sendOtp(phone).then((value) {
+  void setResendVisibility(bool newValue, context, String email) {
+    clear = true;
+    notifyListeners();
+    OtpService().sendOtp(email).then((value) {
       if (value != null) {
+        clear = false;
+        notifyListeners();
         enableResend = newValue;
         timeRemaining = 30;
-        clear = true;
-        notifyListeners();
       } else {
         return null;
       }
@@ -48,9 +50,7 @@ class OtpScreenProvider with ChangeNotifier {
         loading = true;
         notifyListeners();
         if (screenChek == OtpScreenEnum.forgotOtpScreen) {
-          await OtpService()
-              .verifyOtp(model.number, context, code)
-              .then((value) {
+          await OtpService().verifyOtp(model.email, code).then((value) {
             if (value != null) {
               final args = NewPasswordScreenArguementsModel(model: model);
               Navigator.of(context)
@@ -67,11 +67,9 @@ class OtpScreenProvider with ChangeNotifier {
             }
           });
         } else if (screenChek == OtpScreenEnum.signUpOtpScreen) {
-          await OtpService()
-              .verifyOtp(model.number, context, code)
-              .then((value) {
+          await OtpService().verifyOtp(model.email, code).then((value) async {
             if (value != null) {
-              SignUpService().signUp(model, context).then((value) {
+              await SignUpService().signUp(model, context).then((value) {
                 if (value != null) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       RouteNames.bottomNav, (route) => false);

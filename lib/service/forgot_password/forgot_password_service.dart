@@ -12,6 +12,7 @@ class ForgotPasswordService {
   final dio = Dio();
   Future<SignUpModel?> getUser(email) async {
     try {
+      log('entered to get user');
       Response response = await dio.get(
         ApiUrl.apiUrl + ApiEndPoints.usercheck,
         queryParameters: {
@@ -23,10 +24,10 @@ class ForgotPasswordService {
         final SignUpModel model = SignUpModel.fromJson(response.data!);
         return model;
       } else if (response.statusCode == 201) {
-        log('No user found');
         return null;
       }
     } catch (e) {
+      log('entered get user catch');
       AppExceptions.errorHandler(e);
     }
     return null;
@@ -35,7 +36,7 @@ class ForgotPasswordService {
   Future<String?> changePassword(email, newPassword) async {
     try {
       log('entered changepassword function');
-      Response<dynamic> response = await dio.post(
+      Response response = await dio.post(
         ApiUrl.apiUrl + ApiEndPoints.forgetPassword,
         data: {
           'email': email,
@@ -46,7 +47,7 @@ class ForgotPasswordService {
       log(response.statusCode.toString());
       if (response.statusCode == 202) {
         log('Password changed successfull');
-        return response.data['status'];
+        return response.data['message'];
       }
     } catch (e) {
       log('entered catch');

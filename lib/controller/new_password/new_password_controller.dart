@@ -37,10 +37,10 @@ class NewPasswordProvider with ChangeNotifier {
     }
   }
 
-  void success(context, email) async {
+  void success(context, email)  {
     loading = true;
     notifyListeners();
-    await ForgotPasswordService()
+     ForgotPasswordService()
         .changePassword(email, newPasswordController.text)
         .then((value) {
       log(value.toString());

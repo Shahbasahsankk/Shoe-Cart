@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -8,6 +9,9 @@ import 'package:flutter/services.dart';
 
 class AppExceptions {
   static void errorHandler(Object e) {
+    if (e is PlatformException) {
+      AppToast.showToast('Platform Error Occured', AppColors.redColor);
+    }
     if (e is SocketException) {
       AppToast.showToast('No Internet Connection', AppColors.redColor);
     } else if (e is TimeoutException) {
