@@ -41,12 +41,14 @@ class ProductViewScreen extends StatelessWidget {
                         ),
                         Align(
                           alignment: Alignment.topRight,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.favorite_outline,
-                              color: AppColors.redColor,
-                              size: 30,
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: AppColors.blackcolor),
+                            child: const Icon(
+                              Icons.favorite,
                             ),
                           ),
                         ),

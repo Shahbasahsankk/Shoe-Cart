@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/routes/rout_names.dart';
+import 'package:e_commerce_app/view/cart/cart_screen.dart';
 import 'package:e_commerce_app/view/forgot_password/forgot_password_screen.dart';
 import 'package:e_commerce_app/view/home/home_screen.dart';
 import 'package:e_commerce_app/view/home/model/product_collection_model.dart';
@@ -65,6 +66,10 @@ class AppRoutes {
       case RouteNames.homeScreen:
         return MaterialPageRoute(
           builder: (context) => const HomeScreen(),
+        );
+      case RouteNames.cartScreen:
+        return MaterialPageRoute(
+          builder: (context) => const CartScreen(),
         );
       case RouteNames.productCollections:
         final args = settings.arguments as ProductCollectionScreenModel;

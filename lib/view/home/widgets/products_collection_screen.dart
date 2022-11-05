@@ -43,7 +43,7 @@ class ProductCollectionScreen extends StatelessWidget {
                     crossAxisCount: 2,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 20,
-                    childAspectRatio: 1.5 / 2,
+                    childAspectRatio: 1.3 / 2,
                   ),
                   itemBuilder: (context, index) {
                     return GestureDetector(
@@ -71,12 +71,15 @@ class ProductCollectionScreen extends StatelessWidget {
                                     ),
                                     AppSizedBoxes.sizedboxH5,
                                     const Text('RED TAPE'),
+                                    AppSizedBoxes.sizedboxH3,
                                     const Text('Sneakers For Men'),
+                                    AppSizedBoxes.sizedboxH3,
                                     const ProductTextdesciptionStyle(
                                       text1: '4999',
                                       text2: '₹1499',
                                       text3: '70% off',
                                     ),
+                                    AppSizedBoxes.sizedboxH5,
                                     Container(
                                       width: 40,
                                       color: AppColors.greenColor,
@@ -100,13 +103,16 @@ class ProductCollectionScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 120.0),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.favorite,
-                                color: AppColors.redColor,
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              height: 27,
+                              width: 27,
+                              decoration: BoxDecoration(
+                                  color: AppColors.blackcolor,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: const Center(
+                                child: Icon(Icons.favorite),
                               ),
                             ),
                           ),

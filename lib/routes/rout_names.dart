@@ -11,4 +11,5 @@ class RouteNames {
   static const bottomNav = 'bottomNav';
   static const productCollections = 'productCollection';
   static const productScreen = 'productScreen';
+  static const cartScreen = 'cartScreen';
 }
