@@ -2,6 +2,7 @@ import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/view/cart/widgets/address_row.dart';
 import 'package:e_commerce_app/view/cart/widgets/cart_product.dart';
+import 'package:e_commerce_app/view/cart/widgets/price_details_widget.dart';
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatelessWidget {
@@ -57,27 +58,39 @@ class CartScreen extends StatelessWidget {
                     AppSizedBoxes.sizedboxH8,
                     const Divider(thickness: 1),
                     AppSizedBoxes.sizedboxH5,
-                    Container(
-                      width: 120,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.dullWhitecolor,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.delete_forever_sharp,
-                            color: AppColors.redColor,
+                    Center(
+                      child: Container(
+                        width: 120,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppColors.dullWhitecolor,
                           ),
-                          AppSizedBoxes.sizedboxW5,
-                          Text('Remove')
-                        ],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.delete_forever_sharp,
+                              color: AppColors.redColor,
+                            ),
+                            AppSizedBoxes.sizedboxW5,
+                            Text('Remove')
+                          ],
+                        ),
                       ),
-                    )
+                    ),
+                    AppSizedBoxes.sizedboxH12,
+                    const Divider(thickness: 4),
+                    AppSizedBoxes.sizedboxH12,
+                    const PriceDetailsWidget(
+                      itemCount: 1,
+                      amount: '849',
+                      discount: '651',
+                      deliveryCharge: 'Free',
+                      totalAmount: '849',
+                    ),
                   ],
                 ),
               ),
