@@ -1,15 +1,19 @@
+import 'package:e_commerce_app/controller/product_screen/product_screen_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/custom_bottom_container.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/product_description.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/sizechart_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductViewScreen extends StatelessWidget {
   const ProductViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -121,14 +125,16 @@ class ProductViewScreen extends StatelessWidget {
                 height: 50,
                 width: double.infinity,
                 child: Row(
-                  children: const [
+                  children: [
                     CustomBottomContainer(
                       containerColor: AppColors.whiteColor,
                       text: 'Add to cart',
+                      ontap: () => productProvider.addToCart(),
                     ),
                     CustomBottomContainer(
                       containerColor: AppColors.yellowColor,
                       text: 'Buy now',
+                      ontap: () => productProvider.toAddressScreen(context),
                     ),
                   ],
                 ),

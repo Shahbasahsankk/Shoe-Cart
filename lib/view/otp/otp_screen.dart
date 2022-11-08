@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/controller/otp/otp_screen_controller.dart';
-import 'package:e_commerce_app/controller/signUp/signup_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/helper/textstyles/app_textstyles.dart';

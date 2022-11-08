@@ -6,21 +6,26 @@ class CustomBottomContainer extends StatelessWidget {
     super.key,
     required this.containerColor,
     required this.text,
+    required this.ontap,
   });
   final Color containerColor;
   final String text;
+  final void Function() ontap;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: MediaQuery.of(context).size.width / 2,
-      color: containerColor,
-      child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: AppColors.blackcolor,
-            fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: ontap,
+      child: Container(
+        height: 50,
+        width: MediaQuery.of(context).size.width / 2,
+        color: containerColor,
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: AppColors.blackcolor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

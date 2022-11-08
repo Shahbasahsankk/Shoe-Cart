@@ -12,4 +12,9 @@ class RouteNames {
   static const productCollections = 'productCollection';
   static const productScreen = 'productScreen';
   static const cartScreen = 'cartScreen';
+  static const orderSummaryScreen = 'orderSummary';
+  static const paymentScreen = 'payments';
+  static const addressScreen = 'address';
+  static const orderScreen = 'orders';
+  static const confirmOrderScreen = 'confirmOrder';
 }
