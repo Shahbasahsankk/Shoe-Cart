@@ -5,16 +5,34 @@ import 'package:e_commerce_app/view/payments/widgets/payment_pricedetails.dart';
 import 'package:e_commerce_app/widgets/custom_bottom_placeorderwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../helper/sizedboxes/app_sizedboxes.dart';
 
-class PaymentScreen extends StatelessWidget {
+class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
 
   @override
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
+  late PaymentProvider paymentProvider;
+  @override
+  void initState() {
+    paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+    final razorpay = paymentProvider.razorPay;
+    razorpay.on(
+        Razorpay.EVENT_PAYMENT_SUCCESS, paymentProvider.handlePaymentSuccess);
+    razorpay.on(
+        Razorpay.EVENT_PAYMENT_ERROR, paymentProvider.handlePaymentError);
+    razorpay.on(
+        Razorpay.EVENT_EXTERNAL_WALLET, paymentProvider.handleExternalWallet);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final paymentProvider =
-        Provider.of<PaymentProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -70,5 +88,11 @@ class PaymentScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    paymentProvider.razorPay.clear();
+    super.dispose();
   }
 }
