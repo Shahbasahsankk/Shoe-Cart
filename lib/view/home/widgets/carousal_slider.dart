@@ -1,19 +1,23 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce_app/model/home_models/carousal_model.dart';
 import 'package:flutter/material.dart';
 
 class CarousalSliderWidget extends StatelessWidget {
-  const CarousalSliderWidget({super.key});
-
+  const CarousalSliderWidget({
+    super.key,
+    required this.carousals,
+  });
+  final List<CarousalModel> carousals;
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
-      itemCount: 2,
+      itemCount: carousals.length,
       itemBuilder: (context, index, realIndex) {
-        return const Padding(
-          padding: EdgeInsets.all(8.0),
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Image(
-            image:
-                AssetImage('assets/home_page_assets/vass boots carousel.jpg'),
+            image: NetworkImage(
+                "http://192.168.0.203:5003/carousals/${carousals[index].imagePath}"),
             fit: BoxFit.cover,
           ),
         );

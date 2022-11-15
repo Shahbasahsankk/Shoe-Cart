@@ -12,6 +12,7 @@ class PaymentProvider with ChangeNotifier {
   bool isVisible = false;
   Razorpay razorPay = Razorpay();
   bool success = false;
+  BuildContext? ctx;
 
   var options = {
     'key': 'rzp_test_RVe81OqJboapJ6',
@@ -23,6 +24,10 @@ class PaymentProvider with ChangeNotifier {
       'email': 'sh@gmail.com',
     },
   };
+
+  void setContext(BuildContext context) {
+    ctx = context;
+  }
 
   paymentSelection(String? value) {
     if (value == onlinePayment) {
@@ -45,8 +50,8 @@ class PaymentProvider with ChangeNotifier {
   }
 
   void handlePaymentSuccess(PaymentSuccessResponse response) {
-    success = true;
-    notifyListeners();
+    Navigator.of(ctx!)
+        .pushNamedAndRemoveUntil(RouteNames.orderScreen, (route) => false);
   }
 
   void handlePaymentError(PaymentFailureResponse response) {

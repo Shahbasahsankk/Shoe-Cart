@@ -21,6 +21,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+    paymentProvider.setContext(context);
     final razorpay = paymentProvider.razorPay;
     razorpay.on(
         Razorpay.EVENT_PAYMENT_SUCCESS, paymentProvider.handlePaymentSuccess);
