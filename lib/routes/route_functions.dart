@@ -20,6 +20,7 @@ import 'package:e_commerce_app/view/welcome/welcome_screen.dart';
 import 'package:e_commerce_app/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../view/add_address/add_new_address_screen.dart';
 import '../view/otp/model/otp_screen_arguement_model.dart';
 import '../view/splash/splash_screen.dart';
 
@@ -98,6 +99,10 @@ class AppRoutes {
       case RouteNames.confirmOrderScreen:
         return MaterialPageRoute(
           builder: (context) => ConfirmOrderScreen(),
+        );
+      case RouteNames.addNewAddressScreen:
+        return MaterialPageRoute(
+          builder: (context) => AddNewAddressScreen(),
         );
       case RouteNames.orderScreen:
         return MaterialPageRoute(

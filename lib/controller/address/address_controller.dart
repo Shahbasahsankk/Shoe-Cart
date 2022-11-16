@@ -12,4 +12,8 @@ class AddressProvider with ChangeNotifier {
   void toOrderSummaryScreen(context) {
     Navigator.of(context).pushNamed(RouteNames.orderSummaryScreen);
   }
+
+  void toAddNewAddressScreen(context) {
+    Navigator.of(context).pushNamed(RouteNames.addNewAddressScreen);
+  }
 }

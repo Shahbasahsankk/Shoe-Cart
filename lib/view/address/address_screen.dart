@@ -30,26 +30,31 @@ class AddressScreen extends StatelessWidget {
                   children: [
                     const Divider(thickness: 1),
                     AppSizedBoxes.sizedboxH5,
-                    Container(
-                      height: 60,
-                      width: double.infinity,
-                      color: Colors.black54,
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.add_sharp,
-                            size: 28,
-                            color: AppColors.blueColor,
-                          ),
-                          AppSizedBoxes.sizedboxW5,
-                          Text(
-                            'Add a new address',
-                            style: TextStyle(
+                    GestureDetector(
+                      onTap: () =>
+                          addressProvider.toAddNewAddressScreen(context),
+                      child: Container(
+                        height: 60,
+                        width: double.infinity,
+                        color: Colors.black54,
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.add_sharp,
+                              size: 28,
+                              color: AppColors.blueColor,
+                            ),
+                            AppSizedBoxes.sizedboxW5,
+                            Text(
+                              'Add a new address',
+                              style: TextStyle(
                                 color: AppColors.blueColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                        ],
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     AppSizedBoxes.sizedboxH12,
