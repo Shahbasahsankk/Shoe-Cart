@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
+import 'package:e_commerce_app/view/home/widgets/product_description_style2.dart';
 import 'package:flutter/material.dart';
 
 import '../../../helper/sizedboxes/app_sizedboxes.dart';
-import '../../home/widgets/product_textdescription_style.dart';
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({
@@ -53,11 +53,24 @@ class ProductDescription extends StatelessWidget {
           ],
         ),
         AppSizedBoxes.sizedboxH8,
-        ProductTextdesciptionStyle(
-          text1: linethroughPrice,
-          text2: currentPrice,
-          text3: offer,
-          fontsize: 20,
+        Row(
+          children: [
+            ProductDescriptionStyleTwo(
+              text1: linethroughPrice,
+              text2: currentPrice,
+              text3: offer,
+              fontsize: 20,
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: () {},
+              child: const Icon(
+                Icons.favorite_rounded,
+                size: 30,
+              ),
+            ),
+            AppSizedBoxes.sizedboxW15,
+          ],
         ),
         AppSizedBoxes.sizedboxH8,
         const Divider(

@@ -5,14 +5,16 @@ class SizeChartGridView extends StatelessWidget {
   const SizeChartGridView({
     super.key,
     required this.ontap,
+    required this.size,
   });
   final void Function() ontap;
+  final List<String>? size;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 6,
+      itemCount: size?.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
         mainAxisSpacing: 10,
@@ -29,8 +31,8 @@ class SizeChartGridView extends StatelessWidget {
                 color: AppColors.whiteColor54,
               ),
             ),
-            child: const Center(
-              child: Text('7'),
+            child: Center(
+              child: Text(size![index]),
             ),
           ),
         );

@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/constants/api_endpoints.dart';
 import 'package:e_commerce_app/constants/api_url.dart';
 import 'package:e_commerce_app/model/home_models/carousal_model.dart';
+import 'package:e_commerce_app/model/home_models/category_model.dart';
+import 'package:e_commerce_app/model/home_models/product_model.dart';
 
 import '../../utils/app_exceptions.dart';
 
@@ -12,6 +16,7 @@ class HomeService {
       final Response response = await dio.get(
         ApiUrl.apiUrl + ApiEndPoints.carousal,
       );
+      log(response.statusCode.toString());
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<CarousalModel> carousals = (response.data as List)
             .map((e) => CarousalModel.fromJson(e))
@@ -19,6 +24,54 @@ class HomeService {
         return carousals;
       } else {
         return null;
+      }
+    } catch (e) {
+      log('entered catch');
+      AppExceptions.errorHandler(e);
+    }
+    return null;
+  }
+
+  Future<List<CategoryModel>?> getCategories() async {
+    try {
+      final Response response =
+          await dio.get(ApiUrl.apiUrl + ApiEndPoints.categories);
+      if (response.statusCode! >= 200 && response.statusCode! <= 299) {
+        final List<CategoryModel> categories = (response.data as List)
+            .map((e) => CategoryModel.fromJson(e))
+            .toList();
+        return categories;
+      }
+    } catch (e) {
+      AppExceptions.errorHandler(e);
+    }
+    return null;
+  }
+
+  Future<List<Product>?> getAllProducts() async {
+    try {
+      final Response response =
+          await dio.get(ApiUrl.apiUrl + ApiEndPoints.product);
+      if (response.statusCode! >= 200 && response.statusCode! <= 299) {
+        final List<Product> products =
+            (response.data as List).map((e) => Product.fromJson(e)).toList();
+        return products;
+      }
+    } catch (e) {
+      AppExceptions.errorHandler(e);
+    }
+    return null;
+  }
+
+  Future<List<Product>?> getProductsByCategory(String categoryId) async {
+    try {
+      log(categoryId);
+      final Response response = await dio
+          .get('${ApiUrl.apiUrl + ApiEndPoints.product}?category=$categoryId');
+      if (response.statusCode! >= 200 && response.statusCode! <= 299) {
+        final List<Product> products =
+            (response.data as List).map((e) => Product.fromJson(e)).toList();
+        return products;
       }
     } catch (e) {
       AppExceptions.errorHandler(e);

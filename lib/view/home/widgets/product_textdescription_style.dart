@@ -55,3 +55,37 @@ class ProductTextdesciptionStyle extends StatelessWidget {
     );
   }
 }
+
+
+// Row(
+//       mainAxisAlignment: MainAxisAlignment.start,
+//       children: [
+//         Text(
+//           text1,
+//           style: TextStyle(
+//             color: AppColors.whiteColor54,
+//             decoration: TextDecoration.lineThrough,
+//             overflow: TextOverflow.ellipsis,
+//             fontSize: fontsize,
+//           ),
+//         ),
+//         AppSizedBoxes.sizedboxW10,
+//         Text(
+//           text2,
+//           style: TextStyle(
+//             color: AppColors.whiteColor,
+//             overflow: TextOverflow.ellipsis,
+//             fontSize: fontsize,
+//           ),
+//         ),
+//         AppSizedBoxes.sizedboxW10,
+//         Text(
+//           text3,
+//           style: TextStyle(
+//             color: AppColors.greenColor,
+//             overflow: TextOverflow.ellipsis,
+//             fontSize: fontsize,
+//           ),
+//         ),
+//       ],
+//     );

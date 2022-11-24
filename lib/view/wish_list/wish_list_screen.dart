@@ -62,7 +62,7 @@ class WishListScreen extends StatelessWidget {
                                       width: 180,
                                       fit: BoxFit.fill,
                                       image: AssetImage(
-                                        'assets/home_page_assets/men_boots1.jpeg',
+                                        'assets/home_page_assets/menshoes_sales.jpeg',
                                       ),
                                     ),
                                     AppSizedBoxes.sizedboxH15,
@@ -102,16 +102,19 @@ class WishListScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              height: 27,
-                              width: 27,
-                              decoration: BoxDecoration(
-                                  color: AppColors.blackcolor,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: const Center(
-                                child: Icon(Icons.favorite),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 9.0, top: 5),
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                height: 27,
+                                width: 27,
+                                decoration: BoxDecoration(
+                                    color: AppColors.blackcolor,
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Center(
+                                  child: Icon(Icons.favorite),
+                                ),
                               ),
                             ),
                           ),

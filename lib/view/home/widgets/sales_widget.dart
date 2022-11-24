@@ -9,16 +9,16 @@ class SalesWidget extends StatelessWidget {
     required this.imagePath,
     required this.text1,
     required this.text2,
-    required this.ontap,
+    // required this.ontap,
   });
   final String imagePath;
   final String text1;
   final String text2;
-  final void Function() ontap;
+  // final void Function() ontap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ontap,
+      // onTap: ontap,
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.whiteColor,

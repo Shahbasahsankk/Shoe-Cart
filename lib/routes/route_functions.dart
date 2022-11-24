@@ -7,7 +7,7 @@ import 'package:e_commerce_app/view/home/home_screen.dart';
 import 'package:e_commerce_app/view/home/model/product_collection_model.dart';
 import 'package:e_commerce_app/view/home/widgets/products_collection_screen.dart';
 import 'package:e_commerce_app/view/new_password/new_password_screen.dart';
-import 'package:e_commerce_app/view/new_password/widgets/model/newpassword_screen_model.dart';
+import 'package:e_commerce_app/view/new_password/model/newpassword_screen_model.dart';
 import 'package:e_commerce_app/view/onBoard/on_board_screen.dart';
 import 'package:e_commerce_app/view/order_summery/order_summery.dart';
 import 'package:e_commerce_app/view/orders/orders_screen.dart';
@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 
 import '../view/add_address/add_new_address_screen.dart';
 import '../view/otp/model/otp_screen_arguement_model.dart';
+import '../view/product_screen/widgets/utils/productscreen_model.dart';
 import '../view/splash/splash_screen.dart';
 
 class AppRoutes {
@@ -82,11 +83,15 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => ProductCollectionScreen(
             category: args.category,
+            categoryId: args.categoryId,
           ),
         );
       case RouteNames.productScreen:
+        final args = settings.arguments as ProductScreenArguementsModel;
         return MaterialPageRoute(
-          builder: (context) => const ProductViewScreen(),
+          builder: (context) => ProductViewScreen(
+            product: args.product,
+          ),
         );
       case RouteNames.paymentScreen:
         return MaterialPageRoute(

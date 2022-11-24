@@ -82,33 +82,9 @@ flutter:
     - assets/create_new_password_screen_assets/create_new_password.png
     - assets/create_new_password_screen_assets/password_reset_success.png
     - assets/google_icon/google-logo.png
-    - assets/home_page_assets/vass boots carousel.jpg
-    - assets/home_page_assets/sneaker.png
-    - assets/home_page_assets/boots.png
-    - assets/home_page_assets/formal.png
-    - assets/home_page_assets/loafer.png
-    - assets/home_page_assets/sports.png
     - assets/home_page_assets/menshoes_sales.jpeg
     - assets/home_page_assets/womenshoes_sales.jpeg
     - assets/home_page_assets/kidsshoes_sales.jpeg
-    - assets/home_page_assets/sneakers_minimum.jpeg
-    - assets/home_page_assets/women_sports_off.jpeg
-    - assets/home_page_assets/women_boots_off.jpeg
-    - assets/home_page_assets/kids_shoes_off.jpeg
-    - assets/home_page_assets/kids_shoes_off2.jpeg
-    - assets/home_page_assets/men_loafer1.jpeg
-    - assets/home_page_assets/mens_sports_off1.jpeg
-    - assets/home_page_assets/women_sneakers_off1.jpeg
-    - assets/home_page_assets/women_formals_off1.jpeg
-    - assets/home_page_assets/men_boots_off1.jpeg
-    - assets/home_page_assets/women_loafers_off1.jpeg
-    - assets/home_page_assets/men_formals_off1.jpeg
-    - assets/home_page_assets/men_boots1.jpeg
-    - assets/home_page_assets/men_loafer2.jpeg
-    - assets/home_page_assets/men_sneaker1.jpeg
-    - assets/home_page_assets/women_formals1.jpeg
-    - assets/home_page_assets/kids_sports.jpeg
-    - assets/home_page_assets/women_boots1.jpeg
 
     
   # An image asset can refer to one or more resolution-specific "variants", see

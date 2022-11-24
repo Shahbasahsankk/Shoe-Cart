@@ -29,7 +29,7 @@ class ShoeCircleAvatarWidget extends StatelessWidget {
               child: Image(
                 height: 80,
                 width: 80,
-                image: AssetImage(imagePath),
+                image: NetworkImage(imagePath),
               ),
             ),
           ),
