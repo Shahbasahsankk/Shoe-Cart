@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/controller/product_screen/product_screen_controller.dart';
 import 'package:e_commerce_app/view/home/widgets/product_description_style2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,8 +29,8 @@ class GridViewProducts extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () =>
-                values.toProductScreen(context, values.productList[index]),
+            onTap: () => Provider.of<ProductProvider>(context, listen: false)
+                .getAProduct(values.productList[index].id, context),
             child: Stack(
               children: [
                 Container(

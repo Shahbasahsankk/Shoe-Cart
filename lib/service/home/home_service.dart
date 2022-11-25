@@ -65,13 +65,27 @@ class HomeService {
 
   Future<List<Product>?> getProductsByCategory(String categoryId) async {
     try {
-      log(categoryId);
       final Response response = await dio
           .get('${ApiUrl.apiUrl + ApiEndPoints.product}?category=$categoryId');
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<Product> products =
             (response.data as List).map((e) => Product.fromJson(e)).toList();
         return products;
+      }
+    } catch (e) {
+      AppExceptions.errorHandler(e);
+    }
+    return null;
+  }
+
+  Future<Product?> getAProduct(String productId) async {
+    try {
+      final Response response =
+          await dio.get('${ApiUrl.apiUrl + ApiEndPoints.product}/$productId');
+      if (response.statusCode! >= 200 && response.statusCode! <= 299) {
+        final Product product = Product.fromJson(response.data);
+
+        return product;
       }
     } catch (e) {
       AppExceptions.errorHandler(e);

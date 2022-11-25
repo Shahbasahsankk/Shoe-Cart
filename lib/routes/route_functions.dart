@@ -22,7 +22,6 @@ import 'package:flutter/material.dart';
 
 import '../view/add_address/add_new_address_screen.dart';
 import '../view/otp/model/otp_screen_arguement_model.dart';
-import '../view/product_screen/widgets/utils/productscreen_model.dart';
 import '../view/splash/splash_screen.dart';
 
 class AppRoutes {
@@ -87,11 +86,8 @@ class AppRoutes {
           ),
         );
       case RouteNames.productScreen:
-        final args = settings.arguments as ProductScreenArguementsModel;
         return MaterialPageRoute(
-          builder: (context) => ProductViewScreen(
-            product: args.product,
-          ),
+          builder: (context) => ProductViewScreen(),
         );
       case RouteNames.paymentScreen:
         return MaterialPageRoute(

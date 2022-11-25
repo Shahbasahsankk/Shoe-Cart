@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/model/home_models/carousal_model.dart';
 import 'package:e_commerce_app/model/home_models/category_model.dart';
 import 'package:e_commerce_app/model/home_models/product_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/home/home_service.dart';
 import 'package:e_commerce_app/view/home/model/product_collection_model.dart';
-import 'package:e_commerce_app/view/product_screen/widgets/utils/productscreen_model.dart';
 import 'package:flutter/widgets.dart';
 
 class HomeScreenProvider with ChangeNotifier {
@@ -37,14 +38,6 @@ class HomeScreenProvider with ChangeNotifier {
         .then((value) {
       getProducts();
     });
-  }
-
-  void toProductScreen(context, Product product) {
-    final args = ProductScreenArguementsModel(product: product);
-    Navigator.of(context).pushNamed(
-      RouteNames.productScreen,
-      arguments: args,
-    );
   }
 
   void favouriteAction() {

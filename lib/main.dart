@@ -17,10 +17,7 @@ import 'package:e_commerce_app/controller/splash/splash_controller.dart';
 import 'package:e_commerce_app/controller/welcome/welcome_controller.dart';
 import 'package:e_commerce_app/controller/wishlist/wishlist_controller.dart';
 import 'package:e_commerce_app/routes/route_functions.dart';
-import 'package:e_commerce_app/view/add_address/add_new_address_screen.dart';
-import 'package:e_commerce_app/view/address/address_screen.dart';
 import 'package:e_commerce_app/view/home/home_screen.dart';
-import 'package:e_commerce_app/view/wish_list/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
