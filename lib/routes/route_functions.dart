@@ -14,6 +14,7 @@ import 'package:e_commerce_app/view/orders/orders_screen.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
 import 'package:e_commerce_app/view/payments/payment_screen.dart';
 import 'package:e_commerce_app/view/product_screen/product_screen.dart';
+import 'package:e_commerce_app/view/product_screen/widgets/utils/prouductid_model.dart';
 import 'package:e_commerce_app/view/signIn/sign_in_screen.dart';
 import 'package:e_commerce_app/view/signup/signup_screen.dart';
 import 'package:e_commerce_app/view/welcome/welcome_screen.dart';
@@ -45,7 +46,7 @@ class AppRoutes {
         );
       case RouteNames.signInScreen:
         return MaterialPageRoute(
-          builder: (context) => const SignInScreen(),
+          builder: (context) => SignInScreen(),
         );
       case RouteNames.bottomNav:
         return MaterialPageRoute(
@@ -86,8 +87,11 @@ class AppRoutes {
           ),
         );
       case RouteNames.productScreen:
+        final args = settings.arguments as ProductIdModel;
         return MaterialPageRoute(
-          builder: (context) => ProductViewScreen(),
+          builder: (context) => ProductViewScreen(
+            productId: args.productId,
+          ),
         );
       case RouteNames.paymentScreen:
         return MaterialPageRoute(

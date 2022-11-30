@@ -21,6 +21,7 @@ class CartScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: AppColors.transparentColor,
           elevation: 0,
+          actions: const [Icon(Icons.search)],
         ),
         body: Stack(
           children: [
@@ -38,7 +39,7 @@ class CartScreen extends StatelessWidget {
                     AppSizedBoxes.sizedboxH8,
                     const Divider(thickness: 4),
                     CartProducts(
-                      image: 'assets/home_page_assets/formal.png',
+                      image: 'assets/home_page_assets/kidsshoes_sales.jpeg',
                       proudctName: 'Men Formal shoes',
                       size: '27',
                       prouductPrice: '849',

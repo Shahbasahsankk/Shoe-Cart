@@ -10,12 +10,14 @@ class ProductDescriptionStyleTwo extends StatelessWidget {
     required this.text2,
     required this.text3,
     this.fontsize = 14,
+    this.fonsize2 = 14,
   });
 
   final String text1;
   final String text2;
   final String text3;
   final double fontsize;
+  final double fonsize2;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -36,7 +38,7 @@ class ProductDescriptionStyleTwo extends StatelessWidget {
           style: TextStyle(
             color: AppColors.whiteColor,
             overflow: TextOverflow.ellipsis,
-            fontSize: fontsize,
+            fontSize: fonsize2,
           ),
         ),
         AppSizedBoxes.sizedboxW5,
@@ -45,7 +47,7 @@ class ProductDescriptionStyleTwo extends StatelessWidget {
           style: TextStyle(
             color: AppColors.greenColor,
             overflow: TextOverflow.ellipsis,
-            fontSize: fontsize,
+            fontSize: fonsize2,
           ),
         ),
       ],

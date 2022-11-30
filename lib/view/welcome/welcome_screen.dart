@@ -8,8 +8,9 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final welcomeProvider= Provider.of<WelcomeProvider>(context,listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    final welcomeProvider =
+        Provider.of<WelcomeProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       welcomeProvider.toOnboardScreens(context);
     });
     return SafeArea(
@@ -20,14 +21,15 @@ class WelcomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: const [
             Image(
-              image: AssetImage('assets/welcome_and_onboard_screen_assets/welcome1.png'),
+              image: AssetImage(
+                  'assets/welcome_and_onboard_screen_assets/welcome1.png'),
             ),
             Text(
               'Welcome To 👋',
               style: TextStyle(fontSize: 30, color: Colors.white),
             ),
             Text(
-              'SHOESTORE',
+              'SHOECART',
               style: TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,

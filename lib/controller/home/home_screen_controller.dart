@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/model/home_models/carousal_model.dart';
 import 'package:e_commerce_app/model/home_models/category_model.dart';
 import 'package:e_commerce_app/model/home_models/product_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/home/home_service.dart';
 import 'package:e_commerce_app/view/home/model/product_collection_model.dart';
+import 'package:e_commerce_app/view/product_screen/widgets/utils/prouductid_model.dart';
 import 'package:flutter/widgets.dart';
 
 class HomeScreenProvider with ChangeNotifier {
@@ -16,13 +15,21 @@ class HomeScreenProvider with ChangeNotifier {
   List<CarousalModel> carousalList = [];
   List<CategoryModel> categoryList = [];
   List<Product> productList = [];
+
   bool loading = false;
-  bool favourite = false;
 
   void callHomeFunctions() {
     getCarousals();
     getCategories();
     getProducts();
+  }
+
+  void toProductScreen(context, productId) {
+    final args = ProductIdModel(productId: productId);
+    Navigator.of(context).pushNamed(
+      RouteNames.productScreen,
+      arguments: args,
+    );
   }
 
   void toCollectionScreen(
@@ -38,11 +45,6 @@ class HomeScreenProvider with ChangeNotifier {
         .then((value) {
       getProducts();
     });
-  }
-
-  void favouriteAction() {
-    favourite = !favourite;
-    notifyListeners();
   }
 
   void getCarousals() async {
@@ -86,6 +88,7 @@ class HomeScreenProvider with ChangeNotifier {
       if (value != null) {
         productList = value;
         notifyListeners();
+
         loading = false;
         notifyListeners();
       } else {

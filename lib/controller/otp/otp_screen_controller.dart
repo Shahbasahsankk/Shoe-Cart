@@ -6,6 +6,7 @@ import 'package:e_commerce_app/model/signup_model/signup_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/view/new_password/model/newpassword_screen_model.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../service/otp_service/otp_service.dart';
 import '../../service/signup/signup_service.dart';
@@ -19,6 +20,7 @@ class OtpScreenProvider with ChangeNotifier {
   bool otpDone = false;
   String code = '';
   bool loading = false;
+  FlutterSecureStorage storage = const FlutterSecureStorage();
 
   void setResendVisibility(bool newValue, context, String email) {
     clear = true;
@@ -69,8 +71,9 @@ class OtpScreenProvider with ChangeNotifier {
         } else if (screenChek == OtpScreenEnum.signUpOtpScreen) {
           await OtpService().verifyOtp(model.email, code).then((value) async {
             if (value != null) {
-              await SignUpService().signUp(model, context).then((value) {
+              await SignUpService().signUp(model, context).then((value) async {
                 if (value != null) {
+                  await storage.write(key: 'token', value: value);
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       RouteNames.bottomNav, (route) => false);
                   loading = false;

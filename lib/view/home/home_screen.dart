@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/constants/api_url.dart';
 import 'package:e_commerce_app/controller/home/home_screen_controller.dart';
+import 'package:e_commerce_app/controller/wishlist/wishlist_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/view/home/widgets/carousal_slider.dart';
@@ -70,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return ShoeCircleAvatarWidget(
                                     imagePath:
-                                        ("http://${ApiUrl.url}:5005/category/${values.categoryList[index].imagePath}"),
+                                        ("http://${ApiUrl.url}:5008/category/${values.categoryList[index].imagePath}"),
                                     text: values.categoryList[index].name,
                                     ontap: () =>
                                         homeProvider.toCollectionScreen(

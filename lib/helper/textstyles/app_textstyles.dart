@@ -17,7 +17,7 @@ class AppTextStyles {
   static const textStyle4 =
       TextStyle(fontSize: 18, color: AppColors.whiteColor);
   static const textstyle5 = TextStyle(
-      fontSize: 16, color: AppColors.blackcolor, fontWeight: FontWeight.bold);
+      fontSize: 12, color: AppColors.blackcolor, fontWeight: FontWeight.bold);
   static const customButtonTextStyle = TextStyle(
       color: AppColors.blackcolor, fontSize: 16, fontWeight: FontWeight.bold);
 }

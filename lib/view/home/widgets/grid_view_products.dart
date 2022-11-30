@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/controller/product_screen/product_screen_controller.dart';
+import 'package:e_commerce_app/controller/wishlist/wishlist_controller.dart';
 import 'package:e_commerce_app/view/home/widgets/product_description_style2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,13 @@ class GridViewProducts extends StatelessWidget {
   final ScrollPhysics? physics;
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeScreenProvider>(builder: (context, values, _) {
+    final wishListProvider =
+        Provider.of<WishListProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      wishListProvider.getWishListItems();
+    });
+    return Consumer2<HomeScreenProvider, WishListProvider>(
+        builder: (context, values, values2, _) {
       return GridView.builder(
         physics: physics,
         shrinkWrap: true,
@@ -29,8 +35,10 @@ class GridViewProducts extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => Provider.of<ProductProvider>(context, listen: false)
-                .getAProduct(values.productList[index].id, context),
+            onTap: () => values.toProductScreen(
+              context,
+              values.productList[index].id,
+            ),
             child: Stack(
               children: [
                 Container(
@@ -49,7 +57,7 @@ class GridViewProducts extends StatelessWidget {
                             width: 150,
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                              "http://${ApiUrl.url}:5005/products/${values.productList[index].image![0]}",
+                              "http://${ApiUrl.url}:5008/products/${values.productList[index].image![0]}",
                             ),
                           ),
                           AppSizedBoxes.sizedboxH5,
@@ -64,10 +72,11 @@ class GridViewProducts extends StatelessWidget {
                           ),
                           AppSizedBoxes.sizedboxH5,
                           Container(
-                            width: 40,
+                            width: 45,
                             color: AppColors.greenColor,
                             child: Row(
                               children: [
+                                AppSizedBoxes.sizedboxW5,
                                 Text(
                                   values.productList[index].rating.toString(),
                                   style: const TextStyle(
@@ -87,25 +96,22 @@ class GridViewProducts extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 9, top: 5),
+                  padding: const EdgeInsets.only(right: 9, top: 8),
                   child: Align(
                     alignment: Alignment.topRight,
                     child: GestureDetector(
-                      onTap: () => values.favouriteAction(),
-                      child: Container(
-                        height: 27,
-                        width: 27,
-                        decoration: BoxDecoration(
-                            color: AppColors.blackcolor,
-                            borderRadius: BorderRadius.circular(8)),
-                        child: Center(
-                          child: Icon(
-                            Icons.favorite,
-                            color: values.favourite == true
-                                ? AppColors.redColor
-                                : AppColors.whiteColor,
-                          ),
-                        ),
+                      onTap: () => values2.addOrRemoveFromWishList(
+                          values.productList[index].id.toString()),
+                      child: Icon(
+                        values2.favouriteProducts
+                                .contains(values.productList[index].id)
+                            ? Icons.favorite
+                            : Icons.favorite_outline_outlined,
+                        color: values2.favouriteProducts
+                                .contains(values.productList[index].id)
+                            ? AppColors.redColor
+                            : AppColors.blackcolor,
+                        size: 30,
                       ),
                     ),
                   ),

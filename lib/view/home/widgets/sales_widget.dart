@@ -45,6 +45,7 @@ class SalesWidget extends StatelessWidget {
             Text(
               text1,
               style: const TextStyle(
+                fontSize: 13,
                 color: AppColors.blackcolor,
                 fontWeight: FontWeight.bold,
               ),

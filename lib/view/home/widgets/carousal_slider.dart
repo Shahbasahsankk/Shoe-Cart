@@ -18,7 +18,7 @@ class CarousalSliderWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Image(
             image: NetworkImage(
-                "http://${ApiUrl.url}:5005/carousals/${carousals[index].imagePath}"),
+                "http://${ApiUrl.url}:5008/carousals/${carousals[index].imagePath}"),
             fit: BoxFit.cover,
           ),
         );

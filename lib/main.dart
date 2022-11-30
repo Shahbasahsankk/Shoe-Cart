@@ -11,13 +11,15 @@ import 'package:e_commerce_app/controller/order_summary/order_summary_controller
 import 'package:e_commerce_app/controller/otp/otp_screen_controller.dart';
 import 'package:e_commerce_app/controller/payments/payments_controller.dart';
 import 'package:e_commerce_app/controller/product_screen/product_screen_controller.dart';
+import 'package:e_commerce_app/controller/profile/profile_controller.dart';
 import 'package:e_commerce_app/controller/signIn/sign_in_controller.dart';
 import 'package:e_commerce_app/controller/signUp/signup_controller.dart';
 import 'package:e_commerce_app/controller/splash/splash_controller.dart';
 import 'package:e_commerce_app/controller/welcome/welcome_controller.dart';
 import 'package:e_commerce_app/controller/wishlist/wishlist_controller.dart';
 import 'package:e_commerce_app/routes/route_functions.dart';
-import 'package:e_commerce_app/view/home/home_screen.dart';
+import 'package:e_commerce_app/view/splash/splash_screen.dart';
+import 'package:e_commerce_app/view/wish_list/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,12 +51,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AddressProvider()),
         ChangeNotifierProvider(create: (context) => ConfirmOrderProvider()),
         ChangeNotifierProvider(create: (context) => AddNewAddressProvider()),
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
+        title: 'ShoeCart',
         onGenerateRoute: (settings) => AppRoutes.generateRoute(settings),
-        home: HomeScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

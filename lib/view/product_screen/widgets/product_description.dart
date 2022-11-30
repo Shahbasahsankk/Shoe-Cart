@@ -27,7 +27,7 @@ class ProductDescription extends StatelessWidget {
       children: [
         Text(
           productName,
-          style: const TextStyle(fontSize: 25),
+          style: const TextStyle(fontSize: 18),
         ),
         AppSizedBoxes.sizedboxH8,
         Row(
@@ -54,24 +54,12 @@ class ProductDescription extends StatelessWidget {
           ],
         ),
         AppSizedBoxes.sizedboxH8,
-        Row(
-          children: [
-            ProductDescriptionStyleTwo(
-              text1: linethroughPrice,
-              text2: currentPrice,
-              text3: offer,
-              fontsize: 20,
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap: () {},
-              child: const Icon(
-                Icons.favorite_rounded,
-                size: 30,
-              ),
-            ),
-            AppSizedBoxes.sizedboxW15,
-          ],
+        ProductDescriptionStyleTwo(
+          text1: linethroughPrice,
+          text2: currentPrice,
+          text3: offer,
+          fontsize: 20,
+          fonsize2: 17,
         ),
         AppSizedBoxes.sizedboxH8,
         const Divider(

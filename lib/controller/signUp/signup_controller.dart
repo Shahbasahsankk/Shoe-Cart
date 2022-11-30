@@ -102,13 +102,10 @@ class SignUpProvider with ChangeNotifier {
       await ForgotPasswordService()
           .getUser(emailController.text)
           .then((value) async {
-        log(value.toString());
         if (value == null) {
-          log('going to sendotp functin');
           await OtpService().sendOtp(emailController.text).then((value) {
             log(value.toString());
             if (value != null) {
-              log('navigating to otpScreen');
               Navigator.of(context)
                   .pushNamed(RouteNames.otpScreen, arguments: args)
                   .then((value) {
@@ -116,7 +113,6 @@ class SignUpProvider with ChangeNotifier {
                 notifyListeners();
               });
             } else {
-              log('not navigating to otpScren');
               return null;
             }
           });

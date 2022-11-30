@@ -9,7 +9,7 @@ import 'package:e_commerce_app/utils/app_exceptions.dart';
 
 class SignUpService {
   final dio = Dio();
-  Future<SignUpModel?> signUp(SignUpModel model, context) async {
+  Future<String?> signUp(SignUpModel model, context) async {
     try {
       Response response = await dio.post(ApiUrl.apiUrl + ApiEndPoints.signUp,
           data: jsonEncode(model.toJson()),
@@ -18,9 +18,8 @@ class SignUpService {
             'Accept': 'application/json',
           });
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
-        log('saved to database');
-        final SignUpModel model = SignUpModel.fromJson(response.data!);
-        return model;
+        final String token = response.data;
+        return token;
       }
     } catch (e) {
       AppExceptions.errorHandler(e);

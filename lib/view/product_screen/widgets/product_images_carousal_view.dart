@@ -18,12 +18,12 @@ class ImageCarousalsWidget extends StatelessWidget {
         log(images[index].toString());
         return Image(
           image: NetworkImage(
-              "http://${ApiUrl.url}:5005/products/${images[index]}"),
+              "http://${ApiUrl.url}:5008/products/${images[index]}"),
           fit: BoxFit.cover,
         );
       },
       options: CarouselOptions(
-        aspectRatio: 1,
+        aspectRatio: 0.85,
         viewportFraction: 1.0,
         enableInfiniteScroll: true,
       ),

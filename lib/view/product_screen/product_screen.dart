@@ -1,8 +1,7 @@
-import 'package:e_commerce_app/controller/home/home_screen_controller.dart';
 import 'package:e_commerce_app/controller/product_screen/product_screen_controller.dart';
+import 'package:e_commerce_app/controller/wishlist/wishlist_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
-import 'package:e_commerce_app/model/home_models/product_model.dart';
 import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/custom_bottom_container.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/product_description.dart';
@@ -12,11 +11,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductViewScreen extends StatelessWidget {
-  const ProductViewScreen({super.key});
+  const ProductViewScreen({
+    super.key,
+    required this.productId,
+  });
+  final String productId;
   @override
   Widget build(BuildContext context) {
     final productProvider =
         Provider.of<ProductProvider>(context, listen: false);
+    productProvider.productId = productId;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      productProvider.getAProduct();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -30,7 +37,8 @@ class ProductViewScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: Consumer<ProductProvider>(builder: (context, values, _) {
+        body: Consumer2<ProductProvider, WishListProvider>(
+            builder: (context, values, values2, _) {
           final product = values.product;
           return values.loading == true
               ? SizedBox(
@@ -46,7 +54,34 @@ class ProductViewScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ImageCarousalsWidget(images: product!.image!),
+                          Stack(
+                            children: [
+                              ImageCarousalsWidget(images: product!.image!),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 9, top: 8),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: GestureDetector(
+                                    onTap: () =>
+                                        values2.addOrRemoveFromWishList(
+                                            values.product!.id.toString()),
+                                    child: Icon(
+                                      values2.favouriteProducts
+                                              .contains(values.product!.id)
+                                          ? Icons.favorite
+                                          : Icons.favorite_outline_outlined,
+                                      color: values2.favouriteProducts
+                                              .contains(values.product!.id)
+                                          ? AppColors.redColor
+                                          : AppColors.blackcolor,
+                                      size: 35,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           AppSizedBoxes.sizedboxH12,
                           Padding(
                             padding: const EdgeInsets.all(8.0),

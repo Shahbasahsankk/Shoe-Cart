@@ -8,4 +8,6 @@ class ApiEndPoints {
   static const carousal = 'carousal';
   static const categories = 'category';
   static const product = 'products';
+  static const refreshToken = 'auth/refresh';
+  static const wishList = 'wishlist';
 }

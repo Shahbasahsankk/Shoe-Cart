@@ -8,12 +8,13 @@ import 'package:e_commerce_app/model/home_models/category_model.dart';
 import 'package:e_commerce_app/model/home_models/product_model.dart';
 
 import '../../utils/app_exceptions.dart';
+import '../../utils/dio_interceptor.dart';
 
 class HomeService {
-  final dio = Dio();
   Future<List<CarousalModel>?> getCarousals() async {
+    Dio dios = await Interceptorapi().getApiUser();
     try {
-      final Response response = await dio.get(
+      final Response response = await dios.get(
         ApiUrl.apiUrl + ApiEndPoints.carousal,
       );
       log(response.statusCode.toString());
@@ -33,9 +34,10 @@ class HomeService {
   }
 
   Future<List<CategoryModel>?> getCategories() async {
+    Dio dios = await Interceptorapi().getApiUser();
     try {
       final Response response =
-          await dio.get(ApiUrl.apiUrl + ApiEndPoints.categories);
+          await dios.get(ApiUrl.apiUrl + ApiEndPoints.categories);
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<CategoryModel> categories = (response.data as List)
             .map((e) => CategoryModel.fromJson(e))
@@ -49,9 +51,10 @@ class HomeService {
   }
 
   Future<List<Product>?> getAllProducts() async {
+    Dio dios = await Interceptorapi().getApiUser();
     try {
       final Response response =
-          await dio.get(ApiUrl.apiUrl + ApiEndPoints.product);
+          await dios.get(ApiUrl.apiUrl + ApiEndPoints.product);
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<Product> products =
             (response.data as List).map((e) => Product.fromJson(e)).toList();
@@ -64,8 +67,9 @@ class HomeService {
   }
 
   Future<List<Product>?> getProductsByCategory(String categoryId) async {
+    Dio dios = await Interceptorapi().getApiUser();
     try {
-      final Response response = await dio
+      final Response response = await dios
           .get('${ApiUrl.apiUrl + ApiEndPoints.product}?category=$categoryId');
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<Product> products =
@@ -79,12 +83,12 @@ class HomeService {
   }
 
   Future<Product?> getAProduct(String productId) async {
+    Dio dios = await Interceptorapi().getApiUser();
     try {
       final Response response =
-          await dio.get('${ApiUrl.apiUrl + ApiEndPoints.product}/$productId');
+          await dios.get('${ApiUrl.apiUrl + ApiEndPoints.product}/$productId');
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final Product product = Product.fromJson(response.data);
-
         return product;
       }
     } catch (e) {
