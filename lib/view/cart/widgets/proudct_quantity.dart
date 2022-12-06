@@ -7,13 +7,16 @@ class ProductQuantity extends StatelessWidget {
     super.key,
     required this.ontap1,
     required this.ontap2,
+    required this.quantity,
   });
   final void Function() ontap1;
   final void Function() ontap2;
+  final int quantity;
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 30,
+      width: 100,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(20),
@@ -31,10 +34,10 @@ class ProductQuantity extends StatelessWidget {
               ),
             ),
             AppSizedBoxes.sizedboxW3,
-            const FittedBox(
+            FittedBox(
               child: Text(
-                '1',
-                style: TextStyle(
+                quantity.toString(),
+                style: const TextStyle(
                   color: AppColors.blackcolor,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,

@@ -59,11 +59,12 @@ class PriceDetailsWidget extends StatelessWidget {
         const Divider(thickness: 1),
         AppSizedBoxes.sizedboxH15,
         Text(
-          'You will save $discount on this order',
+          'You will save ₹$discount on this order',
           style: const TextStyle(
             color: AppColors.greenColor,
           ),
         ),
+        AppSizedBoxes.sizedboxH80,
       ],
     );
   }

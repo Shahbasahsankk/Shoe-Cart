@@ -1,8 +1,6 @@
-import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/home_models/product_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../service/home/home_service.dart';
 
@@ -14,10 +12,10 @@ class ProductProvider with ChangeNotifier {
   bool loading = false;
   Product? product;
   String? productId;
+  String? productSize;
 
-  void addToCart() {
-    Fluttertoast.showToast(
-        msg: 'Item added to Cart', backgroundColor: AppColors.greenColor);
+  void goToCart(BuildContext context) {
+    Navigator.of(context).pushNamed(RouteNames.cartScreen);
   }
 
   void toAddressScreen(context) {
@@ -26,6 +24,8 @@ class ProductProvider with ChangeNotifier {
 
   void sizeSelect(int index) {
     sizeChartIndex = index;
+    notifyListeners();
+    productSize = product!.size![index].toString();
     notifyListeners();
   }
 

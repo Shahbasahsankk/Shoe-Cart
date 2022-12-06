@@ -83,6 +83,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               }),
               CustomBottomPlaceOrderWidget(
                 ontap: () => paymentProvider.order(context),
+                totalAmount: '456',
               ),
             ],
           ),

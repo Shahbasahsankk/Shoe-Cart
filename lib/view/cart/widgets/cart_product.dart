@@ -1,8 +1,11 @@
+import 'package:e_commerce_app/controller/cart/cart_controller.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/view/cart/widgets/proudct_quantity.dart';
 import 'package:e_commerce_app/view/cart/widgets/prouduct_descripton.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../constants/api_url.dart';
 import '../../../helper/colors/app_colors.dart';
 
 class CartProducts extends StatelessWidget {
@@ -16,15 +19,17 @@ class CartProducts extends StatelessWidget {
     required this.offer,
     required this.ontap1,
     required this.ontap2,
+    required this.quantity,
   });
   final String image;
   final String proudctName;
   final String size;
-  final String prouductPrice;
+  final int prouductPrice;
   final String linethroughPrice;
   final String offer;
   final void Function() ontap1;
   final void Function() ontap2;
+  final int quantity;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,38 +45,42 @@ class CartProducts extends StatelessWidget {
                     height: 110,
                     width: 110,
                     fit: BoxFit.fill,
-                    image: AssetImage(image),
+                    image: NetworkImage(
+                        'http://${ApiUrl.url}:5008/products/$image'),
                   ),
                 ),
               ],
             ),
             AppSizedBoxes.sizedboxW15,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppSizedBoxes.sizedboxH5,
-                Text(
-                  proudctName,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppSizedBoxes.sizedboxH5,
+                  Text(
+                    proudctName,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                AppSizedBoxes.sizedboxH5,
-                Text('Size:$size'),
-                AppSizedBoxes.sizedboxH5,
-                CartPruductTextStyle(
-                  text1: linethroughPrice,
-                  text2: prouductPrice,
-                  text3: offer,
-                ),
-                AppSizedBoxes.sizedboxH12,
-                ProductQuantity(
-                  ontap1: ontap1,
-                  ontap2: ontap2,
-                ),
-              ],
+                  AppSizedBoxes.sizedboxH5,
+                  Text('Size: $size'),
+                  AppSizedBoxes.sizedboxH5,
+                  CartPruductTextStyle(
+                    text1: linethroughPrice,
+                    text2: prouductPrice,
+                    text3: offer,
+                  ),
+                  AppSizedBoxes.sizedboxH12,
+                  ProductQuantity(
+                    ontap1: ontap1,
+                    ontap2: ontap2,
+                    quantity: quantity,
+                  ),
+                ],
+              ),
             )
           ],
         ),

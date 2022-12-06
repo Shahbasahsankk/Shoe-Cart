@@ -12,16 +12,16 @@ class CartPruductTextStyle extends StatelessWidget {
     this.fontsize = 14,
   });
   final String text1;
-  final String text2;
+  final int text2;
   final String text3;
   final double fontsize;
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          text1,
+          '₹$text1',
           style: TextStyle(
             color: AppColors.whiteColor54,
             decoration: TextDecoration.lineThrough,
@@ -31,7 +31,7 @@ class CartPruductTextStyle extends StatelessWidget {
         ),
         AppSizedBoxes.sizedboxW5,
         Text(
-          text2,
+          '₹$text2',
           style: TextStyle(
             color: AppColors.whiteColor,
             overflow: TextOverflow.ellipsis,
@@ -40,7 +40,7 @@ class CartPruductTextStyle extends StatelessWidget {
         ),
         AppSizedBoxes.sizedboxW5,
         Text(
-          text3,
+          "$text3%",
           style: TextStyle(
             color: AppColors.greenColor,
             overflow: TextOverflow.ellipsis,

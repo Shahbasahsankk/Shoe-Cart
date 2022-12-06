@@ -73,7 +73,9 @@ class OtpScreenProvider with ChangeNotifier {
             if (value != null) {
               await SignUpService().signUp(model, context).then((value) async {
                 if (value != null) {
-                  await storage.write(key: 'token', value: value);
+                  await storage.write(key: 'token', value: value.accessToken);
+                  await storage.write(
+                      key: 'refreshToken', value: value.refreshToken);
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       RouteNames.bottomNav, (route) => false);
                   loading = false;

@@ -7,8 +7,10 @@ class CustomBottomPlaceOrderWidget extends StatelessWidget {
   const CustomBottomPlaceOrderWidget({
     super.key,
     required this.ontap,
+    required this.totalAmount,
   });
   final void Function() ontap;
+  final String totalAmount;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,15 +31,15 @@ class CustomBottomPlaceOrderWidget extends StatelessWidget {
             AppSizedBoxes.sizedboxW15,
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Total Amount',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text('849')
+                Text(totalAmount)
               ],
             ),
             const Spacer(),
