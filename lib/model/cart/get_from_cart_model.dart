@@ -55,9 +55,9 @@ class Product {
 
   String id;
   String name;
-  String price;
-  String discountPrice;
-  String offer;
+  int price;
+  int discountPrice;
+  int offer;
   String rating;
   List<String> image;
 

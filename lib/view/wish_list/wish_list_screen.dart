@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/controller/cart/cart_controller.dart';
 import 'package:e_commerce_app/controller/home/home_screen_controller.dart';
 import 'package:e_commerce_app/controller/wishlist/wishlist_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
@@ -34,8 +35,8 @@ class WishListScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Consumer2<WishListProvider, HomeScreenProvider>(
-              builder: (context, wishListValues, homeValues, _) {
+            Consumer3<WishListProvider, HomeScreenProvider, CartProvider>(
+              builder: (context, wishListValues, homeValues, cartValues, _) {
                 return wishListValues.loading == true
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height / 1.3,
@@ -112,7 +113,8 @@ class WishListScreen extends StatelessWidget {
                                                         .wishList!
                                                         .products[index]
                                                         .product
-                                                        .discountPrice,
+                                                        .discountPrice
+                                                        .toString(),
                                                     text2:
                                                         '₹${wishListValues.wishList!.products[index].product.price}',
                                                     text3:
@@ -137,9 +139,10 @@ class WishListScreen extends StatelessWidget {
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(4)),
-                                                      child: const Center(
-                                                        child:
-                                                            Text('Add to Cart'),
+                                                      child: Center(
+                                                        child: GestureDetector(
+                                                            child: Text(
+                                                                'Add to Cart')),
                                                       ),
                                                     ),
                                                   )

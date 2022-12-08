@@ -16,6 +16,9 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartScreenProvider =
         Provider.of<CartProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      cartScreenProvider.getCartItems();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -34,7 +37,7 @@ class CartScreen extends StatelessWidget {
                       child: LoadingWidget(),
                     ),
                   )
-                : values.cartList!.products.isEmpty
+                : values.cartList == null || values.cartList!.products.isEmpty
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height / 1.3,
                         width: double.infinity,
@@ -81,7 +84,8 @@ class CartScreen extends StatelessWidget {
                                                 .products[index].discountPrice
                                                 .toString(),
                                             offer: values.cartList!
-                                                .products[index].product.offer,
+                                                .products[index].product.offer
+                                                .toString(),
                                             ontap1: () => values
                                                 .incrementOrDecrementQuantity(
                                               -1,

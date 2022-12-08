@@ -1,9 +1,7 @@
-import 'package:e_commerce_app/controller/cart/cart_controller.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/view/cart/widgets/proudct_quantity.dart';
 import 'package:e_commerce_app/view/cart/widgets/prouduct_descripton.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../constants/api_url.dart';
 import '../../../helper/colors/app_colors.dart';

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/model/cart/add_to_cart_model.dart';
@@ -15,8 +16,10 @@ class CartService {
     try {
       final Response response =
           await dios.get(ApiUrl.apiUrl + ApiEndPoints.cart);
+
       if (response.statusCode == 200) {
         final GetFromCartModel model = GetFromCartModel.fromJson(response.data);
+        log(model.toString());
         return model;
       }
     } catch (e) {

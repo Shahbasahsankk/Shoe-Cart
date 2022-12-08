@@ -57,11 +57,11 @@ class GridViewProducts extends StatelessWidget {
                             width: 150,
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                              "http://${ApiUrl.url}:5008/products/${values.productList[index].image![0]}",
+                              "http://${ApiUrl.url}:5008/products/${values.productList[index].image[0]}",
                             ),
                           ),
                           AppSizedBoxes.sizedboxH5,
-                          Text(values.productList[index].name!),
+                          Text(values.productList[index].name),
                           AppSizedBoxes.sizedboxH3,
                           const Spacer(),
                           ProductDescriptionStyleTwo(

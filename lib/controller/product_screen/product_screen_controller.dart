@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/model/home_models/product_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +27,7 @@ class ProductProvider with ChangeNotifier {
   void sizeSelect(int index) {
     sizeChartIndex = index;
     notifyListeners();
-    productSize = product!.size![index].toString();
+    productSize = product!.size[index].toString();
     notifyListeners();
   }
 
@@ -49,6 +51,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   void loadingStart() {
+    log('loading started');
     loading = true;
     notifyListeners();
   }

@@ -58,6 +58,7 @@ class HomeService {
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<Product> products =
             (response.data as List).map((e) => Product.fromJson(e)).toList();
+
         return products;
       }
     } catch (e) {

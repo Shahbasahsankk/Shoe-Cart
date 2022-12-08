@@ -24,6 +24,7 @@ class ProductViewScreen extends StatelessWidget {
     productProvider.productId = productId;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       productProvider.getAProduct();
+      productProvider.productSize = null;
     });
     return SafeArea(
       child: Scaffold(
@@ -57,7 +58,7 @@ class ProductViewScreen extends StatelessWidget {
                           children: [
                             Stack(
                               children: [
-                                ImageCarousalsWidget(images: product!.image!),
+                                ImageCarousalsWidget(images: product!.image),
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(right: 9, top: 8),
@@ -89,8 +90,8 @@ class ProductViewScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   ProductDescription(
-                                    productName: product.name!,
-                                    rating: product.rating!,
+                                    productName: product.name,
+                                    rating: product.rating,
                                     ratingInWords: '${product.rating} ratings',
                                     linethroughPrice:
                                         '₹${product.discountPrice}',
@@ -119,7 +120,7 @@ class ProductViewScreen extends StatelessWidget {
                                   ),
                                   AppSizedBoxes.sizedboxH12,
                                   SizeChartGridView(
-                                    sizeList: product.size!,
+                                    sizeList: product.size,
                                   ),
                                   AppSizedBoxes.sizedboxH80,
                                 ],
