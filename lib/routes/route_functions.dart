@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/routes/rout_names.dart';
+import 'package:e_commerce_app/view/add_address/model/addaddress_arguement_model.dart';
 import 'package:e_commerce_app/view/address/address_screen.dart';
 import 'package:e_commerce_app/view/cart/cart_screen.dart';
 import 'package:e_commerce_app/view/confirm_order/confirm_order.dart';
@@ -9,6 +10,7 @@ import 'package:e_commerce_app/view/home/widgets/products_collection_screen.dart
 import 'package:e_commerce_app/view/new_password/new_password_screen.dart';
 import 'package:e_commerce_app/view/new_password/model/newpassword_screen_model.dart';
 import 'package:e_commerce_app/view/onBoard/on_board_screen.dart';
+import 'package:e_commerce_app/view/order_summery/model/order_summery_argument_model.dart';
 import 'package:e_commerce_app/view/order_summery/order_summery.dart';
 import 'package:e_commerce_app/view/orders/orders_screen.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
@@ -106,8 +108,12 @@ class AppRoutes {
           builder: (context) => ConfirmOrderScreen(),
         );
       case RouteNames.addNewAddressScreen:
+        final args = settings.arguments as AddNewAddressArguemnetModel;
         return MaterialPageRoute(
-          builder: (context) => AddNewAddressScreen(),
+          builder: (context) => AddNewAddressScreen(
+            addressScreenCheck: args.addressScreenCheck,
+            addressId: args.addressId,
+          ),
         );
       case RouteNames.orderScreen:
         return MaterialPageRoute(
@@ -115,8 +121,11 @@ class AppRoutes {
         );
 
       case RouteNames.orderSummaryScreen:
+        final args = settings.arguments as OrderSummaryArguementModel;
         return MaterialPageRoute(
-          builder: (context) => const OrderSummeryScreen(),
+          builder: (context) => OrderSummeryScreen(
+            addressId: args.addressId,
+          ),
         );
       default:
         return MaterialPageRoute(

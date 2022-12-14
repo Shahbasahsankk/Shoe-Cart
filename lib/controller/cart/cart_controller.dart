@@ -12,7 +12,7 @@ class CartProvider with ChangeNotifier {
   CartProvider() {
     getCartItems();
   }
-  GetFromCartModel? cartList;
+  CartGetModel? cartList;
   bool loading = false;
   bool countLoading = false;
   int quantity = 1;

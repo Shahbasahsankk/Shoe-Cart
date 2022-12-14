@@ -1,10 +1,15 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
+import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+
+import '../widgets/navigator_key_class.dart';
 
 class AppExceptions {
   static void errorHandler(Object e) {
@@ -18,6 +23,13 @@ class AppExceptions {
     } else if (e is MissingPluginException) {
       AppToast.showToast('Plugin error occured', AppColors.redColor);
     } else if (e is DioError) {
+      if (e.response?.statusCode == 403 &&
+          e.response?.data['message'] == 'forbidden') {
+        log('refresh token expired so loging out');
+        // code for logout;
+        Navigator.of(NavigationService.navigatorKey.currentContext!)
+            .pushNamedAndRemoveUntil(RouteNames.signInScreen, (route) => false);
+      }
       if (e.response?.data['message'] != null) {
         AppToast.showToast(
             e.response!.data['message'].toString(), AppColors.redColor);

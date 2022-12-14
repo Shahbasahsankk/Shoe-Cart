@@ -1,5 +1,5 @@
-class GetFromCartModel {
-  GetFromCartModel({
+class CartGetModel {
+  CartGetModel({
     required this.products,
     required this.totalPrice,
     required this.totalDiscount,
@@ -9,8 +9,7 @@ class GetFromCartModel {
   int totalPrice;
   int totalDiscount;
 
-  factory GetFromCartModel.fromJson(Map<String, dynamic> json) =>
-      GetFromCartModel(
+  factory CartGetModel.fromJson(Map<String, dynamic> json) => CartGetModel(
         products: List<ProductElement>.from(
             json["products"].map((x) => ProductElement.fromJson(x))),
         totalPrice: json["totalPrice"],
@@ -50,6 +49,7 @@ class Product {
     required this.discountPrice,
     required this.offer,
     required this.rating,
+    required this.size,
     required this.image,
   });
 
@@ -59,6 +59,7 @@ class Product {
   int discountPrice;
   int offer;
   String rating;
+  List<String> size;
   List<String> image;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -68,6 +69,7 @@ class Product {
         discountPrice: json["discountPrice"],
         offer: json["offer"],
         rating: json["rating"],
+        size: List<String>.from(json["size"].map((x) => x)),
         image: List<String>.from(json["image"].map((x) => x)),
       );
 }

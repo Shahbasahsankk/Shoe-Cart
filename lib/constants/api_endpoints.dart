@@ -11,4 +11,5 @@ class ApiEndPoints {
   static const refreshToken = 'auth/refresh';
   static const wishList = 'wishlist';
   static const cart = 'cart';
+  static const address = 'address';
 }

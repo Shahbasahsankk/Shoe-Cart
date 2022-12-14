@@ -21,9 +21,10 @@ class AddressTypeWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                    color: values.homeSelected == true
-                        ? AppColors.blueColor
-                        : AppColors.whiteColor),
+                  color: values.homeSelected == true
+                      ? AppColors.blueColor
+                      : AppColors.whiteColor,
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +73,7 @@ class AddressTypeWidget extends StatelessWidget {
                   ),
                   AppSizedBoxes.sizedboxW3,
                   Text(
-                    'Work',
+                    'Office',
                     style: TextStyle(
                       color: values.homeSelected == false
                           ? AppColors.blueColor

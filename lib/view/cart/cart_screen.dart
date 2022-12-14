@@ -16,16 +16,12 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartScreenProvider =
         Provider.of<CartProvider>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      cartScreenProvider.getCartItems();
-    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
           backgroundColor: AppColors.transparentColor,
           elevation: 0,
-          actions: const [Icon(Icons.search)],
         ),
         body: Consumer<CartProvider>(
           builder: (context, values, _) {
@@ -52,14 +48,6 @@ class CartScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  AddressRow(
-                                    name: 'John Wick',
-                                    pinCode: '673636',
-                                    address:
-                                        'Willington House, Cambridge Road, Enland, Uk',
-                                    ontap: () {},
-                                  ),
-                                  AppSizedBoxes.sizedboxH8,
                                   const Divider(thickness: 4),
                                   ListView.separated(
                                     physics:

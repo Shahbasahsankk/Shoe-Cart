@@ -4,8 +4,8 @@ import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/view/home/widgets/carousal_slider.dart';
 import 'package:e_commerce_app/view/home/widgets/grid_view_products.dart';
-import 'package:e_commerce_app/view/home/widgets/prefferedsize_appbar.dart';
 import 'package:e_commerce_app/view/home/widgets/sales_widget.dart';
+import 'package:e_commerce_app/view/home/widgets/shoe_cart.dart';
 import 'package:e_commerce_app/view/home/widgets/shoe_circle_avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +24,9 @@ class HomeScreen extends StatelessWidget {
         appBar: const PreferredSize(
           preferredSize: Size(
             double.infinity,
-            130,
+            100,
           ),
-          child: PrefferedSizeAppBarWidget(),
+          child: ShoeCart(),
         ),
         backgroundColor: AppColors.backgroundColor,
         body: SingleChildScrollView(

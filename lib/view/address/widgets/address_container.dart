@@ -1,4 +1,6 @@
+import 'package:e_commerce_app/controller/add_new_address/add_new_address_controller.dart';
 import 'package:e_commerce_app/controller/address/address_controller.dart';
+import 'package:e_commerce_app/model/address/address_screen_enum_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,13 +14,17 @@ class AddressContainer extends StatelessWidget {
     required this.addressType,
     required this.address,
     required this.phone,
+    required this.addressId,
   });
   final String name;
   final String addressType;
   final String address;
   final String phone;
+  final String addressId;
   @override
   Widget build(BuildContext context) {
+    final addNewAddressProvider =
+        Provider.of<AddNewAddressProvider>(context, listen: false);
     final addressProvider =
         Provider.of<AddressProvider>(context, listen: false);
     return Container(
@@ -30,10 +36,12 @@ class AddressContainer extends StatelessWidget {
           Row(
             children: [
               Radio(
-                value: addressProvider.address1,
-                groupValue: addressProvider.addressType,
-                onChanged: (value) => addressProvider.addressChange(value),
-              ),
+                  value: addressId,
+                  groupValue: addNewAddressProvider.addressGroupValue,
+                  onChanged: (value) {
+                    addNewAddressProvider.addressChange(value);
+                    addressProvider.addressId = addressId;
+                  }),
               Text(name),
               AppSizedBoxes.sizedboxW5,
               Container(
@@ -62,7 +70,11 @@ class AddressContainer extends StatelessWidget {
                 ),
                 child: Center(
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () => addressProvider.toEditAddressScreen(
+                      context,
+                      AddressScreenEnum.editAddressScreen,
+                      addressId,
+                    ),
                     child: const Text(
                       'Edit',
                       style: TextStyle(

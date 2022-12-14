@@ -32,12 +32,6 @@ class ProductViewScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: AppColors.transparentColor,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.search),
-            ),
-          ],
         ),
         body: Consumer3<ProductProvider, WishListProvider, CartProvider>(
           builder: (context, values, values2, values3, _) {
@@ -92,7 +86,6 @@ class ProductViewScreen extends StatelessWidget {
                                   ProductDescription(
                                     productName: product.name,
                                     rating: product.rating,
-                                    ratingInWords: '${product.rating} ratings',
                                     linethroughPrice:
                                         '₹${product.discountPrice}',
                                     currentPrice: '₹${product.price}',

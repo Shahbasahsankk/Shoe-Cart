@@ -9,14 +9,12 @@ class ProductDescription extends StatelessWidget {
     super.key,
     required this.productName,
     required this.rating,
-    required this.ratingInWords,
     required this.linethroughPrice,
     required this.currentPrice,
     required this.offer,
   });
   final String productName;
   final String rating;
-  final String ratingInWords;
   final String linethroughPrice;
   final String currentPrice;
   final String offer;
@@ -30,28 +28,23 @@ class ProductDescription extends StatelessWidget {
           style: const TextStyle(fontSize: 18),
         ),
         AppSizedBoxes.sizedboxH8,
-        Row(
-          children: [
-            Container(
-              width: 40,
-              color: AppColors.greenColor,
-              child: Row(
-                children: [
-                  Text(
-                    rating,
-                    style: const TextStyle(color: AppColors.whiteColor),
-                  ),
-                  const Icon(
-                    Icons.star,
-                    size: 18,
-                    color: AppColors.whiteColor,
-                  )
-                ],
+        Container(
+          width: 45,
+          color: AppColors.greenColor,
+          child: Row(
+            children: [
+              AppSizedBoxes.sizedboxW5,
+              Text(
+                rating,
+                style: const TextStyle(color: AppColors.whiteColor),
               ),
-            ),
-            AppSizedBoxes.sizedboxW5,
-            Text(ratingInWords),
-          ],
+              const Icon(
+                Icons.star,
+                size: 18,
+                color: AppColors.whiteColor,
+              )
+            ],
+          ),
         ),
         AppSizedBoxes.sizedboxH8,
         ProductDescriptionStyleTwo(

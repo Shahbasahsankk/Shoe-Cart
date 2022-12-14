@@ -9,12 +9,14 @@ class DetailsPrice extends StatelessWidget {
     this.fontWeight = FontWeight.normal,
     this.color1 = AppColors.whiteColor,
     this.color2 = AppColors.whiteColor,
+    this.rupeeSymbol = false,
   });
   final String text1;
   final String text2;
   final FontWeight fontWeight;
   final Color color1;
   final Color color2;
+  final bool rupeeSymbol;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -28,7 +30,7 @@ class DetailsPrice extends StatelessWidget {
           ),
         ),
         Text(
-          text2,
+          rupeeSymbol == false ? '₹$text2' : text2,
           style: TextStyle(
             fontWeight: fontWeight,
             color: color2,

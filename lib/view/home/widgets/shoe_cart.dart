@@ -8,27 +8,37 @@ class ShoeCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.blackcolor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Center(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 50,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: AppColors.blackcolor,
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Image(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            AppSizedBoxes.sizedboxW15,
+            const Image(
               height: 80,
               width: 50,
               image: AssetImage('assets/splash_screen_assets/shoe_logo.png'),
             ),
             AppSizedBoxes.sizedboxW3,
-            Text(
+            const Text(
               'ShoeCart',
               style: AppTextStyles.textStyle4,
             ),
+            Spacer(),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.search,
+              ),
+            ),
+            AppSizedBoxes.sizedboxW10,
           ],
         ),
       ),

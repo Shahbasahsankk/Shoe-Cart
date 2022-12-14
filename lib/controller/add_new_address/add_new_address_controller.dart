@@ -1,4 +1,10 @@
+import 'dart:developer';
+
+import 'package:e_commerce_app/model/address/add_address_model.dart';
+import 'package:e_commerce_app/model/address/address_screen_enum_model.dart';
+import 'package:e_commerce_app/model/address/get_address_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
+import 'package:e_commerce_app/service/address/address_service.dart';
 import 'package:e_commerce_app/service/geo_location/geo_location.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -14,6 +20,12 @@ class AddNewAddressProvider with ChangeNotifier {
       TextEditingController();
   bool homeSelected = true;
   bool loading = false;
+  bool loading2 = false;
+  List<AddressModel> addressList = [];
+  AddNewAddressModel? address;
+  AddressModel? singleAddress;
+  String addressType = 'Home';
+  String? addressGroupValue = 'address1';
 
   String? namesHouseandAreaValiator(String? value, String text) {
     if (value == null || value.isEmpty) {
@@ -44,12 +56,24 @@ class AddNewAddressProvider with ChangeNotifier {
   void selectAddressType() {
     homeSelected = !homeSelected;
     notifyListeners();
+    homeSelected == true ? addressType = 'Home' : addressType = 'Office';
+    notifyListeners();
   }
 
-  void saveAddress(FormState currentState, BuildContext context) {
+  void saveAddress(FormState currentState, BuildContext context,
+      AddressScreenEnum addressScreenCheck, String? addressId) {
     if (currentState.validate()) {
-      Navigator.of(context).pushReplacementNamed(RouteNames.addressScreen);
+      if (addressScreenCheck == AddressScreenEnum.addAddressScreen) {
+        addNewAddress(context);
+      } else {
+        updateAddress(context, addressId!);
+      }
     }
+  }
+
+  void addressChange(String? value) {
+    addressGroupValue = value.toString();
+    notifyListeners();
   }
 
   Future<void> useMyLocation() async {
@@ -78,5 +102,129 @@ class AddNewAddressProvider with ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+
+  Future<void> getAllAddresses() async {
+    loading = true;
+    notifyListeners();
+    await AddressService().getAllAddress().then((value) {
+      if (value != null) {
+        addressList = value;
+        notifyListeners();
+        loading = false;
+        notifyListeners();
+      } else {
+        loading = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  void addNewAddress(BuildContext context) async {
+    loading2 = true;
+    notifyListeners();
+    final AddNewAddressModel model = AddNewAddressModel(
+      addressType: addressType,
+      name: fullNameController.text,
+      contactNumber: phoneNumberController.text,
+      pinCode: pincodeController.text,
+      state: stateController.text,
+      place: cityController.text,
+      address: houseAndBuildingController.text,
+      areaColony: roadNameAreaColonyController.text,
+    );
+    await AddressService().addAddress(model).then((value) {
+      if (value != null) {
+        clearControllers();
+        Navigator.of(context).pop();
+        loading2 = false;
+        notifyListeners();
+      } else {
+        loading2 = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  void clearControllers() {
+    fullNameController.clear();
+    pincodeController.clear();
+    stateController.clear();
+    houseAndBuildingController.clear();
+    roadNameAreaColonyController.clear();
+    cityController.clear();
+    phoneNumberController.clear();
+    addressType = 'Home';
+  }
+
+  void updateAddress(BuildContext context, String addressId) async {
+    loading2 = true;
+    notifyListeners();
+    final AddNewAddressModel model = AddNewAddressModel(
+      addressType: addressType,
+      name: fullNameController.text,
+      contactNumber: phoneNumberController.text,
+      pinCode: pincodeController.text,
+      state: stateController.text,
+      place: cityController.text,
+      address: houseAndBuildingController.text,
+      areaColony: roadNameAreaColonyController.text,
+    );
+    await AddressService().updateAddress(model, addressId).then((value) {
+      if (value != null) {
+        clearControllers();
+        Navigator.of(context).pop();
+        loading2 = false;
+        notifyListeners();
+      } else {
+        loading2 = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  void getSingleAddress(String addressId) async {
+    loading = true;
+    notifyListeners();
+    await AddressService().getSingleAddress(addressId).then((value) {
+      if (value != null) {
+        singleAddress = value;
+        notifyListeners();
+        loading = false;
+        notifyListeners();
+      } else {
+        loading = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  void setAddressScreen(
+      AddressScreenEnum addressScreenCheck, String? addressId) async {
+    if (addressScreenCheck == AddressScreenEnum.addAddressScreen) {
+      fullNameController.clear();
+      cityController.clear();
+      pincodeController.clear();
+      roadNameAreaColonyController.clear();
+      phoneNumberController.clear();
+      houseAndBuildingController.clear();
+      notifyListeners();
+    } else {
+      await AddressService().getSingleAddress(addressId!).then((value) {
+        if (value != null) {
+          fullNameController.text = value.fullName;
+          cityController.text = value.place;
+          pincodeController.text = value.pin;
+          stateController.text = value.state;
+          phoneNumberController.text = value.phone;
+          roadNameAreaColonyController.text = value.landMark;
+          houseAndBuildingController.text = value.address;
+          notifyListeners();
+          log(value.title.toString());
+          value.title == 'Home' ? homeSelected = true : homeSelected = false;
+          notifyListeners();
+        }
+      });
+    }
   }
 }

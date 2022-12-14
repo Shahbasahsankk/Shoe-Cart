@@ -12,6 +12,12 @@ class SizeChartGridView extends StatelessWidget {
   final List<String> sizeList;
   @override
   Widget build(BuildContext context) {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // write code to summon the productSize;
+    });
     return Consumer2<ProductProvider, CartProvider>(
       builder: (context, values, values2, _) {
         return GridView.builder(

@@ -30,7 +30,7 @@ class Interceptorapi {
               RequestOptions requestOptions = e.requestOptions;
               try {
                 final refreshToken = await storage.read(key: 'refreshToken');
-                log('calling with refreshToken');
+                log(refreshToken.toString());
                 final opts = Options(method: requestOptions.method);
                 dio.options.headers["refresh"] = "Bearer $refreshToken";
                 final Response response = await dio.get(
@@ -38,27 +38,33 @@ class Interceptorapi {
                   options: opts,
                 );
                 if (response.statusCode! == 200) {
-                  log('new token got');
                   log(response.data.toString());
                   final token = response.data['accessToken'];
+                  final refreshToken = response.data['refreshToken'];
+                  await storage.delete(key: 'token');
+                  await storage.delete(key: 'refreshToken');
                   storage.write(key: 'token', value: token);
+                  storage.write(key: 'refreshToken', value: refreshToken);
                 }
               } catch (e) {
                 AppExceptions.errorHandler(e);
               }
-
-              final token = await storage.read(key: 'token');
-              final opts = Options(method: requestOptions.method);
-              dio.options.headers["Authorization"] = "Bearer $token";
-              final response = await dio.request(
-                requestOptions.path,
-                options: opts,
-                cancelToken: requestOptions.cancelToken,
-                onReceiveProgress: requestOptions.onReceiveProgress,
-                data: requestOptions.data,
-                queryParameters: requestOptions.queryParameters,
-              );
-              return handler.resolve(response);
+              try {
+                final token = await storage.read(key: 'token');
+                final opts = Options(method: requestOptions.method);
+                dio.options.headers["Authorization"] = "Bearer $token";
+                final response = await dio.request(
+                  requestOptions.path,
+                  options: opts,
+                  cancelToken: requestOptions.cancelToken,
+                  onReceiveProgress: requestOptions.onReceiveProgress,
+                  data: requestOptions.data,
+                  queryParameters: requestOptions.queryParameters,
+                );
+                return handler.resolve(response);
+              } catch (e) {
+                AppExceptions.errorHandler(e);
+              }
             }
           } else {
             handler.next(e);

@@ -15,7 +15,6 @@ class WishListService {
       final Response response =
           await dios.get(ApiUrl.apiUrl + ApiEndPoints.wishList);
       if (response.statusCode == 200) {
-        log(response.data.toString());
         final WishListModel model = WishListModel.fromJson(response.data);
         return model;
       }

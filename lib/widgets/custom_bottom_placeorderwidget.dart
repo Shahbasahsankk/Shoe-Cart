@@ -34,12 +34,14 @@ class CustomBottomPlaceOrderWidget extends StatelessWidget {
               children: [
                 const Text(
                   'Total Amount',
-                  style: TextStyle(
+                ),
+                Text(
+                  '₹$totalAmount',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(totalAmount)
               ],
             ),
             const Spacer(),

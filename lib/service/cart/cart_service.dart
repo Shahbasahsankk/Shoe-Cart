@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/model/cart/add_to_cart_model.dart';
@@ -11,15 +10,14 @@ import '../../utils/app_exceptions.dart';
 import '../../utils/dio_interceptor.dart';
 
 class CartService {
-  Future<GetFromCartModel?> getCartItems() async {
+  Future<CartGetModel?> getCartItems() async {
     Dio dios = await Interceptorapi().getApiUser();
     try {
       final Response response =
           await dios.get(ApiUrl.apiUrl + ApiEndPoints.cart);
 
       if (response.statusCode == 200) {
-        final GetFromCartModel model = GetFromCartModel.fromJson(response.data);
-        log(model.toString());
+        final CartGetModel model = CartGetModel.fromJson(response.data);
         return model;
       }
     } catch (e) {

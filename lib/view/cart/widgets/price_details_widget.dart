@@ -38,14 +38,16 @@ class PriceDetailsWidget extends StatelessWidget {
         AppSizedBoxes.sizedboxH8,
         DetailsPrice(
           text1: 'Discount',
-          text2: '- $discount',
+          text2: '- ₹$discount',
           color2: AppColors.greenColor,
+          rupeeSymbol: true,
         ),
         AppSizedBoxes.sizedboxH8,
         DetailsPrice(
           text1: 'Delivery Charges',
           text2: deliveryCharge,
           color2: AppColors.greenColor,
+          rupeeSymbol: true,
         ),
         AppSizedBoxes.sizedboxH8,
         const Divider(thickness: 1),

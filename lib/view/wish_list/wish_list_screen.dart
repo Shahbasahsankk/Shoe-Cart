@@ -15,23 +15,12 @@ class WishListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wishListProvider =
-        Provider.of<WishListProvider>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      wishListProvider.getWishListItems();
-    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
           backgroundColor: AppColors.transparentColor,
           elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: () => wishListProvider.toCartScreen(context),
-              icon: const Icon(Icons.shopping_cart),
-            ),
-          ],
         ),
         body: Column(
           children: [
@@ -66,7 +55,7 @@ class WishListScreen extends StatelessWidget {
                                   crossAxisCount: 2,
                                   mainAxisSpacing: 10,
                                   crossAxisSpacing: 8,
-                                  childAspectRatio: 1.3 / 2,
+                                  childAspectRatio: 1.5 / 2,
                                 ),
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
@@ -81,6 +70,9 @@ class WishListScreen extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                             color: Colors.black26,
+                                            border: Border.all(
+                                              color: AppColors.whiteColor54,
+                                            ),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -109,43 +101,14 @@ class WishListScreen extends StatelessWidget {
                                                   ),
                                                   AppSizedBoxes.sizedboxH3,
                                                   ProductTextdesciptionStyle(
-                                                    text1: wishListValues
-                                                        .wishList!
-                                                        .products[index]
-                                                        .product
-                                                        .discountPrice
-                                                        .toString(),
+                                                    text1:
+                                                        "₹${wishListValues.wishList!.products[index].product.discountPrice}",
                                                     text2:
                                                         '₹${wishListValues.wishList!.products[index].product.price}',
                                                     text3:
                                                         '${wishListValues.wishList!.products[index].product.offer}% off',
                                                   ),
                                                   AppSizedBoxes.sizedboxH5,
-                                                  const Spacer(),
-                                                  AppSizedBoxes.sizedboxH5,
-                                                  GestureDetector(
-                                                    onTap: () => wishListValues
-                                                        .toCartScreen(context),
-                                                    child: Container(
-                                                      height: 30,
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                          color: AppColors
-                                                              .transparentColor,
-                                                          border: Border.all(
-                                                            color: AppColors
-                                                                .dullWhitecolor,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(4)),
-                                                      child: Center(
-                                                        child: GestureDetector(
-                                                            child: Text(
-                                                                'Add to Cart')),
-                                                      ),
-                                                    ),
-                                                  )
                                                 ],
                                               ),
                                             ),
