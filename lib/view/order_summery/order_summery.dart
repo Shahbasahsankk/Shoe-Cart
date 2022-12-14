@@ -89,7 +89,7 @@ class OrderSummeryScreen extends StatelessWidget {
                                 const Divider(thickness: 4),
                                 AppSizedBoxes.sizedboxH12,
                                 const PriceDetailsWidget(
-                                  itemCount: 1,
+                                  itemCount: '1',
                                   amount: '849',
                                   discount: '651',
                                   deliveryCharge: 'Free',

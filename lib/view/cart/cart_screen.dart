@@ -163,7 +163,8 @@ class CartScreen extends StatelessWidget {
                                   const Divider(thickness: 4),
                                   AppSizedBoxes.sizedboxH12,
                                   PriceDetailsWidget(
-                                    itemCount: values.cartList!.products.length,
+                                    itemCount:
+                                        values.totalProductCount.toString(),
                                     amount: values.cartList!.totalDiscount
                                         .toString(),
                                     discount: values.totalSave.toString(),

@@ -13,7 +13,7 @@ class PriceDetailsWidget extends StatelessWidget {
     required this.deliveryCharge,
     required this.totalAmount,
   });
-  final num itemCount;
+  final String itemCount;
   final String discount;
   final String deliveryCharge;
   final String totalAmount;

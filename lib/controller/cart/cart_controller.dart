@@ -18,6 +18,7 @@ class CartProvider with ChangeNotifier {
   int quantity = 1;
   List<String> cartItemsId = [];
   int? totalSave;
+  int? totalProductCount;
 
   void getCartItems() async {
     loading = true;
@@ -26,6 +27,7 @@ class CartProvider with ChangeNotifier {
       if (value != null) {
         cartList = value;
         notifyListeners();
+        totalProductsCount();
         cartItemsId = cartList!.products.map((e) => e.product.id).toList();
         notifyListeners();
         totalSave =
@@ -67,6 +69,15 @@ class CartProvider with ChangeNotifier {
     }
   }
 
+  void totalProductsCount() {
+    int count = 0;
+    for (var i = 0; i < cartList!.products.length; i++) {
+      count = count + cartList!.products[i].qty;
+    }
+    totalProductCount = count;
+    notifyListeners();
+  }
+
   void removeFromCart(String productId) async {
     loading = true;
     notifyListeners();
@@ -98,6 +109,7 @@ class CartProvider with ChangeNotifier {
             if (value != null) {
               cartList = value;
               notifyListeners();
+              totalProductsCount();
               cartItemsId =
                   cartList!.products.map((e) => e.product.id).toList();
               notifyListeners();
