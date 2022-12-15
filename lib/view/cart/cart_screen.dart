@@ -1,9 +1,10 @@
 import 'package:e_commerce_app/controller/cart/cart_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
+import 'package:e_commerce_app/model/order_summary/order_summary_screen_enum.dart';
 import 'package:e_commerce_app/utils/loading_widget.dart';
-import 'package:e_commerce_app/view/cart/widgets/address_row.dart';
 import 'package:e_commerce_app/view/cart/widgets/cart_product.dart';
+import 'package:e_commerce_app/view/cart/widgets/custom_cart_button.dart';
 import 'package:e_commerce_app/view/cart/widgets/price_details_widget.dart';
 import 'package:e_commerce_app/widgets/custom_bottom_placeorderwidget.dart';
 import 'package:flutter/material.dart';
@@ -115,40 +116,38 @@ class CartScreen extends StatelessWidget {
                                           AppSizedBoxes.sizedboxH8,
                                           const Divider(thickness: 1),
                                           AppSizedBoxes.sizedboxH5,
-                                          Center(
-                                            child: GestureDetector(
-                                              onTap: () =>
-                                                  values.removeFromCart(values
-                                                      .cartList!
-                                                      .products[index]
-                                                      .product
-                                                      .id),
-                                              child: Container(
-                                                width: 120,
-                                                height: 30,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    color: AppColors
-                                                        .dullWhitecolor,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: const [
-                                                    Icon(
-                                                      Icons
-                                                          .delete_forever_sharp,
-                                                      color: AppColors.redColor,
-                                                    ),
-                                                    AppSizedBoxes.sizedboxW5,
-                                                    Text('Remove')
-                                                  ],
-                                                ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              CustomCartButton(
+                                                text: 'Remove',
+                                                onTap: () =>
+                                                    values.removeFromCart(values
+                                                        .cartList!
+                                                        .products[index]
+                                                        .product
+                                                        .id),
+                                                color: AppColors.redColor,
+                                                icon:
+                                                    Icons.delete_forever_sharp,
                                               ),
-                                            ),
+                                              AppSizedBoxes.sizedboxW15,
+                                              CustomCartButton(
+                                                text: 'Buy now',
+                                                onTap: () =>
+                                                    values.toAddressScreen(
+                                                  context,
+                                                  OrderSummaryScreenEnum
+                                                      .buyOneProductOrderSummaryScreen,
+                                                  values.cartList!.id,
+                                                  values.cartList!
+                                                      .products[index].id,
+                                                ),
+                                                color: AppColors.blueColor,
+                                                icon: Icons.shopify,
+                                              ),
+                                            ],
                                           ),
                                           AppSizedBoxes.sizedboxH12,
                                         ],
@@ -179,8 +178,12 @@ class CartScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: CustomBottomPlaceOrderWidget(
-                              ontap: () =>
-                                  cartScreenProvider.toAddressScreen(context),
+                              ontap: () => cartScreenProvider.toAddressScreen(
+                                  context,
+                                  OrderSummaryScreenEnum
+                                      .normalOrderSummaryScreen,
+                                  null,
+                                  null),
                               totalAmount:
                                   values.cartList!.totalPrice.toString(),
                             ),

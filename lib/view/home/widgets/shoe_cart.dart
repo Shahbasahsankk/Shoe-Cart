@@ -31,7 +31,7 @@ class ShoeCart extends StatelessWidget {
               'ShoeCart',
               style: AppTextStyles.textStyle4,
             ),
-            Spacer(),
+            const Spacer(),
             IconButton(
               onPressed: () {},
               icon: const Icon(

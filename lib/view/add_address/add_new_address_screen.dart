@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:e_commerce_app/controller/add_new_address/add_new_address_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
 import 'package:e_commerce_app/model/address/address_screen_enum_model.dart';
-import 'package:e_commerce_app/model/address/get_address_model.dart';
 import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:e_commerce_app/view/add_address/widgets/address_type_widget.dart';
 import 'package:e_commerce_app/view/add_address/widgets/location_and_pincode.dart';

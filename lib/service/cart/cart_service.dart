@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/model/cart/add_to_cart_model.dart';
 import 'package:e_commerce_app/model/cart/get_from_cart_model.dart';
+import 'package:e_commerce_app/model/cart/get_single_cart_model.dart';
 
 import '../../constants/api_endpoints.dart';
 import '../../constants/api_url.dart';
@@ -52,6 +54,24 @@ class CartService {
       if (response.statusCode == 201) {
         final String resp = response.data['message'];
         return resp;
+      }
+    } catch (e) {
+      AppExceptions.errorHandler(e);
+    }
+    return null;
+  }
+
+  Future<List<GetSingelCartProduct>?> getSingleCartProduct(
+      String productId, String cartId) async {
+    Dio dios = await Interceptorapi().getApiUser();
+    try {
+      final Response response = await dios.get(
+          "${ApiUrl.apiUrl + ApiEndPoints.cart}/$cartId/product/$productId");
+      if (response.statusCode == 200) {
+        final List<GetSingelCartProduct> product = (response.data as List)
+            .map((e) => GetSingelCartProduct.fromJson(e))
+            .toList();
+        return product;
       }
     } catch (e) {
       AppExceptions.errorHandler(e);

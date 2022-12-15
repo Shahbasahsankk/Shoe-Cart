@@ -3,6 +3,7 @@ import 'package:e_commerce_app/controller/product_screen/product_screen_controll
 import 'package:e_commerce_app/controller/wishlist/wishlist_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
+import 'package:e_commerce_app/model/order_summary/order_summary_screen_enum.dart';
 import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/custom_bottom_container.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/product_description.dart';
@@ -141,13 +142,27 @@ class ProductViewScreen extends StatelessWidget {
                                     : values3.addToCart(
                                         values.product!.id.toString(),
                                         values.productSize,
-                                      ),
+                                        null),
                               ),
                               CustomBottomContainer(
-                                containerColor: AppColors.yellowColor,
-                                text: 'Buy now',
-                                ontap: () => values.toAddressScreen(context),
-                              ),
+                                  containerColor: AppColors.yellowColor,
+                                  text: 'Buy now',
+                                  ontap: () {
+                                    values3.cartItemsId
+                                            .contains(values.product!.id)
+                                        ? null
+                                        : values3.addToCart(
+                                            values.product!.id.toString(),
+                                            values.productSize,
+                                            OrderSummaryScreenEnum
+                                                .buyOneProductOrderSummaryScreen);
+                                    values.toAddressScreen(
+                                        context,
+                                        OrderSummaryScreenEnum
+                                            .buyOneProductOrderSummaryScreen,
+                                        values3.cartList!.id,
+                                        product.id);
+                                  }),
                             ],
                           ),
                         ),

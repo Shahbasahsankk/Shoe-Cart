@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/constants/api_endpoints.dart';
 import 'package:e_commerce_app/constants/api_url.dart';

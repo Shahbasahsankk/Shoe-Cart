@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/view/add_address/model/addaddress_arguement_model.dart';
 import 'package:e_commerce_app/view/address/address_screen.dart';
+import 'package:e_commerce_app/view/address/model/address_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/cart/cart_screen.dart';
 import 'package:e_commerce_app/view/confirm_order/confirm_order.dart';
 import 'package:e_commerce_app/view/forgot_password/forgot_password_screen.dart';
@@ -100,8 +101,13 @@ class AppRoutes {
           builder: (context) => const PaymentScreen(),
         );
       case RouteNames.addressScreen:
+        final args = settings.arguments as AddressScreenArguementModel;
         return MaterialPageRoute(
-          builder: (context) => const AddressScreen(),
+          builder: (context) => AddressScreen(
+            screenCheck: args.screenCheck,
+            cartId: args.cartId,
+            productId: args.productId,
+          ),
         );
       case RouteNames.confirmOrderScreen:
         return MaterialPageRoute(
@@ -125,6 +131,9 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => OrderSummeryScreen(
             addressId: args.addressId,
+            screenCheck: args.screenCheck,
+            cartId: args.cartId,
+            productId: args.productId,
           ),
         );
       default:

@@ -4,7 +4,9 @@ import 'package:e_commerce_app/model/home_models/product_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../model/order_summary/order_summary_screen_enum.dart';
 import '../../service/home/home_service.dart';
+import '../../view/address/model/address_screen_arguement_model.dart';
 
 class ProductProvider with ChangeNotifier {
   ProductProvider() {
@@ -20,8 +22,22 @@ class ProductProvider with ChangeNotifier {
     Navigator.of(context).pushNamed(RouteNames.cartScreen);
   }
 
-  void toAddressScreen(context) {
-    Navigator.of(context).pushNamed(RouteNames.addressScreen);
+  void toAddressScreen(context, OrderSummaryScreenEnum orderScreenCheck,
+      String? cartId, String? productId) {
+    log(orderScreenCheck.toString());
+    final args = AddressScreenArguementModel(
+      screenCheck: orderScreenCheck,
+      cartId: cartId,
+      productId: productId,
+    );
+    if (productSize != null) {
+      Navigator.of(context).pushNamed(
+        RouteNames.addressScreen,
+        arguments: args,
+      );
+    } else {
+      return;
+    }
   }
 
   void sizeSelect(int index) {

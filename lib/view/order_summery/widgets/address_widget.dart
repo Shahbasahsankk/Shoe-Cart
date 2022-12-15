@@ -1,7 +1,4 @@
-import 'package:e_commerce_app/controller/order_summary/order_summary_controller.dart';
-import 'package:e_commerce_app/view/order_summery/model/order_summery_argument_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../helper/colors/app_colors.dart';
 import '../../../helper/sizedboxes/app_sizedboxes.dart';

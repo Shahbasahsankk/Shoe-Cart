@@ -3,9 +3,11 @@ import 'dart:developer';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/cart/add_to_cart_model.dart';
 import 'package:e_commerce_app/model/cart/get_from_cart_model.dart';
+import 'package:e_commerce_app/model/order_summary/order_summary_screen_enum.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/cart/cart_service.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
+import 'package:e_commerce_app/view/address/model/address_screen_arguement_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class CartProvider with ChangeNotifier {
@@ -42,7 +44,8 @@ class CartProvider with ChangeNotifier {
     });
   }
 
-  void addToCart(String productId, String? productSize) async {
+  void addToCart(String productId, String? productSize,
+      OrderSummaryScreenEnum? screenCheck) async {
     if (productSize == null) {
       AppToast.showToast('Select size', AppColors.redColor);
     } else {
@@ -55,10 +58,13 @@ class CartProvider with ChangeNotifier {
         if (value != null) {
           getCartItems();
           if (value == 'product added to cart successfully') {
-            AppToast.showToast(
-              'Product added to cart',
-              AppColors.greenColor,
-            );
+            screenCheck !=
+                    OrderSummaryScreenEnum.buyOneProductOrderSummaryScreen
+                ? AppToast.showToast(
+                    'Product added to cart',
+                    AppColors.greenColor,
+                  )
+                : null;
           } else {
             null;
           }
@@ -94,9 +100,10 @@ class CartProvider with ChangeNotifier {
     });
   }
 
-  void incrementOrDecrementQuantity(int qty, String productId,
+  Future<void> incrementOrDecrementQuantity(int qty, String productId,
       String productSize, int productquantity) async {
-    log(productquantity.toString());
+    countLoading = true;
+    notifyListeners();
     final AddToCartModel model = AddToCartModel(
       productId: productId,
       quantity: qty,
@@ -116,7 +123,11 @@ class CartProvider with ChangeNotifier {
               totalSave = cartList!.totalDiscount.toInt() -
                   cartList!.totalPrice.toInt();
               notifyListeners();
+              countLoading = false;
+              notifyListeners();
             } else {
+              countLoading = false;
+              notifyListeners();
               null;
             }
           });
@@ -126,10 +137,26 @@ class CartProvider with ChangeNotifier {
       });
     } else {
       null;
+      countLoading = false;
+      notifyListeners();
     }
   }
 
-  void toAddressScreen(context) {
-    Navigator.of(context).pushNamed(RouteNames.addressScreen);
+  void toAddressScreen(
+    BuildContext context,
+    OrderSummaryScreenEnum orderScreenCheck,
+    String? cartId,
+    String? productId,
+  ) {
+    log(orderScreenCheck.toString());
+    final args = AddressScreenArguementModel(
+      screenCheck: orderScreenCheck,
+      cartId: cartId,
+      productId: productId,
+    );
+    Navigator.of(context).pushNamed(
+      RouteNames.addressScreen,
+      arguments: args,
+    );
   }
 }

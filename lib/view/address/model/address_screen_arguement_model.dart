@@ -1,14 +1,12 @@
 import 'package:e_commerce_app/model/order_summary/order_summary_screen_enum.dart';
 
-class OrderSummaryArguementModel {
-  final String addressId;
+class AddressScreenArguementModel {
   final OrderSummaryScreenEnum screenCheck;
-  final String? productId;
   final String? cartId;
-  OrderSummaryArguementModel({
-    required this.addressId,
+  final String? productId;
+  AddressScreenArguementModel({
     required this.screenCheck,
-    this.productId,
     this.cartId,
+    this.productId,
   });
 }

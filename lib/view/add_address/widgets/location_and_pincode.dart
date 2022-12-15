@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/controller/add_new_address/add_new_address_controller.dart';
-import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

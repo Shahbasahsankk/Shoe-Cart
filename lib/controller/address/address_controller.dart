@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/address/address_screen_enum_model.dart';
+import 'package:e_commerce_app/model/order_summary/order_summary_screen_enum.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
 import 'package:e_commerce_app/view/add_address/model/addaddress_arguement_model.dart';
@@ -14,19 +15,23 @@ class AddressProvider with ChangeNotifier {
   String? addressId;
   bool loading = false;
 
-  void toOrderSummaryScreen(context) {
+  void toOrderSummaryScreen(context, OrderSummaryScreenEnum screenCheck,
+      String? productId, String? cartId) {
     if (addressId == null) {
       AppToast.showToast('Select an address', AppColors.redColor);
     } else {
-      final args = OrderSummaryArguementModel(addressId: addressId!);
-      log(addressId.toString());
+      final args = OrderSummaryArguementModel(
+        addressId: addressId!,
+        screenCheck: screenCheck,
+        productId: productId,
+        cartId: cartId,
+      );
       Navigator.of(context)
           .pushNamed(RouteNames.orderSummaryScreen, arguments: args);
     }
   }
 
   void toAddNewAddressScreen(context, AddressScreenEnum addressScreenCheck) {
-    log(addressScreenCheck.toString());
     final args =
         AddNewAddressArguemnetModel(addressScreenCheck: addressScreenCheck);
     Navigator.of(context)
@@ -35,7 +40,6 @@ class AddressProvider with ChangeNotifier {
 
   void toEditAddressScreen(
       context, AddressScreenEnum addressScreenCheck, String addressId) {
-    log(addressScreenCheck.toString());
     final args = AddNewAddressArguemnetModel(
         addressScreenCheck: addressScreenCheck, addressId: addressId);
     Navigator.of(context)

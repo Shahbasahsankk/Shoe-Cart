@@ -1,27 +1,5 @@
-class CartGetModel {
-  CartGetModel({
-    required this.id,
-    required this.products,
-    required this.totalPrice,
-    required this.totalDiscount,
-  });
-
-  String id;
-  List<ProductElement> products;
-  int totalPrice;
-  int totalDiscount;
-
-  factory CartGetModel.fromJson(Map<String, dynamic> json) => CartGetModel(
-        id: json["_id"],
-        products: List<ProductElement>.from(
-            json["products"].map((x) => ProductElement.fromJson(x))),
-        totalPrice: json["totalPrice"],
-        totalDiscount: json["totalDiscount"],
-      );
-}
-
-class ProductElement {
-  ProductElement({
+class GetSingelCartProduct {
+  GetSingelCartProduct({
     required this.product,
     required this.size,
     required this.qty,
@@ -37,7 +15,8 @@ class ProductElement {
   int discountPrice;
   String id;
 
-  factory ProductElement.fromJson(Map<String, dynamic> json) => ProductElement(
+  factory GetSingelCartProduct.fromJson(Map<String, dynamic> json) =>
+      GetSingelCartProduct(
         product: Product.fromJson(json["product"]),
         size: json["size"],
         qty: json["qty"],

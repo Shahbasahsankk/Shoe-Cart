@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/controller/add_new_address/add_new_address_controller.dart';
 import 'package:e_commerce_app/controller/address/address_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/address/address_screen_enum_model.dart';
+import 'package:e_commerce_app/model/order_summary/order_summary_screen_enum.dart';
 import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:e_commerce_app/view/address/widgets/address_container.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +13,15 @@ import 'package:provider/provider.dart';
 import '../../helper/sizedboxes/app_sizedboxes.dart';
 
 class AddressScreen extends StatelessWidget {
-  const AddressScreen({super.key});
-
+  const AddressScreen({
+    super.key,
+    required this.screenCheck,
+    this.cartId,
+    this.productId,
+  });
+  final OrderSummaryScreenEnum screenCheck;
+  final String? cartId;
+  final String? productId;
   @override
   Widget build(BuildContext context) {
     final addressProvider =
@@ -146,8 +156,12 @@ class AddressScreen extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () =>
-                              addressProvider.toOrderSummaryScreen(context),
+                          onTap: () => addressProvider.toOrderSummaryScreen(
+                            context,
+                            screenCheck,
+                            productId,
+                            cartId,
+                          ),
                           child: Container(
                             width: double.infinity,
                             height: 48,

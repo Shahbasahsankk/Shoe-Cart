@@ -18,7 +18,6 @@ import 'package:e_commerce_app/controller/splash/splash_controller.dart';
 import 'package:e_commerce_app/controller/welcome/welcome_controller.dart';
 import 'package:e_commerce_app/controller/wishlist/wishlist_controller.dart';
 import 'package:e_commerce_app/routes/route_functions.dart';
-import 'package:e_commerce_app/view/address/address_screen.dart';
 import 'package:e_commerce_app/view/splash/splash_screen.dart';
 import 'package:e_commerce_app/widgets/navigator_key_class.dart';
 import 'package:flutter/material.dart';
