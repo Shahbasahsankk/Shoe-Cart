@@ -10,8 +10,14 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../helper/sizedboxes/app_sizedboxes.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  const PaymentScreen({
+    super.key,
+    required this.totalAmount,
+    required this.itemCount,
+  });
 
+  final String totalAmount;
+  final String itemCount;
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
@@ -21,7 +27,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
-    paymentProvider.setContext(context);
     final razorpay = paymentProvider.razorPay;
     razorpay.on(
         Razorpay.EVENT_PAYMENT_SUCCESS, paymentProvider.handlePaymentSuccess);
@@ -34,6 +39,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      paymentProvider.setTotalAmount(widget.totalAmount);
+    });
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -60,10 +69,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               AppSizedBoxes.sizedboxH12,
               const Divider(thickness: 4),
-              const PaymentPriceDetails(
-                itemCount: 1,
-                amountPayable: '849',
-                deliveryCharge: 'FREE',
+              PaymentPriceDetails(
+                itemCount: widget.itemCount.toString(),
+                amountPayable: widget.totalAmount,
+                deliveryCharge: 'Free',
               ),
               const Spacer(),
               Consumer<PaymentProvider>(builder: (context, values, _) {
@@ -83,7 +92,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               }),
               CustomBottomPlaceOrderWidget(
                 ontap: () => paymentProvider.order(context),
-                totalAmount: '456',
+                totalAmount: widget.totalAmount,
               ),
             ],
           ),

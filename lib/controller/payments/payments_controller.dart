@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/razor_pay_service/razor_pay_service.dart';
+import 'package:e_commerce_app/widgets/navigator_key_class.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -13,20 +16,26 @@ class PaymentProvider with ChangeNotifier {
   Razorpay razorPay = Razorpay();
   bool success = false;
   BuildContext? ctx;
+  Map<String, dynamic> options = {};
 
-  var options = {
-    'key': 'rzp_test_RVe81OqJboapJ6',
-    'amount': 50000,
-    'name': 'ShoeCart',
-    'description': 'Sneaker Shoes',
-    'prefill': {
-      'contact': '7856123494',
-      'email': 'sh@gmail.com',
-    },
-  };
+  void setTotalAmount(amount) {
+    final total = "${(num.parse(amount) * 100)}";
+    final amountPayable = total.toString();
+    setOptions(amountPayable);
+  }
 
-  void setContext(BuildContext context) {
-    ctx = context;
+  void setOptions(String amountPayable) {
+    options = {
+      'key': 'rzp_test_RVe81OqJboapJ6',
+      'amount': amountPayable,
+      'name': 'ShoeCart',
+      'description': 'Shoes',
+      'prefill': {
+        'contact': '7856123494',
+        'email': 'shoeCart@gmail.com',
+      },
+    };
+    notifyListeners();
   }
 
   paymentSelection(String? value) {
@@ -45,12 +54,13 @@ class PaymentProvider with ChangeNotifier {
     if (paymentType == cashOnDelivery) {
       Navigator.of(context).pushNamed(RouteNames.confirmOrderScreen);
     } else if (paymentType == onlinePayment) {
+      log('opening razor pay');
       RazorPayService().openRazorPay(razorPay, options);
     }
   }
 
   void handlePaymentSuccess(PaymentSuccessResponse response) {
-    Navigator.of(ctx!)
+    Navigator.of(NavigationService.navigatorKey.currentContext!)
         .pushNamedAndRemoveUntil(RouteNames.orderScreen, (route) => false);
   }
 
@@ -61,12 +71,5 @@ class PaymentProvider with ChangeNotifier {
 
   void handleExternalWallet(ExternalWalletResponse response) {
     Fluttertoast.showToast(msg: 'External Wallet');
-  }
-
-  void redirectToOrderScreen(context) {
-    success = false;
-    notifyListeners();
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(RouteNames.orderScreen, (route) => false);
   }
 }

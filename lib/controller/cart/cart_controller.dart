@@ -16,7 +16,6 @@ class CartProvider with ChangeNotifier {
   }
   CartGetModel? cartList;
   bool loading = false;
-  bool countLoading = false;
   int quantity = 1;
   List<String> cartItemsId = [];
   int? totalSave;
@@ -102,8 +101,6 @@ class CartProvider with ChangeNotifier {
 
   Future<void> incrementOrDecrementQuantity(int qty, String productId,
       String productSize, int productquantity) async {
-    countLoading = true;
-    notifyListeners();
     final AddToCartModel model = AddToCartModel(
       productId: productId,
       quantity: qty,
@@ -123,11 +120,7 @@ class CartProvider with ChangeNotifier {
               totalSave = cartList!.totalDiscount.toInt() -
                   cartList!.totalPrice.toInt();
               notifyListeners();
-              countLoading = false;
-              notifyListeners();
             } else {
-              countLoading = false;
-              notifyListeners();
               null;
             }
           });
@@ -137,8 +130,6 @@ class CartProvider with ChangeNotifier {
       });
     } else {
       null;
-      countLoading = false;
-      notifyListeners();
     }
   }
 
@@ -154,6 +145,9 @@ class CartProvider with ChangeNotifier {
       cartId: cartId,
       productId: productId,
     );
+    log('buy now product arguement details');
+    log(args.productId.toString());
+    log(args.cartId.toString());
     Navigator.of(context).pushNamed(
       RouteNames.addressScreen,
       arguments: args,

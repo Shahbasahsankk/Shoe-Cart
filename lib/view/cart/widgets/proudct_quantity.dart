@@ -1,9 +1,6 @@
-import 'package:e_commerce_app/controller/cart/cart_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/helper/sizedboxes/app_sizedboxes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ProductQuantity extends StatelessWidget {
   const ProductQuantity({
@@ -17,55 +14,47 @@ class ProductQuantity extends StatelessWidget {
   final int quantity;
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartProvider>(builder: (context, values, _) {
-      return Container(
-        height: 30,
-        width: 100,
-        decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: values.countLoading == true
-            ? const Center(
-                child: CupertinoActivityIndicator(
+    return Container(
+      height: 30,
+      width: 100,
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: ontap1,
+              child: const Icon(
+                Icons.remove,
+                color: AppColors.blackcolor,
+              ),
+            ),
+            AppSizedBoxes.sizedboxW3,
+            FittedBox(
+              child: Text(
+                quantity.toString(),
+                style: const TextStyle(
                   color: AppColors.blackcolor,
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: ontap1,
-                      child: const Icon(
-                        Icons.remove,
-                        color: AppColors.blackcolor,
-                      ),
-                    ),
-                    AppSizedBoxes.sizedboxW3,
-                    FittedBox(
-                      child: Text(
-                        quantity.toString(),
-                        style: const TextStyle(
-                          color: AppColors.blackcolor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                    AppSizedBoxes.sizedboxW3,
-                    GestureDetector(
-                      onTap: ontap2,
-                      child: const Icon(
-                        Icons.add,
-                        color: AppColors.blackcolor,
-                      ),
-                    )
-                  ],
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
                 ),
               ),
-      );
-    });
+            ),
+            AppSizedBoxes.sizedboxW3,
+            GestureDetector(
+              onTap: ontap2,
+              child: const Icon(
+                Icons.add,
+                color: AppColors.blackcolor,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

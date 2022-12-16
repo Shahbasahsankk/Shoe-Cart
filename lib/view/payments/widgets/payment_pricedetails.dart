@@ -11,7 +11,7 @@ class PaymentPriceDetails extends StatelessWidget {
     required this.amountPayable,
     required this.deliveryCharge,
   });
-  final num itemCount;
+  final String itemCount;
   final String amountPayable;
   final String deliveryCharge;
   @override
@@ -30,6 +30,7 @@ class PaymentPriceDetails extends StatelessWidget {
           text1: 'Delivery Charges',
           text2: deliveryCharge,
           color2: AppColors.greenColor,
+          rupeeSymbol: deliveryCharge == 'Free' ? true : false,
         ),
         AppSizedBoxes.sizedboxH8,
         const Divider(thickness: 1),

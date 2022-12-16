@@ -141,8 +141,11 @@ class CartScreen extends StatelessWidget {
                                                   OrderSummaryScreenEnum
                                                       .buyOneProductOrderSummaryScreen,
                                                   values.cartList!.id,
-                                                  values.cartList!
-                                                      .products[index].id,
+                                                  values
+                                                      .cartList!
+                                                      .products[index]
+                                                      .product
+                                                      .id,
                                                 ),
                                                 color: AppColors.blueColor,
                                                 icon: Icons.shopify,

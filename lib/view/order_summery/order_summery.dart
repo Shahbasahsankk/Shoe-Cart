@@ -29,9 +29,12 @@ class OrderSummeryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderSummaryProvider =
         Provider.of<OrderSummaryProvider>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      orderSummaryProvider.checkScreen(screenCheck, productId, cartId);
-      orderSummaryProvider.getSingleAddress(addressId);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      orderSummaryProvider
+          .checkScreen(screenCheck, productId, cartId)
+          .then((value) {
+        orderSummaryProvider.getSingleAddress(addressId);
+      });
     });
     return SafeArea(
       child: Scaffold(
@@ -93,14 +96,14 @@ class OrderSummeryScreen extends StatelessWidget {
                                       prouductPrice: screenCheck ==
                                               OrderSummaryScreenEnum
                                                   .normalOrderSummaryScreen
-                                          ? cartValues.cartList!.products[index]
-                                              .product.price
+                                          ? cartValues
+                                              .cartList!.products[index].price
                                           : values.product[0].price,
                                       linethroughPrice: screenCheck ==
                                               OrderSummaryScreenEnum
                                                   .normalOrderSummaryScreen
                                           ? cartValues.cartList!.products[index]
-                                              .product.discountPrice
+                                              .discountPrice
                                               .toString()
                                           : values.product[0].discountPrice
                                               .toString(),
@@ -126,10 +129,6 @@ class OrderSummeryScreen extends StatelessWidget {
                                                 cartValues.cartList!
                                                     .products[index].qty,
                                               )
-                                                .then((value) {
-                                                values.getSingleCartProduct(
-                                                    productId!, cartId!);
-                                              })
                                             : await cartValues
                                                 .incrementOrDecrementQuantity(
                                                 -1,
@@ -156,10 +155,6 @@ class OrderSummeryScreen extends StatelessWidget {
                                                 cartValues.cartList!
                                                     .products[index].qty,
                                               )
-                                                .then((value) {
-                                                values.getSingleCartProduct(
-                                                    productId!, cartId!);
-                                              })
                                             : await cartValues
                                                 .incrementOrDecrementQuantity(
                                                 1,
@@ -239,8 +234,19 @@ class OrderSummeryScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: CustomBottomPlaceOrderWidget(
-                            ontap: () =>
-                                orderSummaryProvider.toPaymentScreen(context),
+                            ontap: () => orderSummaryProvider.toPaymentScreen(
+                              context,
+                              screenCheck ==
+                                      OrderSummaryScreenEnum
+                                          .buyOneProductOrderSummaryScreen
+                                  ? values.product[0].qty.toString()
+                                  : cartValues.totalProductCount.toString(),
+                              screenCheck ==
+                                      OrderSummaryScreenEnum
+                                          .buyOneProductOrderSummaryScreen
+                                  ? values.product[0].price.toString()
+                                  : cartValues.cartList!.totalPrice.toString(),
+                            ),
                             totalAmount: screenCheck ==
                                     OrderSummaryScreenEnum
                                         .normalOrderSummaryScreen

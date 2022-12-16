@@ -15,6 +15,7 @@ import 'package:e_commerce_app/view/order_summery/model/order_summery_argument_m
 import 'package:e_commerce_app/view/order_summery/order_summery.dart';
 import 'package:e_commerce_app/view/orders/orders_screen.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
+import 'package:e_commerce_app/view/payments/model/payment_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/payments/payment_screen.dart';
 import 'package:e_commerce_app/view/product_screen/product_screen.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/utils/prouductid_model.dart';
@@ -97,8 +98,12 @@ class AppRoutes {
           ),
         );
       case RouteNames.paymentScreen:
+        final args = settings.arguments as PaymentScreenArguementModel;
         return MaterialPageRoute(
-          builder: (context) => const PaymentScreen(),
+          builder: (context) => PaymentScreen(
+            itemCount: args.itemCount,
+            totalAmount: args.totalAmount,
+          ),
         );
       case RouteNames.addressScreen:
         final args = settings.arguments as AddressScreenArguementModel;
