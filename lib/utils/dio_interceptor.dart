@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/constants/api_endpoints.dart';
 import 'package:e_commerce_app/constants/api_url.dart';
@@ -26,11 +24,9 @@ class Interceptorapi {
           if (e.response != null) {
             if (e.response?.statusCode == 403 &&
                 e.response?.data['message'] == 'Forbidden') {
-              log('token expired');
               RequestOptions requestOptions = e.requestOptions;
               try {
                 final refreshToken = await storage.read(key: 'refreshToken');
-                log(refreshToken.toString());
                 final opts = Options(method: requestOptions.method);
                 dio.options.headers["refresh"] = "Bearer $refreshToken";
                 final Response response = await dio.get(
@@ -38,7 +34,6 @@ class Interceptorapi {
                   options: opts,
                 );
                 if (response.statusCode! == 200) {
-                  log(response.data.toString());
                   final token = response.data['accessToken'];
                   final refreshToken = response.data['refreshToken'];
                   await storage.delete(key: 'token');

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -25,8 +24,6 @@ class AppExceptions {
     } else if (e is DioError) {
       if (e.response?.statusCode == 403 &&
           e.response?.data['message'] == 'forbidden') {
-        log('refresh token expired so loging out');
-        // code for logout;
         Navigator.of(NavigationService.navigatorKey.currentContext!)
             .pushNamedAndRemoveUntil(RouteNames.signInScreen, (route) => false);
       }

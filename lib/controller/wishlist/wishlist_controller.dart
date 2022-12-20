@@ -7,11 +7,16 @@ import 'package:flutter/cupertino.dart';
 
 class WishListProvider with ChangeNotifier {
   WishListProvider() {
-    getWishListItems();
+    startLoading();
   }
   bool loading = false;
   WishListModel? wishList;
   List favouriteProducts = [];
+
+  void startLoading() {
+    loading = true;
+    notifyListeners();
+  }
 
   void toCartScreen(context) {
     Navigator.of(context).pushNamed(RouteNames.cartScreen);

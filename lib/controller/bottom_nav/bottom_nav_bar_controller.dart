@@ -1,27 +1,33 @@
 import 'package:e_commerce_app/view/cart/cart_screen.dart';
 import 'package:e_commerce_app/view/home/home_screen.dart';
-import 'package:e_commerce_app/view/orders/orders_screen.dart';
+import 'package:e_commerce_app/view/orders/myorders_screen.dart';
 import 'package:e_commerce_app/view/profile/profile_screen.dart';
 import 'package:e_commerce_app/view/wish_list/wish_list_screen.dart';
 import 'package:flutter/widgets.dart';
 
-class BottomNavBarProvider with ChangeNotifier{
+class BottomNavBarProvider with ChangeNotifier {
+  int currentIndex = 0;
 
-  int currentIndex=0;
-
-  final List<Widget> _bottomScreens= [
+  final List<Widget> _bottomScreens = [
     const HomeScreen(),
     const WishListScreen(),
-    const OrdersScreen(),
+    const MyOrdersScreen(),
     const CartScreen(),
     const ProfileScreen(),
   ];
 
-  List<Widget> get bottomScreen=> _bottomScreens;
-  
-  void newIndex(int newIndex){
-    currentIndex=newIndex;
+  List<Widget> get bottomScreen => _bottomScreens;
+
+  void newIndex(int newIndex) {
+    currentIndex = newIndex;
     notifyListeners();
   }
 
+  Future<bool>? willPopFunction() {
+    if (currentIndex != 0) {
+      currentIndex = 0;
+      notifyListeners();
+    }
+    return null;
+  }
 }

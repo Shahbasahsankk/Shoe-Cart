@@ -12,4 +12,5 @@ class ApiEndPoints {
   static const wishList = 'wishlist';
   static const cart = 'cart';
   static const address = 'address';
+  static const order = 'orders';
 }

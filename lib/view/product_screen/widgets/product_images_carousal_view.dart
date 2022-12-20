@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/constants/api_url.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +13,6 @@ class ImageCarousalsWidget extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: images.length,
       itemBuilder: (context, index, realIndex) {
-        log(images[index].toString());
         return Image(
           image: NetworkImage(
               "http://${ApiUrl.url}:5008/products/${images[index]}"),

@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:e_commerce_app/controller/add_new_address/add_new_address_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/address/address_screen_enum_model.dart';
 import 'package:e_commerce_app/model/order_summary/order_summary_screen_enum.dart';
@@ -31,11 +30,18 @@ class AddressProvider with ChangeNotifier {
     }
   }
 
-  void toAddNewAddressScreen(context, AddressScreenEnum addressScreenCheck) {
+  void toAddNewAddressScreen(context, AddressScreenEnum addressScreenCheck,
+      AddNewAddressProvider provider) async {
     final args =
         AddNewAddressArguemnetModel(addressScreenCheck: addressScreenCheck);
     Navigator.of(context)
-        .pushNamed(RouteNames.addNewAddressScreen, arguments: args);
+        .pushNamed(RouteNames.addNewAddressScreen, arguments: args)
+        .then((value) {
+      provider.getAllAddresses().then((value) {
+        provider.addressChange(provider.addressList[0].id);
+        addressId = provider.addressList[0].id;
+      });
+    });
   }
 
   void toEditAddressScreen(

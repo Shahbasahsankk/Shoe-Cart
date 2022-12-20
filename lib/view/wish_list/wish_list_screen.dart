@@ -15,6 +15,11 @@ class WishListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final wishListProvider =
+        Provider.of<WishListProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      wishListProvider.getWishListItems();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,

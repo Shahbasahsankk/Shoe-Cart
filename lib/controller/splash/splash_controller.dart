@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -15,7 +13,6 @@ class SplashProvider with ChangeNotifier {
     );
     onboardValue = await storage.read(key: 'onboard');
     signInValue = await storage.read(key: 'token');
-    log(signInValue.toString());
     if (signInValue != null) {
       Navigator.pushNamedAndRemoveUntil(
           context, RouteNames.bottomNav, (route) => false);

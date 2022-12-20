@@ -2,11 +2,12 @@ import 'package:e_commerce_app/controller/add_new_address/add_new_address_contro
 import 'package:e_commerce_app/controller/address/address_controller.dart';
 import 'package:e_commerce_app/controller/bottom_nav/bottom_nav_bar_controller.dart';
 import 'package:e_commerce_app/controller/cart/cart_controller.dart';
-import 'package:e_commerce_app/controller/confirm_order/confirm_order_controller.dart';
 import 'package:e_commerce_app/controller/forgot_password/forgot_password_controller.dart';
 import 'package:e_commerce_app/controller/home/home_screen_controller.dart';
 import 'package:e_commerce_app/controller/new_password/new_password_controller.dart';
 import 'package:e_commerce_app/controller/onBoard/onboard_controller.dart';
+import 'package:e_commerce_app/controller/order_controller/myorder_controller.dart';
+import 'package:e_commerce_app/controller/order_details/order_detials_controller.dart';
 import 'package:e_commerce_app/controller/order_summary/order_summary_controller.dart';
 import 'package:e_commerce_app/controller/otp/otp_screen_controller.dart';
 import 'package:e_commerce_app/controller/payments/payments_controller.dart';
@@ -49,9 +50,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OrderSummaryProvider()),
         ChangeNotifierProvider(create: (context) => PaymentProvider()),
         ChangeNotifierProvider(create: (context) => AddressProvider()),
-        ChangeNotifierProvider(create: (context) => ConfirmOrderProvider()),
         ChangeNotifierProvider(create: (context) => AddNewAddressProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
+        ChangeNotifierProvider(create: (context) => OrderDetailsProvider()),
+        ChangeNotifierProvider(create: (context) => MyOrdersProvider()),
       ],
       child: MaterialApp(
         navigatorKey: NavigationService.navigatorKey,

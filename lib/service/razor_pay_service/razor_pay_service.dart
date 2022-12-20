@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:e_commerce_app/utils/app_exceptions.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class RazorPayService {
@@ -7,7 +6,7 @@ class RazorPayService {
     try {
       razorPay.open(options);
     } catch (e) {
-      log(e.toString());
+      AppExceptions.errorHandler(e);
     }
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/model/address/add_address_model.dart';
 import 'package:e_commerce_app/model/address/address_screen_enum_model.dart';
 import 'package:e_commerce_app/model/address/get_address_model.dart';
@@ -219,7 +217,6 @@ class AddNewAddressProvider with ChangeNotifier {
           roadNameAreaColonyController.text = value.landMark;
           houseAndBuildingController.text = value.address;
           notifyListeners();
-          log(value.title.toString());
           value.title == 'Home' ? homeSelected = true : homeSelected = false;
           notifyListeners();
         }

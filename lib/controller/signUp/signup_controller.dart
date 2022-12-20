@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/otpscreen_enum_model.dart/otpscreen_enum.dart';
 import 'package:e_commerce_app/model/signup_model/signup_model.dart';
@@ -104,7 +102,6 @@ class SignUpProvider with ChangeNotifier {
           .then((value) async {
         if (value == null) {
           await OtpService().sendOtp(emailController.text).then((value) {
-            log(value.toString());
             if (value != null) {
               Navigator.of(context)
                   .pushNamed(RouteNames.otpScreen, arguments: args)

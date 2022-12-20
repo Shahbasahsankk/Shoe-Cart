@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/cart/add_to_cart_model.dart';
 import 'package:e_commerce_app/model/cart/get_from_cart_model.dart';
@@ -12,14 +10,20 @@ import 'package:flutter/cupertino.dart';
 
 class CartProvider with ChangeNotifier {
   CartProvider() {
-    getCartItems();
+    startLoading();
   }
   CartGetModel? cartList;
   bool loading = false;
   int quantity = 1;
   List<String> cartItemsId = [];
+  List<String> cartitemsPayId = [];
   int? totalSave;
   int? totalProductCount;
+
+  void startLoading() {
+    loading = true;
+    notifyListeners();
+  }
 
   void getCartItems() async {
     loading = true;
@@ -30,7 +34,7 @@ class CartProvider with ChangeNotifier {
         notifyListeners();
         totalProductsCount();
         cartItemsId = cartList!.products.map((e) => e.product.id).toList();
-        notifyListeners();
+        cartitemsPayId = cartList!.products.map((e) => e.id).toList();
         totalSave =
             cartList!.totalDiscount.toInt() - cartList!.totalPrice.toInt();
         notifyListeners();
@@ -43,7 +47,7 @@ class CartProvider with ChangeNotifier {
     });
   }
 
-  void addToCart(String productId, String? productSize,
+  Future<void> addToCart(String productId, String? productSize,
       OrderSummaryScreenEnum? screenCheck) async {
     if (productSize == null) {
       AppToast.showToast('Select size', AppColors.redColor);
@@ -139,15 +143,11 @@ class CartProvider with ChangeNotifier {
     String? cartId,
     String? productId,
   ) {
-    log(orderScreenCheck.toString());
     final args = AddressScreenArguementModel(
       screenCheck: orderScreenCheck,
       cartId: cartId,
       productId: productId,
     );
-    log('buy now product arguement details');
-    log(args.productId.toString());
-    log(args.cartId.toString());
     Navigator.of(context).pushNamed(
       RouteNames.addressScreen,
       arguments: args,

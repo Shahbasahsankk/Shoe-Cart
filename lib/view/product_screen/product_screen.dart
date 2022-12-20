@@ -22,9 +22,12 @@ class ProductViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final productProvider =
         Provider.of<ProductProvider>(context, listen: false);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
     productProvider.productId = productId;
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      cartProvider.getCartItems();
       productProvider.getAProduct();
+
       productProvider.productSize = null;
     });
     return SafeArea(
@@ -145,24 +148,33 @@ class ProductViewScreen extends StatelessWidget {
                                         null),
                               ),
                               CustomBottomContainer(
-                                  containerColor: AppColors.yellowColor,
-                                  text: 'Buy now',
-                                  ontap: () {
-                                    values3.cartItemsId
-                                            .contains(values.product!.id)
-                                        ? null
-                                        : values3.addToCart(
-                                            values.product!.id.toString(),
-                                            values.productSize,
-                                            OrderSummaryScreenEnum
-                                                .buyOneProductOrderSummaryScreen);
-                                    values.toAddressScreen(
-                                        context,
-                                        OrderSummaryScreenEnum
-                                            .buyOneProductOrderSummaryScreen,
-                                        values3.cartList!.id,
-                                        product.id);
-                                  }),
+                                containerColor: AppColors.yellowColor,
+                                text: 'Buy now',
+                                ontap: () async {
+                                  values3.cartItemsId
+                                          .contains(values.product!.id)
+                                      ? values.toAddressScreen(
+                                          context,
+                                          OrderSummaryScreenEnum
+                                              .buyOneProductOrderSummaryScreen,
+                                          values3.cartList!.id,
+                                          product.id)
+                                      : values3
+                                          .addToCart(
+                                              values.product!.id.toString(),
+                                              values.productSize,
+                                              OrderSummaryScreenEnum
+                                                  .buyOneProductOrderSummaryScreen)
+                                          .then((value) {
+                                          values.toAddressScreen(
+                                              context,
+                                              OrderSummaryScreenEnum
+                                                  .buyOneProductOrderSummaryScreen,
+                                              values3.cartList!.id,
+                                              product.id);
+                                        });
+                                },
+                              ),
                             ],
                           ),
                         ),

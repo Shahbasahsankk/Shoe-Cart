@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/constants/api_endpoints.dart';
@@ -21,7 +20,6 @@ class SignInService {
       );
 
       if (response.statusCode == 200) {
-        log(response.data.toString());
         final SignInModel model = SignInModel.fromJson(response.data);
         return model;
       }
@@ -39,12 +37,10 @@ class SignInService {
         'email': result?.email,
         'name': result?.displayName,
       });
-      log(response.statusCode.toString());
       if (response.statusCode == 201) {
         return response.data['message'];
       }
     } catch (e) {
-      log('entered catch of googlesignin');
       AppExceptions.errorHandler(e);
     }
     return null;

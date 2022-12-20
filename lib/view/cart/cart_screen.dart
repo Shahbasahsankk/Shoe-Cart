@@ -17,6 +17,9 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartScreenProvider =
         Provider.of<CartProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      cartScreenProvider.getCartItems();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -182,11 +185,11 @@ class CartScreen extends StatelessWidget {
                             alignment: Alignment.bottomCenter,
                             child: CustomBottomPlaceOrderWidget(
                               ontap: () => cartScreenProvider.toAddressScreen(
-                                  context,
-                                  OrderSummaryScreenEnum
-                                      .normalOrderSummaryScreen,
-                                  null,
-                                  null),
+                                context,
+                                OrderSummaryScreenEnum.normalOrderSummaryScreen,
+                                null,
+                                null,
+                              ),
                               totalAmount:
                                   values.cartList!.totalPrice.toString(),
                             ),

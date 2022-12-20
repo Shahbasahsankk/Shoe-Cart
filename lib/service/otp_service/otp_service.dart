@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/constants/api_endpoints.dart';
 import 'package:e_commerce_app/constants/api_queryparameters.dart';
@@ -27,23 +25,17 @@ class OtpService {
   }
 
   Future<String?> sendOtp(email) async {
-    log(email);
     try {
-      log('entered to send otp');
       Response response = await dio.get(
         ApiUrl.apiUrl + ApiEndPoints.verifyOrSendOtp,
         queryParameters: {
           'email': email,
         },
       );
-      log(response.statusCode.toString());
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
-        log('otp send ');
-        log(response.data.toString());
         return response.data['message'];
       }
     } catch (e) {
-      log('entered catch');
       AppExceptions.errorHandler(e);
     }
     return null;

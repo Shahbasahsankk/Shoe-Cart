@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/constants/api_endpoints.dart';
 import 'package:e_commerce_app/constants/api_url.dart';
@@ -17,7 +15,6 @@ class HomeService {
       final Response response = await dios.get(
         ApiUrl.apiUrl + ApiEndPoints.carousal,
       );
-      log(response.statusCode.toString());
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<CarousalModel> carousals = (response.data as List)
             .map((e) => CarousalModel.fromJson(e))
@@ -27,7 +24,6 @@ class HomeService {
         return null;
       }
     } catch (e) {
-      log('entered catch');
       AppExceptions.errorHandler(e);
     }
     return null;

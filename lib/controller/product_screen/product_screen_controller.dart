@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/model/home_models/product_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +22,6 @@ class ProductProvider with ChangeNotifier {
 
   void toAddressScreen(context, OrderSummaryScreenEnum orderScreenCheck,
       String? cartId, String? productId) {
-    log(orderScreenCheck.toString());
     final args = AddressScreenArguementModel(
       screenCheck: orderScreenCheck,
       cartId: cartId,
@@ -67,7 +64,6 @@ class ProductProvider with ChangeNotifier {
   }
 
   void loadingStart() {
-    log('loading started');
     loading = true;
     notifyListeners();
   }

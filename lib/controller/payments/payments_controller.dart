@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
+import 'package:e_commerce_app/model/orders/place_order_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
+import 'package:e_commerce_app/service/orders/order_service.dart';
 import 'package:e_commerce_app/service/razor_pay_service/razor_pay_service.dart';
 import 'package:e_commerce_app/widgets/navigator_key_class.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,11 +17,17 @@ class PaymentProvider with ChangeNotifier {
   bool success = false;
   BuildContext? ctx;
   Map<String, dynamic> options = {};
+  bool loading = false;
+  List<Product> products = [];
+  String? addressId;
 
-  void setTotalAmount(amount) {
+  void setTotalAmount(amount, List<String> productIds, address) {
     final total = "${(num.parse(amount) * 100)}";
     final amountPayable = total.toString();
     setOptions(amountPayable);
+    products = productIds.map((e) => Product(id: e)).toList();
+    addressId = address;
+    notifyListeners();
   }
 
   void setOptions(String amountPayable) {
@@ -50,18 +56,16 @@ class PaymentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void order(context) {
+  void order(context, products) {
     if (paymentType == cashOnDelivery) {
-      Navigator.of(context).pushNamed(RouteNames.confirmOrderScreen);
+      orderProducts(addressId!, 'COD');
     } else if (paymentType == onlinePayment) {
-      log('opening razor pay');
       RazorPayService().openRazorPay(razorPay, options);
     }
   }
 
   void handlePaymentSuccess(PaymentSuccessResponse response) {
-    Navigator.of(NavigationService.navigatorKey.currentContext!)
-        .pushNamedAndRemoveUntil(RouteNames.orderScreen, (route) => false);
+    orderProducts(addressId!, 'ONLINE_PAYMENT');
   }
 
   void handlePaymentError(PaymentFailureResponse response) {
@@ -71,5 +75,30 @@ class PaymentProvider with ChangeNotifier {
 
   void handleExternalWallet(ExternalWalletResponse response) {
     Fluttertoast.showToast(msg: 'External Wallet');
+  }
+
+  void orderProducts(String addressId, paymentType) async {
+    final PlaceOrderModel model = PlaceOrderModel(
+      addressId: addressId,
+      paymentType: paymentType,
+      products: products,
+    );
+    loading = true;
+    notifyListeners();
+    await OrderServices().placeOrder(model).then((value) {
+      if (value != null) {
+        loading = false;
+        notifyListeners();
+        Navigator.of(NavigationService.navigatorKey.currentContext!)
+            .pushReplacementNamed(RouteNames.orderPlacedScreen)
+            .then((value) {
+          Navigator.of(NavigationService.navigatorKey.currentContext!)
+              .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);
+        });
+      } else {
+        loading = false;
+        notifyListeners();
+      }
+    });
   }
 }

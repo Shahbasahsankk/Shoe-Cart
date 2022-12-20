@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/controller/bottom_nav/bottom_nav_bar_controller.dart';
 import 'package:e_commerce_app/controller/payments/payments_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/view/payments/widgets/payment_options.dart';
@@ -14,19 +15,26 @@ class PaymentScreen extends StatefulWidget {
     super.key,
     required this.totalAmount,
     required this.itemCount,
+    required this.productIds,
+    required this.addressId,
   });
 
   final String totalAmount;
   final String itemCount;
+  final List<String> productIds;
+  final String addressId;
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
   late PaymentProvider paymentProvider;
+  late BottomNavBarProvider bottomProvider;
   @override
   void initState() {
     paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+    bottomProvider = Provider.of<BottomNavBarProvider>(context, listen: false);
+    bottomProvider.currentIndex = 2;
     final razorpay = paymentProvider.razorPay;
     razorpay.on(
         Razorpay.EVENT_PAYMENT_SUCCESS, paymentProvider.handlePaymentSuccess);
@@ -40,7 +48,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      paymentProvider.setTotalAmount(widget.totalAmount);
+      paymentProvider.setTotalAmount(
+        widget.totalAmount,
+        widget.productIds,
+        widget.addressId,
+      );
+      paymentProvider.paymentSelection(paymentProvider.onlinePayment);
     });
 
     return SafeArea(
@@ -75,23 +88,25 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 deliveryCharge: 'Free',
               ),
               const Spacer(),
-              Consumer<PaymentProvider>(builder: (context, values, _) {
-                return values.isVisible == true
-                    ? Container(
-                        height: 15,
-                        width: double.infinity,
-                        color: AppColors.whiteColor,
-                        child: const Center(
-                          child: Text(
-                            '100% Safe and Secure Payments',
-                            style: TextStyle(color: AppColors.blackcolor),
+              Consumer<PaymentProvider>(
+                builder: (context, values, _) {
+                  return values.isVisible == true
+                      ? Container(
+                          height: 15,
+                          width: double.infinity,
+                          color: AppColors.whiteColor,
+                          child: const Center(
+                            child: Text(
+                              '100% Safe and Secure Payments',
+                              style: TextStyle(color: AppColors.blackcolor),
+                            ),
                           ),
-                        ),
-                      )
-                    : const SizedBox();
-              }),
+                        )
+                      : const SizedBox();
+                },
+              ),
               CustomBottomPlaceOrderWidget(
-                ontap: () => paymentProvider.order(context),
+                ontap: () => paymentProvider.order(context, widget.productIds),
                 totalAmount: widget.totalAmount,
               ),
             ],

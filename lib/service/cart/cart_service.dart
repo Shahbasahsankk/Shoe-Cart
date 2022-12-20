@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:e_commerce_app/model/cart/add_to_cart_model.dart';
 import 'package:e_commerce_app/model/cart/get_from_cart_model.dart';
@@ -63,17 +61,11 @@ class CartService {
 
   Future<List<GetSingelCartProduct>?> getSingleCartProduct(
       String productId, String cartId) async {
-    log('get single product in cart service function');
     Dio dios = await Interceptorapi().getApiUser();
-    log('product id is');
-    log(productId.toString());
-    log('cart id is');
-    log(cartId.toString());
     try {
       final Response response = await dios.get(
           '${ApiUrl.apiUrl + ApiEndPoints.cart}/$cartId/product/$productId');
       if (response.statusCode == 200) {
-        log('got the single cart product');
         final List<GetSingelCartProduct> product = (response.data as List)
             .map((e) => GetSingelCartProduct.fromJson(e))
             .toList();

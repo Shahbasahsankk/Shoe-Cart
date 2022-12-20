@@ -3,7 +3,6 @@ import 'package:e_commerce_app/view/add_address/model/addaddress_arguement_model
 import 'package:e_commerce_app/view/address/address_screen.dart';
 import 'package:e_commerce_app/view/address/model/address_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/cart/cart_screen.dart';
-import 'package:e_commerce_app/view/confirm_order/confirm_order.dart';
 import 'package:e_commerce_app/view/forgot_password/forgot_password_screen.dart';
 import 'package:e_commerce_app/view/home/home_screen.dart';
 import 'package:e_commerce_app/view/home/model/product_collection_model.dart';
@@ -11,9 +10,12 @@ import 'package:e_commerce_app/view/home/widgets/products_collection_screen.dart
 import 'package:e_commerce_app/view/new_password/new_password_screen.dart';
 import 'package:e_commerce_app/view/new_password/model/newpassword_screen_model.dart';
 import 'package:e_commerce_app/view/onBoard/on_board_screen.dart';
+import 'package:e_commerce_app/view/order_detials_screen/model/order_detail_argument_model.dart';
+import 'package:e_commerce_app/view/order_detials_screen/order_details.dart';
 import 'package:e_commerce_app/view/order_summery/model/order_summery_argument_model.dart';
 import 'package:e_commerce_app/view/order_summery/order_summery.dart';
-import 'package:e_commerce_app/view/orders/orders_screen.dart';
+import 'package:e_commerce_app/view/orders/myorders_screen.dart';
+import 'package:e_commerce_app/view/orders/widgets/order_placed_screen.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
 import 'package:e_commerce_app/view/payments/model/payment_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/payments/payment_screen.dart';
@@ -103,6 +105,8 @@ class AppRoutes {
           builder: (context) => PaymentScreen(
             itemCount: args.itemCount,
             totalAmount: args.totalAmount,
+            productIds: args.productIds,
+            addressId: args.addressId,
           ),
         );
       case RouteNames.addressScreen:
@@ -114,10 +118,6 @@ class AppRoutes {
             productId: args.productId,
           ),
         );
-      case RouteNames.confirmOrderScreen:
-        return MaterialPageRoute(
-          builder: (context) => ConfirmOrderScreen(),
-        );
       case RouteNames.addNewAddressScreen:
         final args = settings.arguments as AddNewAddressArguemnetModel;
         return MaterialPageRoute(
@@ -128,7 +128,19 @@ class AppRoutes {
         );
       case RouteNames.orderScreen:
         return MaterialPageRoute(
-          builder: (context) => const OrdersScreen(),
+          builder: (context) => const MyOrdersScreen(),
+        );
+      case RouteNames.orderPlacedScreen:
+        return MaterialPageRoute(
+          builder: (context) => const OrderPlacedScreen(),
+        );
+      case RouteNames.orderDetailsScreen:
+        final args = settings.arguments as OrderDetailsArguementModel;
+        return MaterialPageRoute(
+          builder: (context) => OrderDetailsScreen(
+            orderIndex: args.orderIndex,
+            orderId: args.orderId,
+          ),
         );
 
       case RouteNames.orderSummaryScreen:

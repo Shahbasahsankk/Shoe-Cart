@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/model/address/get_address_model.dart';
 import 'package:e_commerce_app/model/cart/get_single_cart_model.dart';
 import 'package:e_commerce_app/model/order_summary/order_summary_screen_enum.dart';
@@ -18,12 +16,15 @@ class OrderSummaryProvider with ChangeNotifier {
   bool loading = false;
   List<GetSingelCartProduct> product = [];
   int? totalSave;
+  List<String> productIds = [];
 
-  void toPaymentScreen(context, String itemCount, String totalAmount) {
+  void toPaymentScreen(context, String itemCount, String totalAmount,
+      List<String> productIds, String addressId) {
     final args = PaymentScreenArguementModel(
-      itemCount: itemCount,
-      totalAmount: totalAmount,
-    );
+        itemCount: itemCount,
+        totalAmount: totalAmount,
+        productIds: productIds,
+        addressId: addressId);
     Navigator.of(context).pushNamed(RouteNames.paymentScreen, arguments: args);
   }
 
@@ -33,9 +34,7 @@ class OrderSummaryProvider with ChangeNotifier {
   }
 
   void getSingleAddress(String addressId) async {
-    log('get single address function');
     await AddressService().getSingleAddress(addressId).then((value) {
-      log('single address got');
       if (value != null) {
         address = value;
         notifyListeners();
@@ -50,22 +49,21 @@ class OrderSummaryProvider with ChangeNotifier {
 
   Future<void> checkScreen(OrderSummaryScreenEnum screenCheck,
       String? productId, String? cartId) async {
-    log(screenCheck.toString());
     if (screenCheck == OrderSummaryScreenEnum.normalOrderSummaryScreen) {
       return;
     } else if (screenCheck ==
         OrderSummaryScreenEnum.buyOneProductOrderSummaryScreen) {
-      log('getting single product');
-      await getSingleCartProduct(productId!, cartId!);
+      await getSingleCartProduct(productId!, cartId!).then((value) {
+        loading = false;
+        notifyListeners();
+        return;
+      });
     }
   }
 
   Future<void> getSingleCartProduct(String productId, String cartId) async {
-    log('get single product function');
     await CartService().getSingleCartProduct(productId, cartId).then((value) {
-      log('function completed');
       if (value != null) {
-        log(value.toString());
         product = value;
         notifyListeners();
         totalSave = product[0].discountPrice.toInt() - product[0].price.toInt();

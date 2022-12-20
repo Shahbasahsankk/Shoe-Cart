@@ -29,10 +29,13 @@ class OrderSummeryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderSummaryProvider =
         Provider.of<OrderSummaryProvider>(context, listen: false);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      orderSummaryProvider
+      await orderSummaryProvider
           .checkScreen(screenCheck, productId, cartId)
           .then((value) {
+        orderSummaryProvider.productIds.insert(0,
+            cartProvider.cartitemsPayId[cartProvider.cartItemsId.length - 1]);
         orderSummaryProvider.getSingleAddress(addressId);
       });
     });
@@ -246,6 +249,12 @@ class OrderSummeryScreen extends StatelessWidget {
                                           .buyOneProductOrderSummaryScreen
                                   ? values.product[0].price.toString()
                                   : cartValues.cartList!.totalPrice.toString(),
+                              screenCheck ==
+                                      OrderSummaryScreenEnum
+                                          .buyOneProductOrderSummaryScreen
+                                  ? values.productIds
+                                  : cartValues.cartitemsPayId,
+                              addressId,
                             ),
                             totalAmount: screenCheck ==
                                     OrderSummaryScreenEnum

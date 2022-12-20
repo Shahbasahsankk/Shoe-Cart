@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/controller/add_new_address/add_new_address_controller.dart';
 import 'package:e_commerce_app/controller/address/address_controller.dart';
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
@@ -60,6 +58,7 @@ class AddressScreen extends StatelessWidget {
                           onTap: () => addressProvider.toAddNewAddressScreen(
                             context,
                             AddressScreenEnum.addAddressScreen,
+                            addAddressProvider,
                           ),
                           child: Container(
                             height: 60,
@@ -102,6 +101,7 @@ class AddressScreen extends StatelessWidget {
                                         addressProvider.toAddNewAddressScreen(
                                       context,
                                       AddressScreenEnum.addAddressScreen,
+                                      addAddressProvider,
                                     ),
                                     child: Container(
                                       height: 60,

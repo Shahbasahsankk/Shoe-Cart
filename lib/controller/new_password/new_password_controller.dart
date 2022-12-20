@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/forgot_password/forgot_password_service.dart';
 import 'package:e_commerce_app/view/new_password/widgets/success_dialogue.dart';
@@ -37,13 +35,12 @@ class NewPasswordProvider with ChangeNotifier {
     }
   }
 
-  void success(context, email)  {
+  void success(context, email) {
     loading = true;
     notifyListeners();
-     ForgotPasswordService()
+    ForgotPasswordService()
         .changePassword(email, newPasswordController.text)
         .then((value) {
-      log(value.toString());
       if (value != null) {
         loading = false;
         notifyListeners();
