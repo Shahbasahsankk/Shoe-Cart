@@ -101,20 +101,24 @@ class AddNewAddressProvider with ChangeNotifier {
     });
   }
 
-  Future<void> getAllAddresses() async {
+  Future<String?> getAllAddresses() async {
     loading = true;
     notifyListeners();
     await AddressService().getAllAddress().then((value) {
       if (value != null) {
         addressList = value;
         notifyListeners();
+
         loading = false;
         notifyListeners();
+        return 'set';
       } else {
         loading = false;
         notifyListeners();
+        return null;
       }
     });
+    return null;
   }
 
   void addNewAddress(BuildContext context) async {

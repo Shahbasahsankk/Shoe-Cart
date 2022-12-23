@@ -43,10 +43,16 @@ class WishListScreen extends StatelessWidget {
                             wishListValues.wishList!.products.isEmpty
                         ? SizedBox(
                             height: MediaQuery.of(context).size.height / 2,
-                            child: const Center(
-                              child: Text('WishList is empty'),
-                            ),
-                          )
+                            width: double.infinity,
+                            child: Column(
+                              children: const [
+                                SizedBox(height: 160),
+                                Image(
+                                    image: AssetImage(
+                                        'assets/cart&wishlist&orders assets/wishlistempty.png')),
+                                Text('Your wishlist is empty'),
+                              ],
+                            ))
                         : Expanded(
                             child: Padding(
                               padding:

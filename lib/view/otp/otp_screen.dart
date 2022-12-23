@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:provider/provider.dart';
 
+import '../../controller/bottom_nav/bottom_nav_bar_controller.dart';
+
 class OtpScreen extends StatefulWidget {
   const OtpScreen({
     super.key,
@@ -37,6 +39,11 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomNavProvider =
+        Provider.of<BottomNavBarProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      bottomNavProvider.setToZeroIndex();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,

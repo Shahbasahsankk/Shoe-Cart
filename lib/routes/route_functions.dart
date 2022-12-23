@@ -14,6 +14,7 @@ import 'package:e_commerce_app/view/order_detials_screen/model/order_detail_argu
 import 'package:e_commerce_app/view/order_detials_screen/order_details.dart';
 import 'package:e_commerce_app/view/order_summery/model/order_summery_argument_model.dart';
 import 'package:e_commerce_app/view/order_summery/order_summery.dart';
+import 'package:e_commerce_app/view/orders/model/order_placed_screen_arguement_model.dart';
 import 'package:e_commerce_app/view/orders/myorders_screen.dart';
 import 'package:e_commerce_app/view/orders/widgets/order_placed_screen.dart';
 import 'package:e_commerce_app/view/otp/otp_screen.dart';
@@ -116,6 +117,7 @@ class AppRoutes {
             screenCheck: args.screenCheck,
             cartId: args.cartId,
             productId: args.productId,
+            visibility: args.visibility,
           ),
         );
       case RouteNames.addNewAddressScreen:
@@ -131,8 +133,11 @@ class AppRoutes {
           builder: (context) => const MyOrdersScreen(),
         );
       case RouteNames.orderPlacedScreen:
+        final args = settings.arguments as OrderPlacedScreenArguementModel;
         return MaterialPageRoute(
-          builder: (context) => const OrderPlacedScreen(),
+          builder: (context) => OrderPlacedScreen(
+            orderId: args.orderId,
+          ),
         );
       case RouteNames.orderDetailsScreen:
         final args = settings.arguments as OrderDetailsArguementModel;

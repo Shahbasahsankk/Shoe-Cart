@@ -10,6 +10,7 @@ class OrderDetailsProvider with ChangeNotifier {
   GetOrderModel? orderModel;
   String? orderedDate;
   String? deliveredDate;
+  String? canceledDate;
 
   void startLoading() {
     loading = true;
@@ -19,8 +20,10 @@ class OrderDetailsProvider with ChangeNotifier {
   void setDates() {
     final a = orderModel!.orderDate.toString().split(' ');
     final b = orderModel!.deliveryDate.toString().split(' ');
+    final c = orderModel?.cancelDate.toString().split('T');
     orderedDate = a[0];
     deliveredDate = b[0];
+    canceledDate = c?[0] ?? '';
     notifyListeners();
   }
 
@@ -32,6 +35,21 @@ class OrderDetailsProvider with ChangeNotifier {
         orderModel = value;
         notifyListeners();
         setDates();
+        loading = false;
+        notifyListeners();
+      } else {
+        loading = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  Future<void> cancelOrder(String orderId) async {
+    loading = true;
+    notifyListeners();
+
+    await OrderServices().cancelOrder(orderId).then((value) {
+      if (value != null) {
         loading = false;
         notifyListeners();
       } else {

@@ -26,6 +26,7 @@ class ProductProvider with ChangeNotifier {
       screenCheck: orderScreenCheck,
       cartId: cartId,
       productId: productId,
+      visibility: true,
     );
     if (productSize != null) {
       Navigator.of(context).pushNamed(

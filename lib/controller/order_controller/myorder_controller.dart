@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/model/orders/get_all_order_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/orders/order_service.dart';
 import 'package:e_commerce_app/view/order_detials_screen/model/order_detail_argument_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:share/share.dart';
 
 class MyOrdersProvider with ChangeNotifier {
   MyOrdersProvider() {
@@ -11,6 +14,7 @@ class MyOrdersProvider with ChangeNotifier {
   List<GetOrderModel>? ordersList;
   bool loading = false;
   GetOrderModel? singleModel;
+  String? deliveryDate;
 
   void getAllOrders() async {
     await OrderServices().getAllOrders().then((value) {
@@ -26,15 +30,27 @@ class MyOrdersProvider with ChangeNotifier {
     });
   }
 
-  String formatDate(String date) {
+  String? formatDate(String date) {
     final a = date.split(' ');
     return a[0];
   }
 
+  String? formatCancelDate(String? date) {
+    if (date != null) {
+      final a = date.split('T');
+      return a[0];
+    } else {
+      return null;
+    }
+  }
+
   void getSingleOrder(String orderId) async {
+    log(orderId.toString());
     await OrderServices().getSingleOrder(orderId).then((value) {
       if (value != null) {
         singleModel = value;
+        notifyListeners();
+        deliveryDate = formatDate(singleModel!.deliveryDate.toString());
         notifyListeners();
         loading = false;
         notifyListeners();
@@ -46,6 +62,7 @@ class MyOrdersProvider with ChangeNotifier {
   }
 
   void startLoading() {
+    log('loading started');
     loading = true;
     notifyListeners();
   }
@@ -55,16 +72,17 @@ class MyOrdersProvider with ChangeNotifier {
         .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);
   }
 
-  void goToOrderDetialsScreen(context) {
-    Navigator.of(context).pushReplacementNamed(RouteNames.orderDetailsScreen);
-  }
-
   void gotoOrderDetailsFromOrderScreen(
       BuildContext context, String orderId, int index) {
     final OrderDetailsArguementModel args =
         OrderDetailsArguementModel(orderIndex: index, orderId: orderId);
     Navigator.of(context)
-        .pushNamed(RouteNames.orderDetailsScreen, arguments: args);
+        .pushNamed(RouteNames.orderDetailsScreen, arguments: args)
+        .then((value) {
+      loading = true;
+      notifyListeners();
+      getAllOrders();
+    });
   }
 
   void goToHomePage(context) {
@@ -72,5 +90,8 @@ class MyOrdersProvider with ChangeNotifier {
         .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);
   }
 
-  void sendOrderDetials() {}
+  void sendOrderDetials(context) {
+    Share.share(
+        "ShoeCart Order -Order Id:${singleModel!.id},Total Products:${singleModel!.products.length},Total Price:${singleModel!.totalPrice},Delivery Date:$deliveryDate");
+  }
 }

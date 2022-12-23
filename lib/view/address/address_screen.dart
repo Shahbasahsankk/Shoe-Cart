@@ -10,16 +10,19 @@ import 'package:provider/provider.dart';
 
 import '../../helper/sizedboxes/app_sizedboxes.dart';
 
+// ignore: must_be_immutable
 class AddressScreen extends StatelessWidget {
-  const AddressScreen({
+  AddressScreen({
     super.key,
     required this.screenCheck,
     this.cartId,
     this.productId,
+    this.visibility = false,
   });
   final OrderSummaryScreenEnum screenCheck;
   final String? cartId;
   final String? productId;
+  bool visibility;
   @override
   Widget build(BuildContext context) {
     final addressProvider =
@@ -28,15 +31,21 @@ class AddressScreen extends StatelessWidget {
         Provider.of<AddNewAddressProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await addAddressProvider.getAllAddresses().then((value) {
-        addAddressProvider.addressChange(addAddressProvider.addressList[0].id);
-        addressProvider.addressId = addAddressProvider.addressList[0].id;
+        if (value != null) {
+          addAddressProvider
+              .addressChange(addAddressProvider.addressList[0].id);
+          addressProvider.addressId = addAddressProvider.addressList[0].id;
+        } else {
+          null;
+        }
       });
     });
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
-          title: const Text('Select Address'),
+          title:
+              Text(visibility == false ? 'Saved Addresses' : 'Select Address'),
           elevation: 0,
           backgroundColor: AppColors.transparentColor,
         ),
@@ -155,27 +164,30 @@ class AddressScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () => addressProvider.toOrderSummaryScreen(
-                            context,
-                            screenCheck,
-                            productId,
-                            cartId,
-                          ),
-                          child: Container(
-                            width: double.infinity,
-                            height: 48,
-                            color: AppColors.blueColor,
-                            child: const Center(
-                                child: Text(
-                              'DELIVER HERE',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                        visibility == false
+                            ? const SizedBox()
+                            : GestureDetector(
+                                onTap: () =>
+                                    addressProvider.toOrderSummaryScreen(
+                                  context,
+                                  screenCheck,
+                                  productId,
+                                  cartId,
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: AppColors.blueColor,
+                                  child: const Center(
+                                      child: Text(
+                                    'DELIVER HERE',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
+                                ),
                               ),
-                            )),
-                          ),
-                        ),
                       ],
                     );
         }),

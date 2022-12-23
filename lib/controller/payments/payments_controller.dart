@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/orders/place_order_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/orders/order_service.dart';
 import 'package:e_commerce_app/service/razor_pay_service/razor_pay_service.dart';
+import 'package:e_commerce_app/view/orders/model/order_placed_screen_arguement_model.dart';
 import 'package:e_commerce_app/widgets/navigator_key_class.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,6 +25,8 @@ class PaymentProvider with ChangeNotifier {
   String? addressId;
 
   void setTotalAmount(amount, List<String> productIds, address) {
+    log('product id is');
+    log(productIds[0].toString());
     final total = "${(num.parse(amount) * 100)}";
     final amountPayable = total.toString();
     setOptions(amountPayable);
@@ -56,9 +61,9 @@ class PaymentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void order(context, products) {
+  void order(context) async {
     if (paymentType == cashOnDelivery) {
-      orderProducts(addressId!, 'COD');
+      await orderProducts(addressId!, 'COD');
     } else if (paymentType == onlinePayment) {
       RazorPayService().openRazorPay(razorPay, options);
     }
@@ -77,20 +82,25 @@ class PaymentProvider with ChangeNotifier {
     Fluttertoast.showToast(msg: 'External Wallet');
   }
 
-  void orderProducts(String addressId, paymentType) async {
+  Future<void> orderProducts(String addressId, paymentType) async {
+    loading = true;
+    notifyListeners();
     final PlaceOrderModel model = PlaceOrderModel(
       addressId: addressId,
       paymentType: paymentType,
       products: products,
     );
-    loading = true;
-    notifyListeners();
+    log('product id in place order model is');
+    log(model.products[0].id.toString());
     await OrderServices().placeOrder(model).then((value) {
       if (value != null) {
+        log(value.toString());
         loading = false;
         notifyListeners();
+        final OrderPlacedScreenArguementModel args =
+            OrderPlacedScreenArguementModel(orderId: value);
         Navigator.of(NavigationService.navigatorKey.currentContext!)
-            .pushReplacementNamed(RouteNames.orderPlacedScreen)
+            .pushReplacementNamed(RouteNames.orderPlacedScreen, arguments: args)
             .then((value) {
           Navigator.of(NavigationService.navigatorKey.currentContext!)
               .pushNamedAndRemoveUntil(RouteNames.bottomNav, (route) => false);

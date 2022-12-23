@@ -147,6 +147,7 @@ class CartProvider with ChangeNotifier {
       screenCheck: orderScreenCheck,
       cartId: cartId,
       productId: productId,
+      visibility: true,
     );
     Navigator.of(context).pushNamed(
       RouteNames.addressScreen,

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/controller/bottom_nav/bottom_nav_bar_controller.dart';
 import 'package:e_commerce_app/utils/loading_widget.dart';
 import 'package:e_commerce_app/widgets/custom_button3.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,12 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final signInProvider = Provider.of<SignInProvider>(context, listen: false);
+    final bottomNavProvider =
+        Provider.of<BottomNavBarProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      bottomNavProvider.setToZeroIndex();
+    });
+    context.read<BottomNavBarProvider>().currentIndex == 0;
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,

@@ -15,6 +15,7 @@ class GetOrderModel {
     required this.landMark,
     required this.orderDate,
     required this.deliveryDate,
+    required this.cancelDate,
     required this.totalPrice,
     required this.totalDiscount,
   });
@@ -34,6 +35,7 @@ class GetOrderModel {
   String landMark;
   DateTime orderDate;
   DateTime deliveryDate;
+  dynamic cancelDate;
   int totalPrice;
   int totalDiscount;
 
@@ -54,6 +56,7 @@ class GetOrderModel {
         landMark: json["landMark"],
         orderDate: DateTime.parse(json["orderDate"]),
         deliveryDate: DateTime.parse(json["deliveryDate"]),
+        cancelDate: json["cancelDate"],
         totalPrice: json["totalPrice"],
         totalDiscount: json["totalDiscount"],
       );

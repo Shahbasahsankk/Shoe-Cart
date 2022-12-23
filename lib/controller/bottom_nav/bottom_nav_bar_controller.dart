@@ -23,6 +23,11 @@ class BottomNavBarProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setToZeroIndex() {
+    currentIndex = 0;
+    notifyListeners();
+  }
+
   Future<bool>? willPopFunction() {
     if (currentIndex != 0) {
       currentIndex = 0;

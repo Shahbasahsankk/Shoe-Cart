@@ -11,8 +11,11 @@ import 'package:provider/provider.dart';
 import '../../../utils/loading_widget.dart';
 
 class OrderPlacedScreen extends StatelessWidget {
-  const OrderPlacedScreen({super.key});
-
+  const OrderPlacedScreen({
+    super.key,
+    required this.orderId,
+  });
+  final String orderId;
   @override
   Widget build(BuildContext context) {
     const Divider divider = Divider(thickness: 2);
@@ -22,7 +25,7 @@ class OrderPlacedScreen extends StatelessWidget {
         Provider.of<BottomNavBarProvider>(context, listen: false);
     bottomNavProvider.currentIndex = 2;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      myOrdersProvider.getSingleOrder('pass order id');
+      myOrdersProvider.getSingleOrder(orderId);
     });
     return SafeArea(
       child: Scaffold(
@@ -52,9 +55,9 @@ class OrderPlacedScreen extends StatelessWidget {
                     ),
                     AppSizedBoxes.sizedboxH15,
                     PlacedContainer(
-                      itemCount: '2',
-                      totalAmount: '4567',
-                      onTap: () => values.goToOrderDetialsScreen(context),
+                      itemCount: values.singleModel!.products.length.toString(),
+                      totalAmount: values.singleModel!.totalPrice.toString(),
+                      onTap: () => values.closeOrderPlacedScreen(context),
                     ),
                     AppSizedBoxes.sizedboxH15,
                     const Divider(
@@ -62,29 +65,32 @@ class OrderPlacedScreen extends StatelessWidget {
                       color: AppColors.dullWhitecolor,
                     ),
                     AppSizedBoxes.sizedboxH12,
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Delivery by Tue,Nov 22nd 2022',
-                        style: TextStyle(fontSize: 16),
+                        'Delivery by ${values.deliveryDate}',
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                     const Divider(thickness: 2),
                     AppSizedBoxes.sizedboxH8,
-                    const OrderAddressWidget(
-                      name: 'John luther',
-                      number: '90909090',
-                      pin: '909090',
-                      state: 'Kerala',
-                      area: 'airport road devathiyal',
-                      address: 'kalluvalappil house,devathiyal',
+                    OrderAddressWidget(
+                      name: values.singleModel!.fullName,
+                      number: values.singleModel!.phone,
+                      pin: values.singleModel!.pin,
+                      state: values.singleModel!.state,
+                      area: values.singleModel!.landMark,
+                      address: values.singleModel!.address,
                     ),
                     divider,
                     AppSizedBoxes.sizedboxH8,
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                       child: GestureDetector(
-                        onTap: () => values.goToHomePage(context),
+                        onTap: () {
+                          bottomNavProvider.setToZeroIndex();
+                          values.goToHomePage(context);
+                        },
                         child: Container(
                           height: 35,
                           width: double.infinity,
@@ -101,7 +107,7 @@ class OrderPlacedScreen extends StatelessWidget {
                     divider,
                     AppSizedBoxes.sizedboxH15,
                     SendOrderDetails(
-                      ontap: () => values.sendOrderDetials(),
+                      ontap: () => values.sendOrderDetials(context),
                     ),
                   ],
                 );

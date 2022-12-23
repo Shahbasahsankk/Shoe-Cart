@@ -85,24 +85,30 @@ class OrderDetailsScreen extends StatelessWidget {
                       orderedDate: values.orderedDate!,
                       deliveredDate: values.deliveredDate!,
                       shippedDate: '2022-12-21',
-                      canceledDate: '2022-12-21',
+                      canceledDate: values.canceledDate,
                     ),
                     divider,
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, right: 15),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          color: AppColors.whiteColor38,
-                          height: 40,
-                          child: const Center(
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(fontSize: 18),
+                      child: values.orderModel!.orderStatus == 'CANCELED'
+                          ? const SizedBox()
+                          : GestureDetector(
+                              onTap: () async {
+                                await values.cancelOrder(orderId).then((value) {
+                                  values.getSingleOrder(orderId);
+                                });
+                              },
+                              child: Container(
+                                color: AppColors.whiteColor38,
+                                height: 40,
+                                child: const Center(
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 );

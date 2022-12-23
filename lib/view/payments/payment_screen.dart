@@ -106,7 +106,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 },
               ),
               CustomBottomPlaceOrderWidget(
-                ontap: () => paymentProvider.order(context, widget.productIds),
+                ontap: () => paymentProvider.order(context),
                 totalAmount: widget.totalAmount,
               ),
             ],

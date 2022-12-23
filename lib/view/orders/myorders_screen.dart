@@ -37,8 +37,18 @@ class MyOrdersScreen extends StatelessWidget {
               : values.ordersList == null || values.ordersList!.isEmpty
                   ? SizedBox(
                       height: MediaQuery.of(context).size.height / 2,
-                      child: const Center(
-                        child: Text('You have no orders'),
+                      width: double.infinity,
+                      child: Column(
+                        children: const [
+                          SizedBox(height: 160),
+                          Image(
+                              image: AssetImage(
+                                  'assets/cart&wishlist&orders assets/emptyOrder.png')),
+                          Text(
+                            'No orders yet',
+                            style: TextStyle(color: AppColors.whiteColor54),
+                          )
+                        ],
                       ),
                     )
                   : ListView.separated(
@@ -56,6 +66,9 @@ class MyOrdersScreen extends StatelessWidget {
                                   final deliveryDate = values.formatDate(values
                                       .ordersList![index1].deliveryDate
                                       .toString());
+                                  final canceledDate = values.formatCancelDate(
+                                      values.ordersList![index1].cancelDate
+                                          .toString());
                                   return Column(
                                     children: [
                                       AppSizedBoxes.sizedboxH12,
@@ -87,8 +100,8 @@ class MyOrdersScreen extends StatelessWidget {
                                                                   .ordersList![
                                                                       index1]
                                                                   .orderStatus ==
-                                                              'canceled'
-                                                          ? 'Delivery Canceled on 2022-12-21'
+                                                              'CANCELED'
+                                                          ? 'Delivery Canceled on $canceledDate'
                                                           : values
                                                                       .ordersList![
                                                                           index1]

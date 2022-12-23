@@ -105,5 +105,7 @@ class SignInProvider with ChangeNotifier {
   void clearControllers() {
     emailController.clear();
     passwordController.clear();
+    loading = false;
+    notifyListeners();
   }
 }

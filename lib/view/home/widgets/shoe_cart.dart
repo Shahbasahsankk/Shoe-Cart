@@ -1,4 +1,6 @@
+import 'package:e_commerce_app/controller/home/home_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../helper/colors/app_colors.dart';
 import '../../../helper/sizedboxes/app_sizedboxes.dart';
 import '../../../helper/textstyles/app_textstyles.dart';
@@ -8,6 +10,8 @@ class ShoeCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeProvider =
+        Provider.of<HomeScreenProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -33,7 +37,7 @@ class ShoeCart extends StatelessWidget {
             ),
             const Spacer(),
             IconButton(
-              onPressed: () {},
+              onPressed: () => homeProvider.toSearchScreen(),
               icon: const Icon(
                 Icons.search,
               ),

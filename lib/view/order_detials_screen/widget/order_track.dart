@@ -24,7 +24,7 @@ class OrderTrackWidget extends StatelessWidget {
       builder: (context, values, _) {
         return Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15),
-          child: values.orderModel!.orderStatus == 'canceled'
+          child: values.orderModel!.orderStatus == 'CANCELED'
               ? Row(
                   children: [
                     SizedBox(

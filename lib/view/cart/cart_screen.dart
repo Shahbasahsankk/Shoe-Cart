@@ -41,8 +41,19 @@ class CartScreen extends StatelessWidget {
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height / 1.3,
                         width: double.infinity,
-                        child: const Center(
-                          child: Text('Cart is empty'),
+                        child: Center(
+                          child: Column(
+                            children: const [
+                              SizedBox(height: 130),
+                              Image(
+                                  image: AssetImage(
+                                      'assets/cart&wishlist&orders assets/empty cart.png')),
+                              Text(
+                                'Cart is empty',
+                                style: TextStyle(color: AppColors.whiteColor54),
+                              )
+                            ],
+                          ),
                         ),
                       )
                     : Stack(
