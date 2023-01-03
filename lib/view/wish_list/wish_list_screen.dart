@@ -26,6 +26,7 @@ class WishListScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: AppColors.transparentColor,
           elevation: 0,
+          title: const Text('My WishList'),
         ),
         body: Column(
           children: [
