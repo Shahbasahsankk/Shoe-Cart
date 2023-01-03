@@ -19,4 +19,5 @@ class RouteNames {
   static const orderPlacedScreen = 'orderPlaced';
   static const orderDetailsScreen = 'orderDetailsScreen';
   static const addNewAddressScreen = 'newAddress';
+  static const searchScreen = 'search';
 }

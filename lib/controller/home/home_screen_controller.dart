@@ -5,6 +5,7 @@ import 'package:e_commerce_app/model/home_models/product_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/home/home_service.dart';
 import 'package:e_commerce_app/utils/app_toast.dart';
+import 'package:e_commerce_app/utils/debouncer.dart';
 import 'package:e_commerce_app/view/home/model/product_collection_model.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/utils/prouductid_model.dart';
 import 'package:flutter/widgets.dart';
@@ -17,20 +18,22 @@ class HomeScreenProvider with ChangeNotifier {
   List<CarousalModel> carousalList = [];
   List<CategoryModel> categoryList = [];
   List<Product> productList = [];
-
+  final debouncer = Debouncer(milliseconds: 200);
   bool loading = false;
 
   Future<void> callHomeFunctions() async {
     getCarousals().then((value) {
       getCategories().then((value) {
-        getProducts();
+        searchProducts('');
       });
     });
   }
 
-  void toSearchScreen() {
+  void toSearchScreen(BuildContext context) {
     if (categoryList.isEmpty || productList.isEmpty || carousalList.isEmpty) {
       AppToast.showToast("No internet connection", AppColors.redColor);
+    } else {
+      Navigator.of(context).pushNamed(RouteNames.searchScreen);
     }
   }
 
@@ -53,7 +56,7 @@ class HomeScreenProvider with ChangeNotifier {
       arguments: args,
     )
         .then((value) {
-      getProducts();
+      searchProducts('');
     });
   }
 
@@ -89,8 +92,10 @@ class HomeScreenProvider with ChangeNotifier {
     });
   }
 
-  Future<void> getProducts() async {
-    await HomeService().getAllProducts().then((value) {
+  Future<void> searchProducts(String text) async {
+    loading = true;
+    notifyListeners();
+    await HomeService().searchProducts(text).then((value) {
       if (value != null) {
         productList = value;
         notifyListeners();
@@ -99,7 +104,6 @@ class HomeScreenProvider with ChangeNotifier {
       } else {
         loading = false;
         notifyListeners();
-        null;
       }
     });
   }

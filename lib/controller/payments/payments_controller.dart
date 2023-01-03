@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/helper/colors/app_colors.dart';
 import 'package:e_commerce_app/model/orders/place_order_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
@@ -25,8 +23,6 @@ class PaymentProvider with ChangeNotifier {
   String? addressId;
 
   void setTotalAmount(amount, List<String> productIds, address) {
-    log('product id is');
-    log(productIds[0].toString());
     final total = "${(num.parse(amount) * 100)}";
     final amountPayable = total.toString();
     setOptions(amountPayable);
@@ -90,11 +86,8 @@ class PaymentProvider with ChangeNotifier {
       paymentType: paymentType,
       products: products,
     );
-    log('product id in place order model is');
-    log(model.products[0].id.toString());
     await OrderServices().placeOrder(model).then((value) {
       if (value != null) {
-        log(value.toString());
         loading = false;
         notifyListeners();
         final OrderPlacedScreenArguementModel args =

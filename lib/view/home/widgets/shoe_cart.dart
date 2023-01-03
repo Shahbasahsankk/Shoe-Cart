@@ -37,7 +37,7 @@ class ShoeCart extends StatelessWidget {
             ),
             const Spacer(),
             IconButton(
-              onPressed: () => homeProvider.toSearchScreen(),
+              onPressed: () => homeProvider.toSearchScreen(context),
               icon: const Icon(
                 Icons.search,
               ),

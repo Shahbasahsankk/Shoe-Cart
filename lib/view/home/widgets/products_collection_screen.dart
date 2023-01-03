@@ -28,14 +28,6 @@ class ProductCollectionScreen extends StatelessWidget {
           backgroundColor: AppColors.transparentColor,
           elevation: 0,
           title: Text(category),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
-              ),
-            ),
-          ],
         ),
         body: Consumer<HomeScreenProvider>(builder: (context, values, _) {
           return values.loading == true

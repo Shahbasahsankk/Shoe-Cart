@@ -22,6 +22,7 @@ import 'package:e_commerce_app/view/payments/model/payment_screen_arguement_mode
 import 'package:e_commerce_app/view/payments/payment_screen.dart';
 import 'package:e_commerce_app/view/product_screen/product_screen.dart';
 import 'package:e_commerce_app/view/product_screen/widgets/utils/prouductid_model.dart';
+import 'package:e_commerce_app/view/search/search_screen.dart';
 import 'package:e_commerce_app/view/signIn/sign_in_screen.dart';
 import 'package:e_commerce_app/view/signup/signup_screen.dart';
 import 'package:e_commerce_app/view/welcome/welcome_screen.dart';
@@ -128,6 +129,8 @@ class AppRoutes {
             addressId: args.addressId,
           ),
         );
+      case RouteNames.searchScreen:
+        return MaterialPageRoute(builder: (context) => const SearchScreen());
       case RouteNames.orderScreen:
         return MaterialPageRoute(
           builder: (context) => const MyOrdersScreen(),

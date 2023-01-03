@@ -46,11 +46,12 @@ class HomeService {
     return null;
   }
 
-  Future<List<Product>?> getAllProducts() async {
+  Future<List<Product>?> searchProducts(String searchValue) async {
     Dio dios = await Interceptorapi().getApiUser();
     try {
-      final Response response =
-          await dios.get(ApiUrl.apiUrl + ApiEndPoints.product);
+      final Response response = await dios.get(
+          ApiUrl.apiUrl + ApiEndPoints.product,
+          queryParameters: {"search": searchValue});
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<Product> products =
             (response.data as List).map((e) => Product.fromJson(e)).toList();
@@ -66,8 +67,8 @@ class HomeService {
   Future<List<Product>?> getProductsByCategory(String categoryId) async {
     Dio dios = await Interceptorapi().getApiUser();
     try {
-      final Response response = await dios
-          .get('${ApiUrl.apiUrl + ApiEndPoints.product}?category=$categoryId');
+      final Response response =
+          await dios.get('${ApiUrl.apiUrl}category/$categoryId/products');
       if (response.statusCode! >= 200 && response.statusCode! <= 299) {
         final List<Product> products =
             (response.data as List).map((e) => Product.fromJson(e)).toList();

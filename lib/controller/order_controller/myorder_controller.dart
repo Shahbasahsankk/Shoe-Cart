@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:e_commerce_app/model/orders/get_all_order_model.dart';
 import 'package:e_commerce_app/routes/rout_names.dart';
 import 'package:e_commerce_app/service/orders/order_service.dart';
@@ -45,7 +43,6 @@ class MyOrdersProvider with ChangeNotifier {
   }
 
   void getSingleOrder(String orderId) async {
-    log(orderId.toString());
     await OrderServices().getSingleOrder(orderId).then((value) {
       if (value != null) {
         singleModel = value;
@@ -62,7 +59,6 @@ class MyOrdersProvider with ChangeNotifier {
   }
 
   void startLoading() {
-    log('loading started');
     loading = true;
     notifyListeners();
   }
